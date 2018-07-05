@@ -15,6 +15,21 @@ router.get('/', (req, res) => {
     res.json(Story.get());
 });
 
+
+router.get('/:id', (req, res) => {
+    Story
+        .findById(req.params.id)
+        .then(story => res.json(Story.get()))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+});
+
+
+
 router.post('/', jsonParser, (req, res) => {
     const requiredFields = ['title', 'content', 'image'];
     for (let i = 0; i < requiredFields.length; i++) {
@@ -29,7 +44,7 @@ router.post('/', jsonParser, (req, res) => {
     res.status(201).json(item);
 });
 
-
+// for image uploading (not implemented yet)
 router.post('/upload', function (req, res) {
     if (!req.files)
         return res.status(400).send('No files were uploaded.');
@@ -45,6 +60,7 @@ router.post('/upload', function (req, res) {
         res.send('File uploaded!');
     });
 });
+// 
 
 
 
@@ -75,9 +91,11 @@ router.put('/:id', jsonParser, (req, res) => {
     const updatedStory = Story.update({
         id: req.params.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        publishedDate: new Date().toString()
     });
     res.status(204).end();
 });
+
 
 module.exports = router;

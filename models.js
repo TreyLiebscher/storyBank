@@ -41,12 +41,54 @@ const Story = {
     }
 };
 
+const StoryBlock = {
+    create: function (title, color) {
+        console.log('Creating new story block');
+        const item = {
+            title: title,
+            color: color,
+            id: uuid.v4(),
+            createdDate: new Date().toString()
+        };
+        this.items[item.id] = item;
+        return item;
+    },
+    get: function () {
+        console.log('Retrieving story block');
+        return Object.keys(this.items).map(key => this.items[key]);
+    },
+    delete: function (id) {
+        console.log(`Deleting story block \`${id}\``);
+        delete this.items[id];
+    },
+    update: function (updatedItem) {
+        console.log(`Deleting story block \`${updatedItem.id}\``);
+        const {
+            id
+        } = updatedItem;
+        if (!(id in this.items)) {
+            throw StorageException(
+                `Can't update story block \`${id}\` because it doesn't exist`
+            )
+        }
+        this.items[updatedItem.id] = updatedItem;
+        return updatedItem
+    }
+}
+
 function createStory() {
     const storage = Object.create(Story);
     storage.items = {};
     return storage;
 }
 
+function createStoryBlock() {
+    const storage = Object.create(StoryBlock);
+    storage.items = {};
+    return storage;
+}
+
 module.exports = {
-    Story: createStory()
+    Story: createStory(),
+    StoryBlock: createStoryBlock()
 }
