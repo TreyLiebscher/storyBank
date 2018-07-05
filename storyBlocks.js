@@ -8,8 +8,7 @@ const {
     StoryBlock
 } = require('./models');
 
-StoryBlock.create('Funny Stories', 'Blue');
-StoryBlock.create('Scary Stories', 'Black');
+
 
 router.get('/', (req, res) => {
     res.json(StoryBlock.get());

@@ -1,94 +1,71 @@
-const uuid = require('uuid');
+const mongoose = require('mongoose');
 
 
-function StorageException(message) {
-    this.message = message;
-    this.name = "StorageException";
-}
+const Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
-const Story = {
-    create: function (title, content, image) {
-        console.log('Creating new story post');
-        const item = {
-            title: title,
-            image: image,
-            id: uuid.v4(),
-            publishDate: new Date().toString(),
-            content: content
-        };
-        this.items[item.id] = item;
-        return item;
+const storySchema = new Schema({
+    title: {
+        type: String,
+        required: true
     },
-    get: function () {
-        console.log('Retrieving story');
-        return Object.keys(this.items).map(key => this.items[key]);
+    image: {
+        type: String,
+        required: false
     },
-    delete: function (id) {
-        console.log(`Deleting story \`${id}\``);
-        delete this.items[id];
+    content: {
+        type: String,
+        required: true
     },
-    update: function (updatedItem) {
-        console.log(`Deleting story \`${updatedItem.id}\``);
-        const {
-            id
-        } = updatedItem;
-        if (!(id in this.items)) {
-            throw StorageException(
-                `Can't update story \`${id}\` because doesn't exist.`)
-        }
-        this.items[updatedItem.id] = updatedItem;
-        return updatedItem;
-    }
+    public: {
+        type: Boolean,
+        required: true
+    },
+    storyBlock: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'story-blocks'
+    }]
+});
+
+storySchema.methods.serialize = function () {
+    return {
+        id: this._id,
+        title: this.title,
+        image: this.image,
+        content: this.content,
+        public: this.public
+    };
 };
 
-const StoryBlock = {
-    create: function (title, color) {
-        console.log('Creating new story block');
-        const item = {
-            title: title,
-            color: color,
-            id: uuid.v4(),
-            createdDate: new Date().toString()
-        };
-        this.items[item.id] = item;
-        return item;
-    },
-    get: function () {
-        console.log('Retrieving story block');
-        return Object.keys(this.items).map(key => this.items[key]);
-    },
-    delete: function (id) {
-        console.log(`Deleting story block \`${id}\``);
-        delete this.items[id];
-    },
-    update: function (updatedItem) {
-        console.log(`Deleting story block \`${updatedItem.id}\``);
-        const {
-            id
-        } = updatedItem;
-        if (!(id in this.items)) {
-            throw StorageException(
-                `Can't update story block \`${id}\` because it doesn't exist`
-            )
-        }
-        this.items[updatedItem.id] = updatedItem;
-        return updatedItem
-    }
-}
 
-function createStory() {
-    const storage = Object.create(Story);
-    storage.items = {};
-    return storage;
-}
+const storyBlockSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    color: {
+        type: String,
+        required: true
+    },
+    story: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'stories'
+    }]
+});
 
-function createStoryBlock() {
-    const storage = Object.create(StoryBlock);
-    storage.items = {};
-    return storage;
-}
+storyBlockSchema.methods.serialize = function () {
+    return {
+        id: this._id,
+        title: this.title,
+        color: this.color
+    };
+};
+
+
+const Story = mongoose.model('stories', storySchema);
+const StoryBlock = mongoose.model('story-blocks', storyBlockSchema);
 
 module.exports = {
-    Story: createStory(),
-    StoryBlock: createStoryBlock()
-}
+    Story,
+    StoryBlock
+};

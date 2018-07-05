@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+
+mongoose.Promise = global.Promise;
 
 const {
     Story
 } = require('./models');
 
-Story.create('newStory', 'This is a story about nothing', 'An uploaded image');
-Story.create('another story', 'this is yet another story about nothing', 'Another uploaded image');
+const { PORT, DATABASE_URL} = require('./config');
 
-router.get('/', (req, res) => {
+router.get('/stories', (req, res) => {
     res.json(Story.get());
 });
 
