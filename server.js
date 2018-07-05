@@ -15,10 +15,6 @@ const {
 const storiesRouter = require('./storiesRouter');
 const storyBlockRouter = require('./storyBlockRouter');
 
-const {
-    Story
-} = require('./models');
-
 const app = express();
 app.use(express.json());
 

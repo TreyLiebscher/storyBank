@@ -52,7 +52,7 @@ const storyBlockSchema = new Schema({
         type: String,
         required: true
     },
-    story: [{
+    stories: [{
         type: mongoose.Schema.ObjectId,
         ref: 'stories'
     }]
@@ -62,7 +62,8 @@ storyBlockSchema.methods.serialize = function () {
     return {
         id: this._id,
         title: this.title,
-        color: this.color
+        color: this.color,
+        stories: this.stories
     };
 };
 

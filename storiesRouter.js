@@ -9,6 +9,10 @@ const {
     Story
 } = require('./models');
 
+const {
+    StoryBlock
+} = require('./models');
+
 router.get('/', (req, res) => {
     Story
         .find()
@@ -39,8 +43,9 @@ router.get('/:id', (req, res) => {
         });
 });
 
+// // // // // // // //
 router.post('/', (req, res) => {
-    const requiredFields = ['title', 'content', 'public'];
+    const requiredFields = ['title', 'content', 'public', 'storyBlock'];
     for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
         if (!(field in req.body)) {
@@ -52,27 +57,44 @@ router.post('/', (req, res) => {
 
     Story
         .create({
-            title: req.body.title,
-            content: req.body.content,
-            image: req.body.image,
-            public: req.body.public,
-            publishDate: new Date().toString()
-        })
+                title: req.body.title,
+                content: req.body.content,
+                image: req.body.image,
+                public: req.body.public,
+                publishDate: new Date().toString(),
+                storyBlock: req.body.storyBlock
+            }
+        )
         .then(story => res.status(201).json(story.serialize()))
+        // .then(function (err, story) {
+        //     StoryBlock.findByIdAndUpdate({
+        //         id: req.body.storyBlock
+        //     }, {
+        //         $push: {
+        //             stories: req.body.id
+        //         }
+        //     }, function(err, storyBlock) {});
+        // })
         .catch(err => {
             console.error(err);
-            res.status(500).json({message: 'Internal Server Error'});
+            res.status(500).json({
+                message: 'Internal Server Error'
+            });
         });
 });
 
+// // // // // //
+
 router.put('/:id', (req, res) => {
-    if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
         const message = (
             `Request path id (${req.params.id}) and request body id ` +
             `(${req.body.id}) must match`
         );
         console.error(message);
-        return res.status(400).json({message: message});
+        return res.status(400).json({
+            message: message
+        });
     }
 
     const toUpdate = {};
@@ -85,20 +107,28 @@ router.put('/:id', (req, res) => {
     });
 
     Story
-        .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+        .findByIdAndUpdate(req.params.id, {
+            $set: toUpdate
+        })
         .then(story => res.status(204).end())
-        .catch(err => res.status(500).json({message: 'Internal Server Error'}));
+        .catch(err => res.status(500).json({
+            message: 'Internal Server Error'
+        }));
 });
 
 router.delete('/stories/:id', (req, res) => {
     Story
         .findByIdAndRemove(req.params.id)
         .then(story => res.status(204).end())
-        .catch(err => res.status(500).json({message: 'Internal Server Error'}));
+        .catch(err => res.status(500).json({
+            message: 'Internal Server Error'
+        }));
 });
 
 router.use('*', function (req, res) {
-    res.status(404).json({message:'Not Found'});
+    res.status(404).json({
+        message: 'Not Found'
+    });
 });
 
 module.exports = router;
