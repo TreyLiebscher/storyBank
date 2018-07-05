@@ -25,7 +25,7 @@ describe('basic functionality', function() {
     });
 
     it('POST should create a new story', function() {
-        const newStory = {title: 'new story', content: 'just some new stuff', image: 'upload img'};
+        const newStory = {title: 'new story', content: 'just some new stuff', image: 'upload img', public: true};
         return chai
             .request(app)
             .post('/stories')
@@ -34,7 +34,7 @@ describe('basic functionality', function() {
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
-                expect(res.body).include.keys('title', 'content', 'image');
+                expect(res.body).include.keys('title', 'content', 'image', 'public');
                 expect(res.body.id).to.not.equal(null);
                 expect(res.body.publishDate).to.not.equal(null);
                 expect(res.body).to.deep.equal(

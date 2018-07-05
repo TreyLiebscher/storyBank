@@ -64,7 +64,9 @@ app.post('/stories', (req, res) => {
         .create({
             title: req.body.title,
             content: req.body.content,
-            public: req.body.public
+            image: req.body.image,
+            public: req.body.public,
+            publishDate: new Date().toString()
         })
         .then(story => res.status(201).json(story.serialize()))
         .catch(err => {

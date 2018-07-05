@@ -21,6 +21,10 @@ const storySchema = new Schema({
         type: Boolean,
         required: true
     },
+    publishDate: {
+        type: String,
+        required: true
+    },
     storyBlock: [{
         type: mongoose.Schema.ObjectId,
         ref: 'story-blocks'
@@ -33,6 +37,7 @@ storySchema.methods.serialize = function () {
         title: this.title,
         image: this.image,
         content: this.content,
+        publishDate: this.publishDate,
         public: this.public
     };
 };
