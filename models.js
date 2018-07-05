@@ -27,9 +27,9 @@ const storySchema = new Schema({
     },
     storyBlock: [{
         type: mongoose.Schema.ObjectId,
-        ref: 'story-blocks'
+        ref: 'storyblocks'
     }]
-});
+}, {collection: 'stories'});
 
 storySchema.methods.serialize = function () {
     return {
@@ -56,7 +56,7 @@ const storyBlockSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'stories'
     }]
-});
+}, {collection: 'storyblocks'});
 
 storyBlockSchema.methods.serialize = function () {
     return {
@@ -68,7 +68,7 @@ storyBlockSchema.methods.serialize = function () {
 
 
 const Story = mongoose.model('stories', storySchema);
-const StoryBlock = mongoose.model('story-blocks', storyBlockSchema);
+const StoryBlock = mongoose.model('storyblocks', storyBlockSchema);
 
 module.exports = {
     Story,
