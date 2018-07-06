@@ -25,10 +25,10 @@ const storySchema = new Schema({
         type: String,
         required: true
     },
-    storyBlock: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'storyblocks'
-    }]
+    storyBlock: {
+        type: String,
+        required: true
+    }
 }, {collection: 'stories'});
 
 storySchema.methods.serialize = function () {
@@ -38,7 +38,8 @@ storySchema.methods.serialize = function () {
         image: this.image,
         content: this.content,
         publishDate: this.publishDate,
-        public: this.public
+        public: this.public,
+        storyBlock: this.storyBlock
     };
 };
 
