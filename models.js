@@ -29,7 +29,9 @@ const storySchema = new Schema({
         type: String,
         required: true
     }
-}, {collection: 'stories'});
+}, {
+    collection: 'stories'
+});
 
 storySchema.methods.serialize = function () {
     return {
@@ -53,11 +55,10 @@ const storyBlockSchema = new Schema({
         type: String,
         required: true
     },
-    stories: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'stories'
-    }]
-}, {collection: 'storyblocks'});
+    stories: [{ type : String, ref: 'stories' }]
+}, {
+    collection: 'storyblocks'
+});
 
 storyBlockSchema.methods.serialize = function () {
     return {

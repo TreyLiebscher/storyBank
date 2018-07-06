@@ -56,14 +56,14 @@ router.post('/', (req, res) => {
     }
 
     function addStory() {
-        const storyId = req.body._id;
+        const storyTitle = req.body.title;
 
         StoryBlock
             .findByIdAndUpdate({
                 _id: req.body.storyBlock
             }, {
                 $push: {
-                    stories: storyId
+                    stories: storyTitle
                 }
             }, function (err, res) {return});
     }
