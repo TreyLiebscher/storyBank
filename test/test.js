@@ -68,7 +68,7 @@ function tearDownDb() {
     return mongoose.connection.dropDatabase();
 }
 
-
+//TODO: add test to make sure storyblock dest actually exists
 describe('Stories API resource', function () {
     before(function () {
         return runServer(TEST_DATABASE_URL);
@@ -199,7 +199,7 @@ describe('Stories API resource', function () {
     });
 
 });
-
+//TODO: add tests for matching storyBlocks to their children 
 describe('StoryBlocks API resource', function () {
     before(function () {
         return runServer(TEST_DATABASE_URL);
@@ -332,4 +332,8 @@ describe('StoryBlocks API resource', function () {
                 });
         });
     });
+});
+
+describe('Users API resource', function() {
+    //TODO: add tests here once Users model/routes/auth are completed
 });

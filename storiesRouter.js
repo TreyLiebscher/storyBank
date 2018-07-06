@@ -54,7 +54,7 @@ router.post('/', (req, res) => {
             return res.status(400).send(message);
         }
     }
-
+    // for adding stories into their respective story blocks
     function addStory() {
         const storyTitle = req.body.title;
 
