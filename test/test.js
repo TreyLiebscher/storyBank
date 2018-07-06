@@ -87,7 +87,7 @@ describe('Stories API resource', function () {
     });
 
     describe('GET endpoint', function () {
-        it('GET should return with a status of 200', function () {
+        it('should return with a status of 200', function () {
             return chai
                 .request(app)
                 .get('/stories')
@@ -96,7 +96,7 @@ describe('Stories API resource', function () {
                 });
         });
 
-        it('GET should return stories with the right fields', function () {
+        it('should return stories with the right fields', function () {
             let resStory;
             return chai
                 .request(app)
@@ -129,7 +129,7 @@ describe('Stories API resource', function () {
     });
 
     describe('POST enpoint', function () {
-        it('POST should create a new story', function () {
+        it('should create a new story', function () {
             const newStory = {
                 title: 'new story',
                 content: 'just some new stuff',
@@ -159,7 +159,7 @@ describe('Stories API resource', function () {
     });
 
     describe('PUT endpoint', function () {
-        it('PUT should update a story by id', function () {
+        it('should update a story by id', function () {
             const updateStory = {
                 title: 'test story',
                 content: 'just testing',
@@ -184,7 +184,7 @@ describe('Stories API resource', function () {
     });
 
     describe('DELETE endpoint', function () {
-        it('DELETE should remove a story by id', function () {
+        it('should remove a story by id', function () {
             return
             chai
                 .request(app)
@@ -218,25 +218,118 @@ describe('StoryBlocks API resource', function () {
     });
 
     describe('GET endpoint', function () {
-        it('should return all existing storyblocks', function() {
+        it('should return all existing storyblocks', function () {
             return chai
-            .request(app)
-            .get('/story-blocks')
-            .then(function (res) {
-                expect(res).to.have.status(200);
-            });
+                .request(app)
+                .get('/story-blocks')
+                .then(function (res) {
+                    expect(res).to.have.status(200);
+                });
+        });
+
+        it('should return storyblocks with the right fields', function () {
+            let resStoryblock;
+            return
+            chai.request(app)
+                .get('/story-blocks')
+                .then(function (res) {
+                    expect(res).to.have.status(200);
+                    expect(res).to.be.json;
+                    expect(res.body.storyblocks).to.ba.a('array');
+                    expect(res.body.storyblocks).to.have.lengthOf.at.least(1);
+
+                    res.body.storyblocks.forEach(function (storyblock) {
+                        expect(storyblock).to.be.a('object');
+                        expect(storyblock).to.include.keys(
+                            'id', 'title', 'color', 'stories'
+                        );
+
+                    });
+
+                    resStoryblock = res.body.storyblocks[0];
+                    return StoryBlock.findById(resStoryblock.id);
+                })
+                .then(function (storyblock) {
+                    expect(resStoryblock.id).to.equal(storyblock.id);
+                    expect(resStoryblock.title).to.equal(storyblock.title);
+                    expect(resStoryblock.color).to.equal(storyblock.color);
+                    expect(resStoryblock.stories).to.equal(storyblock.stories);
+                });
         });
     });
 
-    describe('POST endpoint', function() {
+    describe('POST endpoint', function () {
+        it('should add a new storyblock', function () {
+            const newStoryblock = generateStoryBlocksData();
 
+            return
+            chai.request(app)
+                .post('/story-blocks')
+                .send(newStoryblock)
+                .then(function (res) {
+                    expect(res).to.have.status(201);
+                    expect(res).to.be.json;
+                    expect(res.body).to.ba.a('object');
+                    expect(res.body).to.include.keys(
+                        'id', 'title', 'color', 'stories'
+                    );
+                    expect(res.body.title).to.equal(newStoryblock.title);
+                    expect(res.body.color).to.equal(newStoryblock.color);
+                    expect(res.body.id).to.not.be.null;
+                    return StoryBlock.findById(res.body.id);
+                })
+                .then(function (storyblock) {
+                    expect(storyblock.title).to.equal(newStoryblock.title);
+                    expect(storyblock.color).to.equal(newStoryblock.color);
+                });
+        });
     });
 
-    describe('PUT endpoint', function() {
+    describe('PUT endpoint', function () {
+        it('should update fields that are sent', function() {
+            const updateData = {
+                title: 'A new Block',
+                color: 'black'
+            };
 
+            return StoryBlock
+                .findOne()
+                .then(function(storyblock) {
+                    updateData.id = storyblock.id;
+
+                    return chai
+                        .request(app)
+                        .put(`/story-blocks/${storyblock.id}`)
+                        .send(updateData);
+                })
+                .then(function(res) {
+                    expect(res).to.have.status(204);
+                    return StoryBlock.findById(updateData.id);
+                })
+                .then(function(storyblock) {
+                    expect(storyblock.title).to.equal(updateData.title);
+                    expect(storyblock.color).to.equal(updateData.color);
+                });
+        });
     });
 
-    describe('DELETE endpoint', function() {
+    describe('DELETE endpoint', function () {
+        it('should delete a storyblock by id', function() {
+            let storyblock;
 
+            return StoryBlock
+                .findOne()
+                .then(function(_storyblock) {
+                    storyblock = _storyblock;
+                    return chai.request(app).delete(`/story-blocks/${storyblock.id}`);
+                })
+                .then(function(res) {
+                    expect(res).to.have.status(204);
+                    return StoryBlock.findById(storyblock.id);
+                })
+                .then(function(_storyblock) {
+                    expect(_storyblock).to.be.null;
+                });
+        });
     });
 });
