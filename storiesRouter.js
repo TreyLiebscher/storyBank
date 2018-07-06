@@ -116,7 +116,7 @@ router.put('/:id', (req, res) => {
         }));
 });
 
-router.delete('/stories/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     Story
         .findByIdAndRemove(req.params.id)
         .then(story => res.status(204).end())
