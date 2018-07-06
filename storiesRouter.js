@@ -55,32 +55,38 @@ router.post('/', (req, res) => {
         }
     }
 
+    function addStory() {
+        const storyId = req.body._id;
+
+        StoryBlock
+            .findByIdAndUpdate({
+                _id: req.body.storyBlock
+            }, {
+                $push: {
+                    stories: storyId
+                }
+            }, function (err, res) {return});
+    }
+
     Story
         .create({
-                title: req.body.title,
-                content: req.body.content,
-                image: req.body.image,
-                public: req.body.public,
-                publishDate: new Date().toString(),
-                storyBlock: req.body.storyBlock
-            }
-        )
+            title: req.body.title,
+            content: req.body.content,
+            image: req.body.image,
+            public: req.body.public,
+            publishDate: new Date().toString(),
+            storyBlock: req.body.storyBlock
+        })
+        .then(addStory())
         .then(story => res.status(201).json(story.serialize()))
-        // .then(function (err, story) {
-        //     StoryBlock.findByIdAndUpdate({
-        //         id: req.body.storyBlock
-        //     }, {
-        //         $push: {
-        //             stories: req.body.id
-        //         }
-        //     }, function(err, storyBlock) {});
-        // })
         .catch(err => {
             console.error(err);
             res.status(500).json({
                 message: 'Internal Server Error'
             });
         });
+
+
 });
 
 // // // // // //
