@@ -4,7 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const {StoryBlock} = require('./models');
+const {StoryBlock} = require('./schema');//changed from models
 
 router.get('/', (req, res) => {
     StoryBlock

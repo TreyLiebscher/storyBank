@@ -1,17 +1,15 @@
+'use strict';
+
 const mongoose = require('mongoose');
 
-
-const Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
-
-const storySchema = new Schema({
+const StoriesSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
     image: {
         type: String,
-        required: false
+        required: true
     },
     content: {
         type: String,
@@ -20,60 +18,24 @@ const storySchema = new Schema({
     public: {
         type: Boolean,
         required: true
-    },
-    publishDate: {
-        type: String,
-        required: true
-    },
-    storyBlock: {
-        type: String,
-        required: true
     }
 }, {
-    collection: 'stories'
+    timestamps: {
+        createdAt: 'createdAt'
+    }
 });
 
-storySchema.methods.serialize = function () {
+StoriesSchema.methods.serialize = function () {
     return {
         id: this._id,
         title: this.title,
         image: this.image,
         content: this.content,
-        publishDate: this.publishDate,
         public: this.public,
-        storyBlock: this.storyBlock
+        createdAt: this.createdAt
     };
-};
+}
 
+const StoriesModel = mongoose.model('StoriesModel', StoriesSchema);
 
-const storyBlockSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    color: {
-        type: String,
-        required: true
-    },
-    stories: [{ type : String, ref: 'stories' }]
-}, {
-    collection: 'storyblocks'
-});
-
-storyBlockSchema.methods.serialize = function () {
-    return {
-        id: this._id,
-        title: this.title,
-        color: this.color,
-        stories: this.stories
-    };
-};
-
-
-const Story = mongoose.model('stories', storySchema);
-const StoryBlock = mongoose.model('storyblocks', storyBlockSchema);
-
-module.exports = {
-    Story,
-    StoryBlock
-};
+module.exports = StoriesModel

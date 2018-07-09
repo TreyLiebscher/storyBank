@@ -1,69 +1,83 @@
 'use strict';
 
 const express = require('express');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
-const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser');
+const os = require('os');
 
-mongoose.Promise = global.Promise;
-// app.use(fileUpload());
-
-const {
-    PORT,
-    DATABASE_URL
-} = require('./config');
-
-const storiesRouter = require('./storiesRouter');
-const storyBlockRouter = require('./storyBlockRouter');
+const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('./config.js');
+const {setupRoutes} = require('./api.js');
 
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/stories', storiesRouter);
-app.use('/story-blocks', storyBlockRouter);
+setupRoutes(app);
 
+app.use('*', function (req, res) {
+    res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
+});
 
 let server;
 
-function runServer(databaseUrl = DATABASE_URL, port = PORT) {
+function runHttpServer(port) {
+    let resolved = false;
     return new Promise((resolve, reject) => {
-        mongoose.connect(databaseUrl, err => {
-            if (err) {
-                return reject(err);
+        const server = app.listen(port, () => {
+            console.log(`EXPRESS HTTP(S) SERVER STARTED ON PORT ${port}`);
+            const hostname = os.hostname() || 'localhost';
+            console.log(`APP URL is: http://${hostname}:${port}`);
+            resolved = true;
+            resolve(server);
+        }).on('error', err => {
+            console.error('SERVER ERROR', err)
+            if (!resolved) {
+                reject(err);
             }
-            server = app.listen(port, () => {
-                    console.log(`Your app is listening on port ${port}`);
-                    resolve();
-                })
-                .on('error', err => {
-                    mongoose.disconnect();
-                    reject(err);
-                });
         });
     });
 }
 
+async function runServer(databaseUrl, port) {
+    try {
+        await mongoose.connect(databaseUrl, {useNewUrlParser: false});
+        const dbMode = databaseUrl === TEST_DATABASE_URL ? 'TEST MODE' : 'PRODUCTION MODE';
+        console.log(`MONGOOSE CONNECTED [${dbMode}]`);
+        server = await runHttpServer(port);
+        return server;
+    } catch (ex) {
+        mongoose.disconnect();
+        console.error('CANNOT START SERVER', ex);
+        return false;
+    }
+}
 
-function closeServer() {
-    return mongoose.disconnect().then(() => {
-        return new Promise((resolve, reject) => {
-            console.log('Closing server');
+async function closeServer() {
+    try {
+        await mongoose.disconnect();
+        return await new Promise((resolve, reject) => {
+            if (!server) {
+                return resolve(true);
+            }
+            console.log('CLOSING SERVER');
             server.close(err => {
                 if (err) {
                     return reject(err);
                 }
-                resolve();
+                return resolve(true);
             });
-        });
-    });
+        })
+    } catch (ex) {
+        console.error('CANNOT STOP SERVER', ex);
+        return false;
+    }
 }
-
 
 if (require.main === module) {
-    runServer(DATABASE_URL).catch(err => console.error(err));
+    runServer(DATABASE_URL, PORT).catch(err => console.error('CANNOT START SERVER', err));
 }
 
-module.exports = {
-    app,
-    runServer,
-    closeServer
-};
+module.exports = {app, runServer, closeServer};
+
+

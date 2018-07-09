@@ -1,97 +1,60 @@
 const express = require('express');
+
+const StoriesModel = require('./models');
+const tryCatch = require('./helpers').expressTryCatchWrapper;
+
 const router = express.Router();
 
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const LIMIT = 10;
 
+// // // // POST
+async function createStory(req, res) {
+    const record = await StoriesModel.create({
+        date: new Date(),
+        title: req.body.title || 'Untitled Story',
+        image: req.body.image,
+        content: req.body.content,
+        public: req.body.public
+    })
+    res.json({
+        story: record.serialize()
+    });
+}
 
-const {
-    Story
-} = require('./models');
+router.post('/story/create', tryCatch(createStory));
 
-const {
-    StoryBlock
-} = require('./models');
+// // // // GET
+async function getStories(req, res) {
+    const offset = parseInt(req.params.offset || 0);
+    const total = await StoriesModel.count()
 
-router.get('/', (req, res) => {
-    Story
-        .find()
-        .then(stories => {
-            res.json({
-                stories: stories.map(
-                    (story) => story.serialize()
-                )
-            });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-router.get('/:id', (req, res) => {
-    Story
-        .findById(req.params.id)
-        .then(story => res.json(story.serialize()))
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// // // // // // // //
-router.post('/', (req, res) => {
-    const requiredFields = ['title', 'content', 'public', 'storyBlock'];
-    for (let i = 0; i < requiredFields.length; i++) {
-        const field = requiredFields[i];
-        if (!(field in req.body)) {
-            const message = `Missing \`${field}\` in request body`;
-            console.error(message);
-            return res.status(400).send(message);
-        }
-    }
-    // for adding stories into their respective story blocks
-    function addStory() {
-        const storyTitle = req.body.title;
-
-        StoryBlock
-            .findByIdAndUpdate({
-                _id: req.body.storyBlock
-            }, {
-                $push: {
-                    stories: storyTitle
-                }
-            }, function (err, res) {return});
+    if (offset > total || offset < 0) {
+        throw new Error('OUT_OF_BOUNDS');
     }
 
-    Story
-        .create({
-            title: req.body.title,
-            content: req.body.content,
-            image: req.body.image,
-            public: req.body.public,
-            publishDate: new Date().toString(),
-            storyBlock: req.body.storyBlock
-        })
-        .then(addStory())
-        .then(story => res.status(201).json(story.serialize()))
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
+    const records = await StoriesModel
+        .find({})
+        .sort([
+            ['date', -1]
+        ])
+        .skip(offset)
+        .limit(LIMIT)
+
+    res.json({
+        pageSize: LIMIT,
+        total,
+        stories: records.map(record => record.serialize())
+    })
+}
+
+router.get('/stories', tryCatch(getStories));
+
+router.get('/stories/:offset', tryCatch(getStories));
 
 
-});
+// // // // PUT
+async function updateStory(req, res) {
 
-// // // // // //
-
-router.put('/:id', (req, res) => {
     if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
         const message = (
             `Request path id (${req.params.id}) and request body id ` +
@@ -112,29 +75,24 @@ router.put('/:id', (req, res) => {
         }
     });
 
-    Story
+    const record = await StoriesModel
         .findByIdAndUpdate(req.params.id, {
             $set: toUpdate
         })
-        .then(story => res.status(204).end())
-        .catch(err => res.status(500).json({
-            message: 'Internal Server Error'
-        }));
-});
-
-router.delete('/:id', (req, res) => {
-    Story
-        .findByIdAndRemove(req.params.id)
-        .then(story => res.status(204).end())
-        .catch(err => res.status(500).json({
-            message: 'Internal Server Error'
-        }));
-});
-
-router.use('*', function (req, res) {
-    res.status(404).json({
-        message: 'Not Found'
+    res.json({
+        story: record.serialize()
     });
-});
+}
+
+router.put('/story/update/:id', tryCatch(updateStory));
+
+// // // // DELETE
+async function deleteStory(req, res) {
+    const record = await StoriesModel
+        .findByIdAndRemove(req.params.id)
+    res.status(204).end()
+}
+
+router.delete('/story/delete/:id', tryCatch(deleteStory));
 
 module.exports = router;
