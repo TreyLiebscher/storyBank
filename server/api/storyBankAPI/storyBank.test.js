@@ -92,4 +92,52 @@ describe('StoryBank API routes', function () {
             expect(createdAt.toDateString()).to.not.equal('Invalid Date');
         });
     });
+
+    describe('GET /storyBank/stories (no records)', () => {
+        it('should respond with JSON', async () => {
+            await deleteCollections(['storiesmodels'])
+            const res = await chai
+                .request(app)
+                .get('/storyBank/stories')
+                expect(res).to.have.status(200);
+                expect(res).to.be.json;
+                expect(res.body.stories).to.deep.equal([]);
+        });
+
+        it('should fail when the offset parameter is out of bounds', async () => {
+            const res = await chai
+                .request(app)
+                .get('/storyBank/stories/10')
+                expect(res).to.be.json;
+                expect(res).to.have.status(500)
+        });
+    });
+
+    describe('GET /storyBank/stories (some records)', () => {
+        it('should respond with JSON', async () => {
+            await deleteCollections(['storiesmodels'])
+
+            await Promise.all(mockData.map(item => StoriesModel.create(item)))
+            const res = await chai
+                .request(app)
+                .get('/storyBank/stories')
+                expect(res).to.have.status(200);
+                expect(res).to.be.json;
+                expect(res.body.stories).to.be.an('array');
+                expect(res.body.stories).to.have.lengthOf(3);
+                expect(res.body.total).to.equal(3);
+
+        });
+
+        it('should account for the offset paramter', async () => {
+            const res = await chai
+                .request(app)
+                .get('/storyBank/stories/2')
+                expect(res).to.be.json;
+                expect(res).to.have.status(200);
+                expect(res.body.stories).to.be.an('array');
+                expect(res.body.stories).to.have.lengthOf(1);
+                expect(res.body.total).to.equal(3);
+        });
+    });
 });
