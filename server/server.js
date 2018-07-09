@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
 
-const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('./config.js');
-const {setupRoutes} = require('./api.js');
+const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
+const { setupRoutes } = require('./api/api.js');
 
 const app = express();
 app.use(bodyParser.json());

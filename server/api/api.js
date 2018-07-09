@@ -1,5 +1,7 @@
-const StoriesModel = require('./models');
-const storiesRouter = require('./storiesRouter');
+const StoriesModel = require('./storyBankAPI/models');
+const storiesRouter = require('./storyBankAPI/storiesRouter');
+
+// const { setupRoutes } = require('./api/api.js');
 
 const apiConfig = {
     storyBank: {

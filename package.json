@@ -27,7 +27,7 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "test:api": "mocha 'test/*.test.js' --exit --timeout 10000 --reporter min"
+    "test:api": "mocha 'server/**/*.test.js' --exit --timeout 10000 --reporter min"
   },
   "author": "",
   "license": "ISC"
