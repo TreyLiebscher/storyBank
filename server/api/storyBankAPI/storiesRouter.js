@@ -26,7 +26,7 @@ router.post('/story/create', tryCatch(createStory));
 // // // // GET
 async function getStories(req, res) {
     const offset = parseInt(req.params.offset || 0);
-    const total = await StoriesModel.count()
+    const total = await StoriesModel.countDocuments()
 
     if (offset > total || offset < 0) {
         throw new Error('OUT_OF_BOUNDS');
