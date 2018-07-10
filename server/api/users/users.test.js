@@ -15,7 +15,7 @@ const {
     getConfig
 } = require('../../api/api');
 
-const UsersModel = getConfig('users').models.users;
+const UserModel = getConfig('users').models.users;
 
 const {
     TEST_DATABASE_URL,
@@ -54,9 +54,9 @@ describe('Users API routes', function () {
 
     describe('GET /users/ (some records)', () => {
         it('should respond with JSON', async () => {
-            await deleteCollections(['usersmodels'])
+            await deleteCollections(['usermodels'])
 
-            await Promise.all(seedData.map(item => UsersModel.create(item)))
+            await Promise.all(seedData.map(item => UserModel.create(item)))
             const res = await chai
                 .request(app)
                 .get('/users/')

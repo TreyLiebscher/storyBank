@@ -1,11 +1,12 @@
 const StoriesModel = require('./storyBankAPI/models');
 const storiesRouter = require('./storyBankAPI/storiesRouter');
 
-const UsersModel = require('./users/usersModel');
+const BlockModel = require('./blocks/blockModel');
+const blockRouter = require('./blocks/blockRouter');
+
+const UserModel = require('./users/UserModel');
 const usersRouter = require('./users/usersRouter');
 
-
-// const { setupRoutes } = require('./api/api.js');
 
 const apiConfig = {
     storyBank: {
@@ -14,10 +15,16 @@ const apiConfig = {
             story: StoriesModel
         }
     },
+    storyblock: {
+        router: blockRouter,
+        models: {
+            block: BlockModel
+        }
+    },
     users: {
         router: usersRouter,
         models: {
-            users: UsersModel
+            users: UserModel
         }
     },
 }

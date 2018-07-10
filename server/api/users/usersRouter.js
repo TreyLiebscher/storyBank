@@ -1,14 +1,14 @@
 const express = require('express');
 
-const UsersModel = require('./usersModel');
+const UserModel = require('./UserModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const router = express.Router();
 
 // // // // GET
 async function getUsers(req, res) {
-    const total = await UsersModel.countDocuments()
-    const records = await UsersModel
+    const total = await UserModel.countDocuments()
+    const records = await UserModel
         .find({})
         .sort([
             ['email', -1]

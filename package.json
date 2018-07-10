@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js",
+    "start": "node /Users/trey/Desktop/Projects/storyBank/server/server.js",
     "test:api": "mocha 'server/**/*.test.js' --exit --timeout 10000 --reporter min",
     "develop": "nodemon --watch server server/server.js"
   },
