@@ -1,6 +1,10 @@
 const StoriesModel = require('./storyBankAPI/models');
 const storiesRouter = require('./storyBankAPI/storiesRouter');
 
+const UsersModel = require('./users/usersModel');
+const usersRouter = require('./users/usersRouter');
+
+
 // const { setupRoutes } = require('./api/api.js');
 
 const apiConfig = {
@@ -9,7 +13,13 @@ const apiConfig = {
         models: {
             story: StoriesModel
         }
-    }
+    },
+    users: {
+        router: usersRouter,
+        models: {
+            users: UsersModel
+        }
+    },
 }
 
 function setupRoutes(app) {

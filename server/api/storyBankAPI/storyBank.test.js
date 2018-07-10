@@ -58,7 +58,7 @@ async function deleteCollections(namesArr) {
 describe('StoryBank API routes', function () {
 
     before(async () => {
-        await runServer(TEST_DATABASE_URL);
+        await runServer(TEST_DATABASE_URL, PORT);
     });
 
     after(async () => {
