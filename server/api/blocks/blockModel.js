@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const BlockSchema = new mongoose.Schema({
     title: {
@@ -11,12 +12,17 @@ const BlockSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    stories: [{
+        type: Schema.Types.ObjectId,
+        ref: 'StoriesModel'
+    }]
 
 }, {
-        timestamps: {
-            createdAt: 'createdAt'
-        }
-    });
+    timestamps: {
+        createdAt: 'createdAt'
+    }
+});
+
 
 BlockSchema.methods.serialize = function () {
 

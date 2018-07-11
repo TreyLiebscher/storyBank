@@ -1,5 +1,5 @@
-const StoriesModel = require('./storyBankAPI/models');
-const storiesRouter = require('./storyBankAPI/storiesRouter');
+const StoriesModel = require('./stories/storyModel');
+const storiesRouter = require('./stories/storiesRouter');
 
 const BlockModel = require('./blocks/blockModel');
 const blockRouter = require('./blocks/blockRouter');
@@ -9,7 +9,7 @@ const usersRouter = require('./users/usersRouter');
 
 
 const apiConfig = {
-    storyBank: {
+    stories: {
         router: storiesRouter,
         models: {
             story: StoriesModel

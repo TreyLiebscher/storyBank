@@ -1,6 +1,7 @@
 const express = require('express');
 
-const StoriesModel = require('./models');
+const StoriesModel = require('./storyModel');
+const BlockModel = require('../blocks/blockModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const router = express.Router();
@@ -21,7 +22,26 @@ async function createStory(req, res) {
     });
 }
 
+async function createStoryInBlock(req, res) {
+    const record = await StoriesModel.create({
+        date: new Date(),
+        title: req.body.title || 'Untitled Story',
+        image: req.body.image,
+        content: req.body.content,
+        public: req.body.public
+    })
+
+    BlockModel
+        .findOne({id: req.params.id})
+        .populate('stories', record.id)
+        .exec(function (err, story) {
+            if (err) return handleError(err);
+        });
+}
+
 router.post('/story/create', tryCatch(createStory));
+
+router.post('/story/create/:id', tryCatch(createStoryInBlock));
 
 // // // // GET
 async function getStories(req, res) {
@@ -47,9 +67,9 @@ async function getStories(req, res) {
     })
 }
 
-router.get('/stories', tryCatch(getStories));
+router.get('/storiesall', tryCatch(getStories));
 
-router.get('/stories/:offset', tryCatch(getStories));
+router.get('/storiesall/:offset', tryCatch(getStories));
 
 
 // // // // PUT

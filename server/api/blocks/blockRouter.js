@@ -72,7 +72,6 @@ router.get('/blocks', tryCatch(getBlocks));
 router.get('/blocks/:offset', tryCatch(getBlocks));
 
 // // // // GET by id
-
 async function getBlock(req, res) {
     const record = await BlockModel.findById(req.params.id)
     if (record === null) {
@@ -81,7 +80,6 @@ async function getBlock(req, res) {
     res.json({ block: record.serialize() })
 }
 
-// Retrieve one
 router.get('/block/:id', tryCatch(getBlock));
 
 // // // // PUT

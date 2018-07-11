@@ -15,7 +15,7 @@ const {
     getConfig
 } = require('../../api/api');
 
-const StoriesModel = getConfig('storyBank').models.story;
+const StoriesModel = getConfig('stories').models.story;
 
 const {
     TEST_DATABASE_URL,
@@ -55,7 +55,7 @@ async function deleteCollections(namesArr) {
     return await Promise.all(filteredCollections.map(c => c.remove()));
 }
 
-describe('StoryBank API routes', function () {
+describe('storyBank API routes', function () {
 
     before(async () => {
         await runServer(TEST_DATABASE_URL, PORT);
@@ -65,7 +65,7 @@ describe('StoryBank API routes', function () {
         await closeServer();
     });
 
-    describe('POST /storyBank/story/create', () => {
+    describe('POST /stories/story/create', () => {
         it('should create a new story', async () => {
             const newStory = {
                 title: 'new story',
@@ -76,7 +76,7 @@ describe('StoryBank API routes', function () {
             };
             const res = await chai
                 .request(app)
-                .post('/storyBank/story/create')
+                .post('/stories/story/create')
                 .send(newStory)
             expect(res).to.have.status(200);
             expect(res).to.be.json;
@@ -93,12 +93,12 @@ describe('StoryBank API routes', function () {
         });
     });
 
-    describe('GET /storyBank/stories (no records)', () => {
+    describe('GET /stories/storiesall (no records)', () => {
         it('should respond with JSON', async () => {
             await deleteCollections(['storiesmodels'])
             const res = await chai
                 .request(app)
-                .get('/storyBank/stories')
+                .get('/stories/storiesall')
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
                 expect(res.body.stories).to.deep.equal([]);
@@ -107,20 +107,20 @@ describe('StoryBank API routes', function () {
         it('should fail when the offset parameter is out of bounds', async () => {
             const res = await chai
                 .request(app)
-                .get('/storyBank/stories/10')
+                .get('/stories/storiesall/10')
                 expect(res).to.be.json;
                 expect(res).to.have.status(500)
         });
     });
 
-    describe('GET /storyBank/stories (some records)', () => {
+    describe('GET /stories/storiesall (some records)', () => {
         it('should respond with JSON', async () => {
             await deleteCollections(['storiesmodels'])
 
             await Promise.all(mockData.map(item => StoriesModel.create(item)))
             const res = await chai
                 .request(app)
-                .get('/storyBank/stories')
+                .get('/stories/storiesall')
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
                 expect(res.body.stories).to.be.an('array');
@@ -132,7 +132,7 @@ describe('StoryBank API routes', function () {
         it('should account for the offset paramter', async () => {
             const res = await chai
                 .request(app)
-                .get('/storyBank/stories/2')
+                .get('/stories/storiesall/2')
                 expect(res).to.be.json;
                 expect(res).to.have.status(200);
                 expect(res.body.stories).to.be.an('array');
