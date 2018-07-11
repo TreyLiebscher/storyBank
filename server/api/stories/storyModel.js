@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const StoriesSchema = new mongoose.Schema({
     title: {
@@ -18,7 +19,11 @@ const StoriesSchema = new mongoose.Schema({
     public: {
         type: Boolean,
         required: true
-    }
+    },
+    block: [{
+        type: Schema.Types.ObjectId,
+        ref: 'blockmodel'
+    }]
 }, {
     timestamps: {
         createdAt: 'createdAt'

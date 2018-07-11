@@ -31,12 +31,18 @@ async function createStoryInBlock(req, res) {
         public: req.body.public
     })
 
-    BlockModel
-        .findOne({id: req.params.id})
-        .populate('stories', record.id)
-        .exec(function (err, story) {
-            if (err) return handleError(err);
-        });
+
+
+
+    BlockModel.findOne({id: req.params.id})
+        .populate('stories').exec((err, stories) => {
+            console.log("Populated Block " + record);
+        })
+
+
+    res.json({
+        story: record.serialize()
+    });
 }
 
 router.post('/story/create', tryCatch(createStory));

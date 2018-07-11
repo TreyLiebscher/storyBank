@@ -14,7 +14,7 @@ const BlockSchema = new mongoose.Schema({
     },
     stories: [{
         type: Schema.Types.ObjectId,
-        ref: 'StoriesModel'
+        ref: 'storiesmodel'
     }]
 
 }, {
@@ -30,7 +30,8 @@ BlockSchema.methods.serialize = function () {
         id: this._id,
         title: this.title,
         color: this.color,
-        createdAt: this.createdAt
+        createdAt: this.createdAt,
+        stories: this.stories
     };
 }
 
