@@ -20,10 +20,10 @@ const StoriesSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    block: [{
+    block: {
         type: Schema.Types.ObjectId,
         ref: 'blockmodel'
-    }]
+    }
 }, {
     timestamps: {
         createdAt: 'createdAt'
@@ -37,10 +37,13 @@ StoriesSchema.methods.serialize = function () {
         image: this.image,
         content: this.content,
         public: this.public,
-        createdAt: this.createdAt
+        createdAt: this.createdAt,
+        block: this.block
     };
 }
 
 const StoriesModel = mongoose.model('StoriesModel', StoriesSchema);
 
 module.exports = StoriesModel
+
+
