@@ -32,8 +32,6 @@ async function createStoryInBlock(req, res) {
     })
 
 
-
-
     BlockModel.findOne({id: req.params.id})
         .populate('stories').exec((err, stories) => {
             console.log("Populated Block " + record);
