@@ -45,5 +45,3 @@ StoriesSchema.methods.serialize = function () {
 const StoriesModel = mongoose.model('StoriesModel', StoriesSchema);
 
 module.exports = StoriesModel
-
-

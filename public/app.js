@@ -1,57 +1,48 @@
-var MOCK_STORIES = {
-    "postedStories": [{
-            "id": "1111111",
-            "title": "first story",
-            "content": "this is the first story that was written",
-            "image": "image",
-            "public": true,
-            "publishedAt": 1470016976606
-        },
-        {
-            "id": "2222222",
-            "title": "second story",
-            "content": "this is the second story that was written",
-            "image": "image",
-            "public": false,
-            "publishedAt": 1470016976607
-        },
-        {
-            "id": "3333333",
-            "title": "third story",
-            "content": "this is the third story that was written",
-            "image": "image",
-            "public": true,
-            "publishedAt": 1470016976608
-        },
-        {
-            "id": "4444444",
-            "title": "fourth story",
-            "content": "this is the fourth story that was written",
-            "image": "image",
-            "public": false,
-            "publishedAt": 1470016976609
-        }
-    ]
-};
+'use strict';
 
-function getStories(callbackFn) {
-    setTimeout(function () {
-        callbackFn(MOCK_STORIES)
-    }, 1);
+// http://treys-imac.local:8080/
+
+function getBlocks(id, callback) {
+    const requestURI = `http://treys-imac.local:8080/storyblock/block/${id}`;
+    $.getJSON(requestURI, callback);
 }
 
-function displayPostedStories(data) {
-    for (index in data.postedStories) {
-        $('body').append(
-            '<p>' + data.postedStories[index].title + '</p>',
-            '<p>' + data.postedStories[index].content + '</p>');
-    }
+function displayBlock(data) {
+    const results = `
+    <div class="storyBlock" style="background-color:${data.color}">
+        <h3>${data.title}</h3>        
+    </div>`;
+    $('.js-block-result').html(results);
 }
 
-function getAndDisplayPostedStories() {
-    getStories(displayPostedStories);
+function watchBlockSearchSubmit() {
+    $('.js-block-search-form').on('submit', function (event) {
+        event.preventDefault();
+        const id = $('.js-query-id').val();
+        getBlocks(id, displayBlock);
+    });
 }
 
-$(function () {
-    getAndDisplayPostedStories();
-})
+function renderBlock(title, color) {
+    return `
+    <div class="storyBlock" style="background-color:${color}">
+        <h3>${title}</h3>        
+    </div>`
+}
+
+function handleBlockSubmit() {
+    $('#createBlock').on('submit', function (event) {
+        event.preventDefault();
+        const title = $('#title').val();
+        const color = $('#color').val();
+        const block = renderBlock(title, color);
+        $('.blockHolder').append(block);
+    });
+}
+
+function storyBank() {
+    $(watchBlockSearchSubmit);
+    $(handleBlockSubmit);
+}
+
+$(storyBank);

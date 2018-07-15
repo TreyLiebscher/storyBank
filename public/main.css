@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+.blockHolder {
+    margin: auto;
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.storyBlock {
+    font-size: 12px;
+    width: 10vw;
+    margin: 1%;
+    border: 1px solid black;
+}
