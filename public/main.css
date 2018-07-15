@@ -15,3 +15,11 @@
     margin: 1%;
     border: 1px solid black;
 }
+
+.js-signup-form {
+    z-index: 1;
+    width: 40vw;
+    height: 30vh;
+    margin: auto;
+    border: 1px solid black;
+}
