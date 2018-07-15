@@ -17,6 +17,8 @@ setupRoutes(app);
 
 app.use('*', function (req, res) {
     res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 });
 
 let server;
