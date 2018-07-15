@@ -4,7 +4,7 @@ const storiesRouter = require('./stories/storiesRouter');
 const BlockModel = require('./blocks/blockModel');
 const blockRouter = require('./blocks/blockRouter');
 
-const UserModel = require('./users/UserModel');
+const UserModel = require('./users/userModel');
 const usersRouter = require('./users/usersRouter');
 
 
