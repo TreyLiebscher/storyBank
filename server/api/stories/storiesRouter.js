@@ -15,7 +15,7 @@ async function createStory(req, res) {
         title: req.body.title || 'Untitled Story',
         image: req.body.image,
         content: req.body.content,
-        public: req.body.public
+        publicStatus: req.body.publicStatus
     })
     res.json({
         story: record.serialize()
@@ -36,7 +36,7 @@ async function createStoryInBlock(req, res) {
         title: req.body.title || 'Untitled Story',
         image: req.body.image,
         content: req.body.content,
-        public: req.body.public,
+        publicStatus: req.body.publicStatus,
         block: blockRecord._id
     })
 
@@ -93,7 +93,7 @@ async function updateStory(req, res) {
     }
 
     const toUpdate = {};
-    const updateableFields = ['title', 'image', 'content', 'public'];
+    const updateableFields = ['title', 'image', 'content', 'publicStatus'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {

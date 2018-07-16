@@ -16,7 +16,7 @@ const StoriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    public: {
+    publicStatus: {
         type: Boolean,
         required: true
     },
@@ -36,7 +36,7 @@ StoriesSchema.methods.serialize = function () {
         title: this.title,
         image: this.image,
         content: this.content,
-        public: this.public,
+        publicStatus: this.publicStatus,
         createdAt: this.createdAt,
         block: this.block
     };

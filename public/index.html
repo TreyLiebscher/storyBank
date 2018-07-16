@@ -46,12 +46,35 @@
 
 	<button class="js-all-block-display" type="button">Display All Blocks</button>
 
-	<div></div>
+	<div class="storyCreateInterface">
+		<h3>Add a story to BLOCKTITLE</h3>
+		<form id="createStory" type="submit" action="http://treys-imac.local:8080/stories/story/create/BLOCKIDHERE" method="POST">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input id="title" class="mdl-textfield__input" name="title">
+				<label class="mdl-textfield__label" for="title">Title</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input id="image" class="mdl-textfield__input" name="image">
+				<label class="mdl-textfield__label" for="image">Image</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield">
+				<textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
+				<label class="mdl-textfield__label" for="content">Write your story</label>
+			</div>
+			<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+				<input type="checkbox" id="switch-2" class="mdl-switch__input">
+				<span class="mdl-switch__label">publicStatus?</span>
+			</label>
+			<button type="submit">Add to block</button>
+		</form>
+	</div>
+
 	
+
 	<div class="js-block-result"></div>
 
 	<script type="text/javascript" src="app.js"></script>
-	
+
 </body>
 
 
