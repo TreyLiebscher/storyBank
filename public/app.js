@@ -7,13 +7,12 @@ function getBlocks(id, callback) {
     $.getJSON(requestURI, callback);
 }
 
-function displayBlock(data) {
-    const results = `
-    <div class="storyBlock" style="background-color:${data.block.color}">
-        <h3>${data.block.title}</h3>        
-    </div>`;
-    $('.js-block-result').html(results);
+function getAllBlocks(callback) {
+    const requestURI = `http://treys-imac.local:8080/storyblock/blocks`;
+    return $.getJSON(requestURI, callback)
 }
+
+
 
 function watchBlockSearchSubmit() {
     $('.js-block-search-form').on('submit', function (event) {
@@ -23,13 +22,17 @@ function watchBlockSearchSubmit() {
     });
 }
 
-function renderBlock(data) {
+function renderBlock(result) {
     return `
-    <div class="storyBlock" id="${data.block.id}" style="background-color:${data.block.color}">
-        <h3>${data.block.title}</h3>        
+    <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
+        <h3>${result.title}</h3>        
     </div>`
 }
 
+function displayBlock(arr) {
+    const results = arr.blocks.map((item) => renderBlock(item));
+    $('.js-block-result').html(results);
+}
 
 function renderSignUpForm() {
     return `<form class="js-signUp-form" type="submit">
@@ -95,9 +98,24 @@ function createBlock(){
         const posting = $.post(url, {title: title, color: color});
 
         posting.done(function(data) {
-            const content = renderBlock(data);
-            $('.js-block-result').empty().append(content);
+            const content = renderBlock(data.block);
+            $('.js-block-result').append(content);
         });
+    });
+}
+
+function handleGetAllBlocks(){
+    $('.js-all-block-display').on('click', function(event) {
+        event.preventDefault();
+        const blockPromise = getAllBlocks();
+        
+        blockPromise.catch(err => {
+            console.error('Error', err);
+        })
+
+        blockPromise.then(blockResponse => {
+            return displayBlock(blockResponse);
+        })
     });
 }
 
@@ -107,6 +125,7 @@ function storyBank() {
     $(watchBlockSearchSubmit);
     // $(handleBlockSubmit);
     $(createBlock);
+    $(handleGetAllBlocks);
     $(handleSignUpClick);
     $(handleLogInClick);
 }
