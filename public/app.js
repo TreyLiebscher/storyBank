@@ -145,7 +145,7 @@ function renderCreateStoryInterface(title, id){
             <label class="mdl-textfield__label" for="content">Write your story</label>
         </div>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
-            <input type="checkbox" id="switch-2" class="mdl-switch__input">
+            <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus" value="true">
             <span class="mdl-switch__label">publicStatus?</span>
         </label>
         <button type="submit">Add to block</button>
@@ -160,7 +160,7 @@ function viewCreateStoryInterface() {
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId);//for testing needs removal
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
-        $('.js-block-result').html(createStoryInterface);
+        $('.storyCreateInterface').html(createStoryInterface);
         componentHandler.upgradeDom();
     });
 }
@@ -175,27 +175,25 @@ function renderStory(result) {
 
 function createNewStory(){
     $('#createStory').submit(function (event) {
-        event.preventDefault();
-
-        const status = $('#switch-2').is(":checked");
+        // event.preventDefault();
 
         const $form = $(this),
             title = $form.find('input[name="title"]').val(),
             image = $form.find('input[name="image"]').val(),
             content = $form.find('textarea[name="content"]').val(),
-            publicStatus = status,
+            publicStatus = $form.find("#switch-2").is(":checked"),
             url = $form.attr('action');
 
         const posting = $.post(url, {
             title: title,
             image: image,
             content: content,
-            publicStatus: status
+            publicStatus: publicStatus
         });
 
         posting.done(function(data) {
             const content = renderStory(data.story);
-            $('.js-block-result').html(content);
+            $('.js-story-result').append(content);
         });
     });
 }
