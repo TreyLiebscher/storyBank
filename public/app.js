@@ -9,8 +9,8 @@ function getBlocks(id, callback) {
 
 function displayBlock(data) {
     const results = `
-    <div class="storyBlock" style="background-color:${data.color}">
-        <h3>${data.title}</h3>        
+    <div class="storyBlock" style="background-color:${data.block.color}">
+        <h3>${data.block.title}</h3>        
     </div>`;
     $('.js-block-result').html(results);
 }
@@ -23,22 +23,13 @@ function watchBlockSearchSubmit() {
     });
 }
 
-function renderBlock(title, color) {
+function renderBlock(data) {
     return `
-    <div class="storyBlock" style="background-color:${color}">
-        <h3>${title}</h3>        
+    <div class="storyBlock" id="${data.block.id}" style="background-color:${data.block.color}">
+        <h3>${data.block.title}</h3>        
     </div>`
 }
 
-function handleBlockSubmit() {
-    $('#createBlock').on('submit', function (event) {
-        event.preventDefault();
-        const title = $('#title').val();
-        const color = $('#color').val();
-        const block = renderBlock(title, color);
-        $('.blockHolder').append(block);
-    });
-}
 
 function renderSignUpForm() {
     return `<form class="js-signUp-form" type="submit">
@@ -55,7 +46,16 @@ function renderSignUpForm() {
 		<label class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 	</div>
 	<button type="submit">Create Account</button>
-</form>`
+    </form>`
+}
+
+function handleSignUpClick() {
+    $('#signUp').on('click', function (event) {
+        event.preventDefault();
+        const signUp = renderSignUpForm();
+        $('#formsHolder').html(signUp);
+        componentHandler.upgradeDom();
+    });
 }
 
 function renderLogInForm() {
@@ -69,17 +69,8 @@ function renderLogInForm() {
 		<label class="mdl-textfield__label" for="password">Password</label>
 	</div>
 	<button type="submit">Log In</button>
-</form>
+    </form>
     `
-}
-
-function handleSignUpClick() {
-    $('#signUp').on('click', function (event) {
-        event.preventDefault();
-        const signUp = renderSignUpForm();
-        $('#formsHolder').html(signUp);
-        componentHandler.upgradeDom();
-    });
 }
 
 function handleLogInClick() {
@@ -91,11 +82,31 @@ function handleLogInClick() {
     });
 }
 
+//POST - StoryBlock
+function createBlock(){
+    $('#createBlock').submit(function (event) {
+        event.preventDefault();
+
+        const $form = $(this),
+            title = $form.find('input[name="title"]').val(),
+            color = $form.find('input[name="color"]').val(),
+            url = $form.attr('action');
+
+        const posting = $.post(url, {title: title, color: color});
+
+        posting.done(function(data) {
+            const content = renderBlock(data);
+            $('.js-block-result').empty().append(content);
+        });
+    });
+}
+
 
 
 function storyBank() {
     $(watchBlockSearchSubmit);
-    $(handleBlockSubmit);
+    // $(handleBlockSubmit);
+    $(createBlock);
     $(handleSignUpClick);
     $(handleLogInClick);
 }
