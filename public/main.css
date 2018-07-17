@@ -16,6 +16,10 @@
     border: 1px solid black;
 }
 
+.blockId {
+    display: none;
+}
+
 .js-signup-form {
     z-index: 1;
     width: 40vw;

@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
-const cors = require('cors');
+// const cors = require('cors');
 const path = require('path');
 
 const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
@@ -14,7 +14,7 @@ const { setupRoutes } = require('./api/api.js');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+// app.use(cors());
 
 setupRoutes(app);
 

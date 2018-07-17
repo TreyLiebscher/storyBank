@@ -1,26 +1,9 @@
 'use strict';
 
 
-// http://localhost:8080/
-
-function getBlocks(id, callback) {
-    const requestURI = `http://localhost:8080/storyblock/block/${id}`;
-    $.getJSON(requestURI, callback);
-}
-
 function getAllBlocks(callback) {
-    const requestURI = `http://localhost:8080/storyblock/blocks`;
+    const requestURI = `${HEROKU_URL}${API_URLS.getBlocks}`
     return $.getJSON(requestURI, callback)
-}
-
-
-
-function watchBlockSearchSubmit() {
-    $('.js-block-search-form').on('submit', function (event) {
-        event.preventDefault();
-        const id = $('.js-query-id').val();
-        getBlocks(id, displayBlock);
-    });
 }
 
 function renderBlock(result) {
@@ -38,58 +21,6 @@ function displayBlock(arr) {
     const results = arr.blocks.map((item) => renderBlock(item));
     $('.js-block-result').html(results);
 }
-
-function renderSignUpForm() {
-    return `<form class="js-signUp-form" type="submit">
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="userName" class="mdl-textfield__input">
-		<label class="mdl-textfield__label" for="userName">Username</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="password" class="mdl-textfield__input" type="password">
-		<label class="mdl-textfield__label" for="password">Password</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="passwordConfirm" class="mdl-textfield__input" type="password">
-		<label class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
-	</div>
-	<button type="submit">Create Account</button>
-    </form>`
-}
-
-function handleSignUpClick() {
-    $('#signUp').on('click', function (event) {
-        event.preventDefault();
-        const signUp = renderSignUpForm();
-        $('#formsHolder').html(signUp);
-        componentHandler.upgradeDom();
-    });
-}
-
-function renderLogInForm() {
-    return `<form class="js-logIn-form" type="submit">
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="userName" class="mdl-textfield__input">
-		<label class="mdl-textfield__label" for="userName">Username</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="password" class="mdl-textfield__input" type="password">
-		<label class="mdl-textfield__label" for="password">Password</label>
-	</div>
-	<button type="submit">Log In</button>
-    </form>
-    `
-}
-
-function handleLogInClick() {
-    $('#logIn').on('click', function (event) {
-        event.preventDefault();
-        const logIn = renderLogInForm();
-        $('#formsHolder').html(logIn);
-        componentHandler.upgradeDom();
-    });
-}
-
 
 function handleCreateBlockSubmit() {
 
@@ -125,15 +56,12 @@ function handleGetAllBlocks() {
     });
 }
 
-
-
-
 function renderCreateStoryInterface(title, id) {
 
     const createURL = API_URLS.createStory
 
     return `		<h3>Add a story to ${title}</h3>
-    <form id="createStory" action="${createURL}/${id}" method="POST">
+    <form id="createStory" action="${HEROKU_URL}${createURL}/${id}" method="POST">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
@@ -225,12 +153,8 @@ function handleFormsSubmit() {
 
 
 function storyBank() {
-    $(watchBlockSearchSubmit);
-    // $(handleBlockSubmit);
     $(createBlock);
     $(handleGetAllBlocks);
-    $(handleSignUpClick);
-    $(handleLogInClick);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
 }
