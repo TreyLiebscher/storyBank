@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
 const cors = require('cors');
+const path = require('path');
 
 const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
 const { setupRoutes } = require('./api/api.js');
@@ -17,9 +18,12 @@ app.use(cors());
 
 setupRoutes(app);
 
+app.use('/app', express.static(path.join(__dirname, '../public')))
+
 app.use('*', function (req, res) {
     res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
 });
+
 
 let server;
 
