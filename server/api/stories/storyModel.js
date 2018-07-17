@@ -16,14 +16,14 @@ const StoriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    public: {
+    publicStatus: {
         type: Boolean,
         required: true
     },
-    block: [{
+    block: {
         type: Schema.Types.ObjectId,
         ref: 'blockmodel'
-    }]
+    }
 }, {
     timestamps: {
         createdAt: 'createdAt'
@@ -36,8 +36,9 @@ StoriesSchema.methods.serialize = function () {
         title: this.title,
         image: this.image,
         content: this.content,
-        public: this.public,
-        createdAt: this.createdAt
+        publicStatus: this.publicStatus,
+        createdAt: this.createdAt,
+        block: this.block
     };
 }
 

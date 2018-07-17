@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+.blockHolder {
+    margin: auto;
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.storyBlock {
+    font-size: 12px;
+    width: 10vw;
+    margin: 1%;
+    border: 1px solid black;
+}
+
+.js-signup-form {
+    z-index: 1;
+    width: 40vw;
+    height: 30vh;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.storyCreateInterface {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    margin: auto;
+    border: 1px solid black;
+}

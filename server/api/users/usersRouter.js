@@ -1,6 +1,6 @@
 const express = require('express');
 
-const UserModel = require('./UserModel');
+const UserModel = require('./userModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const router = express.Router();

@@ -31,19 +31,19 @@ const mockData = [{
         title: 'Story1',
         image: 'Image1',
         content: 'Content1',
-        public: true
+        publicStatus: true
     },
     {
         title: 'Story2',
         image: 'Image2',
         content: 'Content2',
-        public: false
+        publicStatus: false
     },
     {
         title: 'Story3',
         image: 'Image3',
         content: 'Content3',
-        public: true
+        publicStatus: true
     },
 ]
 
@@ -71,7 +71,7 @@ describe('storyBank API routes', function () {
                 title: 'new story',
                 content: 'just some new stuff',
                 image: 'upload img',
-                public: true,
+                publicStatus: true,
                 storyBlock: '1234'
             };
             const res = await chai

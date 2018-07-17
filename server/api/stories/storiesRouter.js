@@ -15,7 +15,7 @@ async function createStory(req, res) {
         title: req.body.title || 'Untitled Story',
         image: req.body.image,
         content: req.body.content,
-        public: req.body.public
+        publicStatus: req.body.publicStatus
     })
     res.json({
         story: record.serialize()
@@ -23,22 +23,22 @@ async function createStory(req, res) {
 }
 
 async function createStoryInBlock(req, res) {
+    
+    const blockRecord = await BlockModel.findOne({_id: req.params.id});
+
+    //this validates block _id
+    if(blockRecord === null) {
+        throw new Error('Block does not exist');
+    }
+    
     const record = await StoriesModel.create({
         date: new Date(),
         title: req.body.title || 'Untitled Story',
         image: req.body.image,
         content: req.body.content,
-        public: req.body.public
+        publicStatus: req.body.publicStatus,
+        block: blockRecord._id
     })
-
-
-
-
-    BlockModel.findOne({id: req.params.id})
-        .populate('stories').exec((err, stories) => {
-            console.log("Populated Block " + record);
-        })
-
 
     res.json({
         story: record.serialize()
@@ -93,7 +93,7 @@ async function updateStory(req, res) {
     }
 
     const toUpdate = {};
-    const updateableFields = ['title', 'image', 'content', 'public'];
+    const updateableFields = ['title', 'image', 'content', 'publicStatus'];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
