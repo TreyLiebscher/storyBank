@@ -1,14 +1,21 @@
 'use strict';
 
-// http://treys-imac.local:8080/
+const BASE_URL = '/'
+const API_URLS = {
+    createBlock: '/storyblock/block/create',
+    createStory: '/stories/story/create' //NOTE: need to append  block id
+}
+
+
+// http://localhost:8080/
 
 function getBlocks(id, callback) {
-    const requestURI = `http://treys-imac.local:8080/storyblock/block/${id}`;
+    const requestURI = `http://localhost:8080/storyblock/block/${id}`;
     $.getJSON(requestURI, callback);
 }
 
 function getAllBlocks(callback) {
-    const requestURI = `http://treys-imac.local:8080/storyblock/blocks`;
+    const requestURI = `http://localhost:8080/storyblock/blocks`;
     return $.getJSON(requestURI, callback)
 }
 
@@ -89,26 +96,24 @@ function handleLogInClick() {
     });
 }
 
-//POST - StoryBlock
-function createBlock() {
-    $('#createBlock').submit(function (event) {
-        event.preventDefault();
 
-        const $form = $(this),
-            title = $form.find('input[name="title"]').val(),
-            color = $form.find('input[name="color"]').val(),
-            url = $form.attr('action');
+function handleCreateBlockSubmit() {
 
-        const posting = $.post(url, {
-            title: title,
-            color: color
-        });
+    const $form = $('#createBlock'),
+        title = $form.find('input[name="title"]').val(),
+        color = $form.find('input[name="color"]').val(),
+        url = $form.attr('action');
 
-        posting.done(function (data) {
-            const content = renderBlock(data.block);
-            $('.js-block-result').append(content);
-        });
+    const posting = $.post(url, {
+        title: title,
+        color: color
     });
+
+    posting.done(function (data) {
+        const content = renderBlock(data.block);
+        $('.js-block-result').append(content);
+    });
+
 }
 
 function handleGetAllBlocks() {
@@ -129,9 +134,12 @@ function handleGetAllBlocks() {
 
 
 
-function renderCreateStoryInterface(title, id){
+function renderCreateStoryInterface(title, id) {
+
+    const createURL = API_URLS.createStory
+
     return `		<h3>Add a story to ${title}</h3>
-    <form id="createStory" type="submit" action="http://treys-imac.local:8080/stories/story/create/${id}" method="POST">
+    <form id="createStory" action="${createURL}/${id}" method="POST">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
@@ -145,7 +153,7 @@ function renderCreateStoryInterface(title, id){
             <label class="mdl-textfield__label" for="content">Write your story</label>
         </div>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
-            <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus" value="true">
+            <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
             <span class="mdl-switch__label">publicStatus?</span>
         </label>
         <button type="submit">Add to block</button>
@@ -153,7 +161,7 @@ function renderCreateStoryInterface(title, id){
 }
 
 function viewCreateStoryInterface() {
-    $('.js-block-result').on('click', 'button.addStory', function(event) {
+    $('.js-block-result').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
         console.log(blockTitle);//for testing needs removal
@@ -173,28 +181,50 @@ function renderStory(result) {
     `
 }
 
-function createNewStory(){
-    $('#createStory').submit(function (event) {
-        // event.preventDefault();
 
-        const $form = $(this),
-            title = $form.find('input[name="title"]').val(),
-            image = $form.find('input[name="image"]').val(),
-            content = $form.find('textarea[name="content"]').val(),
-            publicStatus = $form.find("#switch-2").is(":checked"),
-            url = $form.attr('action');
+function handleCreateStory() {
+    const $form = $('#createStory'),
+        title = $form.find('input[name="title"]').val(),
+        image = $form.find('input[name="image"]').val(),
+        content = $form.find('textarea[name="content"]').val();
 
-        const posting = $.post(url, {
-            title: title,
-            image: image,
-            content: content,
-            publicStatus: publicStatus
-        });
+    const ckBox = $form.find("#switch-2")
+    const publicStatus = ckBox.is(':checked')
+    const url = $form.attr('action');
 
-        posting.done(function(data) {
-            const content = renderStory(data.story);
-            $('.js-story-result').append(content);
-        });
+    const formData = {
+        title: title,
+        image: image,
+        content: content,
+        publicStatus: publicStatus
+    }
+
+    const posting = $.post(url, formData);
+
+    posting.done(function (data) {
+        const content = renderStory(data.story);
+        $('.js-story-result').append(content);
+    });
+}
+
+function handleFormsSubmit() {
+
+    $('body').submit(function (event) {
+        event.preventDefault();
+
+        const formID = $(event.target).attr('id')
+        console.log('Submitted form id is:', formID)
+
+        if (formID === 'createBlock') {
+            //create block logic here
+            handleCreateBlockSubmit()
+        }
+
+        if (formID === 'createStory') {
+            //create story logic here
+            handleCreateStory()
+        }
+
     });
 }
 
@@ -208,7 +238,7 @@ function storyBank() {
     $(handleSignUpClick);
     $(handleLogInClick);
     $(viewCreateStoryInterface);
-    $(createNewStory);
+    $(handleFormsSubmit);
 }
 
 $(storyBank);
