@@ -19,33 +19,35 @@
 	</header>
 	<div id="formsHolder"></div>
 	<h1>StoryBank</h1>
+	<main>
+		<div class="storyBlockCreateHolder">
+			<h2>Create a new Story Block</h2>
+			<form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input id="title" class="mdl-textfield__input" name="title">
+					<label class="mdl-textfield__label" for="title">Title</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input id="color" class="mdl-textfield__input" name="color">
+					<label class="mdl-textfield__label" for="color">Choose a color</label>
+				</div>
+				<button type="submit" id="js-blockCreateButton">Create!</button>
+			</form>
+		</div>
 
-	<div class="storyBlockCreateHolder">
-		<h2>Create a new Story Block</h2>
-		<form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input id="title" class="mdl-textfield__input" name="title">
-				<label class="mdl-textfield__label" for="title">Title</label>
-			</div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input id="color" class="mdl-textfield__input" name="color">
-				<label class="mdl-textfield__label" for="color">Choose a color</label>
-			</div>
-			<button type="submit" id="js-blockCreateButton">Create!</button>
-		</form>
-	</div>
 
 
-	<button class="js-all-block-display" type="button">Display All Blocks</button>
 
-	<div class="storyCreateInterface">
-	</div>
+		<button class="js-all-block-display" type="button">Display All Blocks</button>
 
-	
+		<div class="storyCreateInterface">
+		</div>
 
-	<div class="js-block-result"></div>
-	<div class="js-story-result"></div>
 
+
+		<div class="js-block-result"></div>
+		<div class="js-story-result"></div>
+	</main>
 	<script type="text/javascript" src="globals.js"></script>
 	<script type="text/javascript" src="signup-login.js"></script>
 	<script type="text/javascript" src="app.js"></script>

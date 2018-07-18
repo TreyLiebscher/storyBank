@@ -2,7 +2,8 @@
 
 
 function getAllBlocks(callback) {
-    const requestURI = `${HEROKU_URL}${API_URLS.getBlocks}`
+    const requestURI = `${HEROKU_URL}${BASE_URL}${API_URLS.getBlocks}`
+    // const requestURI = `${BASE_URL}${API_URLS.getBlocks}`;
     return $.getJSON(requestURI, callback)
 }
 
@@ -149,6 +150,8 @@ function handleFormsSubmit() {
 
     });
 }
+
+
 
 
 
