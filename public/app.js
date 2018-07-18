@@ -2,8 +2,8 @@
 
 
 function getAllBlocks(callback) {
-    const requestURI = `${HEROKU_URL}${BASE_URL}${API_URLS.getBlocks}`
-    // const requestURI = `${BASE_URL}${API_URLS.getBlocks}`;
+    const requestURI = `${API_URLS.getBlocks}`
+    // const requestURI = `${API_URLS.getBlocks}`;
     return $.getJSON(requestURI, callback)
 }
 
@@ -62,7 +62,7 @@ function renderCreateStoryInterface(title, id) {
     const createURL = API_URLS.createStory
 
     return `		<h3>Add a story to ${title}</h3>
-    <form id="createStory" action="${HEROKU_URL}${createURL}/${id}" method="POST">
+    <form id="createStory" action="${createURL}/${id}" method="POST">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
