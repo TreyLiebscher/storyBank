@@ -1,6 +1,7 @@
 const express = require('express');
 
 const BlockModel = require('./blockModel');
+const StoriesModel = require('../stories/storyModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const router = express.Router();
@@ -81,6 +82,21 @@ async function getBlock(req, res) {
 }
 
 router.get('/block/:id', tryCatch(getBlock));
+
+async function getBlockWithStories(req, res) {
+    const record = await BlockModel.findById(req.params.id);
+    if (record === null) {
+        return res.status(404).json({message: 'NOT_FOUND'})
+    }
+
+    const storyRecord = await StoriesModel.find({block: req.params.id});
+    if (record === null) {
+        return res.status(404).json({message: 'No stories in this block'})
+    }
+    res.json({block: record.serialize(), stories: storyRecord});
+}
+
+router.get('/blocks/stories/:id', tryCatch(getBlockWithStories));
 
 // // // // PUT
 async function updateBlock(req, res) {

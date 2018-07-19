@@ -3,7 +3,6 @@
 
 function getAllBlocks(callback) {
     const requestURI = `${API_URLS.getBlocks}`
-    // const requestURI = `${API_URLS.getBlocks}`;
     return $.getJSON(requestURI, callback)
 }
 
@@ -56,6 +55,10 @@ function handleGetAllBlocks() {
         })
     });
 }
+
+// function renderInsideBlockView(){
+//     return 
+// }
 
 function renderCreateStoryInterface(title, id) {
 
@@ -150,6 +153,7 @@ function handleFormsSubmit() {
 
     });
 }
+
 
 
 
