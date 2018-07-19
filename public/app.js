@@ -6,6 +6,11 @@ function getAllBlocks(callback) {
     return $.getJSON(requestURI, callback)
 }
 
+function getBlocksWithStories(blockId, callback) {
+    const requestURI = `${API_URLS.getBlocksWithStories}/${blockId}`;
+    return $.getJSON(requestURI, callback);
+}
+
 function renderBlock(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
@@ -13,7 +18,8 @@ function renderBlock(result) {
         <p class="blockId">${result.id}</p>
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
 		<i class="material-icons">add</i>
-	</button>
+    </button>
+    <button type="button" class="storyBlock-View">View Stories</button>
     </div>`
 }
 
@@ -56,9 +62,39 @@ function handleGetAllBlocks() {
     });
 }
 
-// function renderInsideBlockView(){
-//     return 
-// }
+function renderInsideBlockView() {
+    return `
+    <h2>${block.title}</h2>
+    <h3>${result.title}</h3>
+    <img src="${result.image}">
+    <p>${result.content}</p>
+    <p>Public? ${result.publicStatus}</p>
+    `
+}
+
+function displayBlockWithStories(arr) {
+    // const block = arr.blocks;
+    const results = arr.stories.map((item) => renderInsideBlockView(item));
+    $('.js-block-result').html(results);
+}
+
+function handleGetAllBlocksWithStories() {
+    $('.js-block-result').on('click', 'button.storyBlock-View', function (event) {
+        event.preventDefault();
+        const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
+        console.log(blockId);
+        const resultPromise = getBlocksWithStories(blockId);
+
+        resultPromise.catch(err => {
+            console.error('Error', err);
+        })
+
+        resultPromise.then(resultResponse => {
+            return displayBlockWithStories(resultResponse);
+        })
+
+    })
+}
 
 function renderCreateStoryInterface(title, id) {
 
@@ -90,9 +126,9 @@ function viewCreateStoryInterface() {
     $('.js-block-result').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
-        console.log(blockTitle);//for testing needs removal
+        console.log(blockTitle); //for testing needs removal
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
-        console.log(blockId);//for testing needs removal
+        console.log(blockId); //for testing needs removal
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
         $('.storyCreateInterface').html(createStoryInterface);
         componentHandler.upgradeDom();
@@ -162,6 +198,7 @@ function handleFormsSubmit() {
 function storyBank() {
     $(createBlock);
     $(handleGetAllBlocks);
+    $(handleGetAllBlocksWithStories);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
 }
