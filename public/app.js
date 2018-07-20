@@ -10,9 +10,11 @@ function getBlocksWithStories(blockId, callback) {
     return $.getJSON(requestURI, callback);
 }
 
+// style="background-color:${result.color}">
+
 function renderBlock(result) {
     return `
-    <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
+    <div class="storyBlock" id="${result.id}" style="${result.color}">
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
     </div>`
@@ -21,6 +23,7 @@ function renderBlock(result) {
 function displayBlock(arr) {
     const results = arr.blocks.map((item) => renderBlock(item));
     $('.js-block-result').html(results);
+    componentHandler.upgradeDom();
 }
 
 function renderCreateBlockInterface() {
@@ -31,10 +34,7 @@ function renderCreateBlockInterface() {
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="color" class="mdl-textfield__input" name="color">
-            <label class="mdl-textfield__label" for="color">Choose a color</label>
-        </div>
+        <input id="myColorPickerPopover" class="form-control" type="text" value="Click to select a color" name="selectedColor">
         <button type="submit" id="js-blockCreateButton">Create!</button>
     </form>
     `
@@ -49,11 +49,14 @@ function viewCreateBlockInterface() {
     });
 }
 
+/* <input id="myColorPickerPopover" class="form-control" type="text" value="Click to select a color" style="background-color: rgb(106, 168, 79);"> */
+
 function handleCreateBlockSubmit() {
 
     const $form = $('#createBlock'),
         title = $form.find('input[name="title"]').val(),
-        color = $form.find('input[name="color"]').val(),
+        // color = $form.find('input[name="color"]').val(),
+        color = $form.find('input[name="selectedColor"]').attr('style'),
         url = $form.attr('action');
 
     const posting = $.post(url, {
@@ -63,6 +66,7 @@ function handleCreateBlockSubmit() {
 
     posting.done(function (data) {
         const content = renderBlock(data.block);
+        $('.storyBlockCreateHolder').empty();
         $('.js-block-result').append(content);
     });
 
@@ -121,7 +125,7 @@ function handleGetAllBlocksWithStories() {
 
 function renderInsideBlockViewTitle(result) {
     return `
-    <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
+    <div class="storyBlock" id="${result.id}" style="${result.color}">
     <p class="blockTitle">${result.title}</p>
     <p class="blockId">${result.id}</p>
     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
@@ -224,6 +228,70 @@ function handleFormsSubmit() {
 
     });
 }
+//Planned layout of inside block view
+function renderPrettyInsideView(result){
+    return `
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+				<header class="mdl-layout__header">
+				  <div class="mdl-layout__header-row">
+					<!-- Title -->
+					<span class="mdl-layout-title">${result.title}</span>
+					<!-- Add spacer, to align navigation to the right -->
+					<div class="mdl-layout-spacer"></div>
+					<!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <p class="blockId">${result.id}</p>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
+                    <i class="material-icons">add</i>
+                    </button>
+					</nav>
+				  </div>
+				</header>
+				<div class="mdl-layout__drawer">
+				  <span class="mdl-layout-title">Title</span>
+				  <nav class="mdl-navigation">
+					<p>story 1</p>
+				  </nav>
+				</div>
+				<main class="mdl-layout__content">
+                  <div class="page-content">
+                  <div class="storyCreateInterface"></div>
+                  <div class="storyBlockView"></div>
+                  </div>
+				</main>
+			  </div>`
+}
+
+function viewPrettyCreateStoryInterface(){
+    $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
+        event.preventDefault();
+        const blockTitle = $(event.target).closest('.mdl-layout__header-row').find('.mdl-layout-title').text();
+        console.log(blockTitle); //for testing needs removal
+        const blockId = $(event.target).closest('.mdl-layout__header-row').find('.blockId').text();
+        console.log(blockId); //for testing needs removal
+        const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
+        $('.storyCreateInterface').html(createStoryInterface);
+        componentHandler.upgradeDom();
+    });
+}
+
+YUI().use(
+    'aui-color-picker-popover',
+    function(Y) {
+      var colorPicker = new Y.ColorPickerPopover(
+        {
+          trigger: '#myColorPickerPopover',
+          zIndex: 2
+        }
+      ).render();
+  
+      colorPicker.on('select',
+        function(event) {
+          event.trigger.setStyle('backgroundColor', event.color);
+        }
+      );
+    }
+);
 
 
 function storyBank() {
@@ -232,6 +300,7 @@ function storyBank() {
     $(viewCreateBlockInterface);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
+    // $(viewPrettyCreateStoryInterface);
 }
 
 $(storyBank);
