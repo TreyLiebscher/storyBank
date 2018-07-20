@@ -27,6 +27,11 @@
     width: 90vw;
 }
 
+.storyImage {
+    max-width: 75vw;
+    max-height: 50vh;
+}
+
 .blockId {
     display: none;
 }

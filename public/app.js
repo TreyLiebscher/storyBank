@@ -87,7 +87,7 @@ function handleGetAllBlocks() {
 function renderInsideBlockView(result) {
     return `
     <h3>${result.title}</h3>
-    <img src="${result.image}">
+    <img class="storyImage" src="${result.image}">
     <p>${result.content}</p>
     <p>Public? ${result.publicStatus}</p>
     `
@@ -174,7 +174,7 @@ function viewCreateStoryInterface() {
 function renderStory(result) {
     return `
         <h3>${result.title}</h3>
-        <img src="${result.image}">
+        <img class="storyImage" src="${result.image}">
         <p>${result.content}</p>
     `
 }
