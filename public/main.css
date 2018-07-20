@@ -11,9 +11,14 @@
 
 .storyBlock {
     font-size: 12px;
-    width: 10vw;
+    width: 30vw;
     margin: 1%;
     border: 1px solid black;
+}
+
+.storyBlock:hover {
+    cursor: pointer;
+    filter: brightness(120%);
 }
 
 .blockId {

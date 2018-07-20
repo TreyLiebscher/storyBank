@@ -1,6 +1,5 @@
 'use strict';
 
-
 function getAllBlocks(callback) {
     const requestURI = `${API_URLS.getBlocks}`
     return $.getJSON(requestURI, callback)
@@ -26,6 +25,32 @@ function renderBlock(result) {
 function displayBlock(arr) {
     const results = arr.blocks.map((item) => renderBlock(item));
     $('.js-block-result').html(results);
+}
+
+function renderCreateBlockInterface() {
+    return `
+    <h2>Create a new Story Block</h2>
+    <form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="title" class="mdl-textfield__input" name="title">
+            <label class="mdl-textfield__label" for="title">Title</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="color" class="mdl-textfield__input" name="color">
+            <label class="mdl-textfield__label" for="color">Choose a color</label>
+        </div>
+        <button type="submit" id="js-blockCreateButton">Create!</button>
+    </form>
+    `
+}
+
+function viewCreateBlockInterface() {
+    $('.js-create-block-view').on('click', function (event) {
+        event.preventDefault();
+        const blockInterface = renderCreateBlockInterface();
+        $('.storyBlockCreateHolder').html(blockInterface);
+        componentHandler.upgradeDom();
+    });
 }
 
 function handleCreateBlockSubmit() {
@@ -64,7 +89,6 @@ function handleGetAllBlocks() {
 
 function renderInsideBlockView(result) {
     return `
-    
     <h3>${result.title}</h3>
     <img src="${result.image}">
     <p>${result.content}</p>
@@ -73,9 +97,11 @@ function renderInsideBlockView(result) {
 }
 
 function displayBlockWithStories(arr) {
-    // const block = arr.blocks;
     const results = arr.stories.map((item) => renderInsideBlockView(item));
-    $('.js-block-result').html(results);
+    const blockResult = renderInsideBlockViewTitle(arr.block);
+    $('.storyBlockView').html(results);
+    $('.storyBlockView-Title').html(blockResult);
+    componentHandler.upgradeDom();
 }
 
 function handleGetAllBlocksWithStories() {
@@ -94,6 +120,20 @@ function handleGetAllBlocksWithStories() {
         })
 
     })
+}
+
+
+
+function renderInsideBlockViewTitle(result) {
+    return `
+    <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
+    <p class="blockTitle">${result.title}</p>
+    <p class="blockId">${result.id}</p>
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
+    <i class="material-icons">add</i>
+    </button>
+    <button type="button" class="storyBlock-View">View Stories</button>
+    </div>`
 }
 
 function renderCreateStoryInterface(title, id) {
@@ -123,7 +163,7 @@ function renderCreateStoryInterface(title, id) {
 }
 
 function viewCreateStoryInterface() {
-    $('.js-block-result').on('click', 'button.addStory', function (event) {
+    $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
         console.log(blockTitle); //for testing needs removal
@@ -142,7 +182,6 @@ function renderStory(result) {
         <p>${result.content}</p>
     `
 }
-
 
 function handleCreateStory() {
     const $form = $('#createStory'),
@@ -165,7 +204,8 @@ function handleCreateStory() {
 
     posting.done(function (data) {
         const content = renderStory(data.story);
-        $('.js-story-result').append(content);
+        $('.storyBlockView').append(content);
+        $('.storyCreateInterface').empty();
     });
 }
 
@@ -191,14 +231,10 @@ function handleFormsSubmit() {
 }
 
 
-
-
-
-
 function storyBank() {
-    $(createBlock);
     $(handleGetAllBlocks);
     $(handleGetAllBlocksWithStories);
+    $(viewCreateBlockInterface);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
 }
