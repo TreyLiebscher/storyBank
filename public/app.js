@@ -10,8 +10,6 @@ function getBlocksWithStories(blockId, callback) {
     return $.getJSON(requestURI, callback);
 }
 
-// style="background-color:${result.color}">
-
 function renderBlock(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="${result.color}">
@@ -49,13 +47,12 @@ function viewCreateBlockInterface() {
     });
 }
 
-/* <input id="myColorPickerPopover" class="form-control" type="text" value="Click to select a color" style="background-color: rgb(106, 168, 79);"> */
+
 
 function handleCreateBlockSubmit() {
 
     const $form = $('#createBlock'),
         title = $form.find('input[name="title"]').val(),
-        // color = $form.find('input[name="color"]').val(),
         color = $form.find('input[name="selectedColor"]').attr('style'),
         url = $form.attr('action');
 
