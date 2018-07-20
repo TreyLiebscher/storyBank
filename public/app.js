@@ -62,9 +62,9 @@ function handleGetAllBlocks() {
     });
 }
 
-function renderInsideBlockView() {
+function renderInsideBlockView(result) {
     return `
-    <h2>${block.title}</h2>
+    
     <h3>${result.title}</h3>
     <img src="${result.image}">
     <p>${result.content}</p>
