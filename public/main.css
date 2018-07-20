@@ -11,14 +11,20 @@
 
 .storyBlock {
     font-size: 12px;
-    width: 30vw;
-    margin: 1%;
+    width: 75vw;
+    margin: 1% auto 0 auto;
     border: 1px solid black;
+    display: flex;
+    flex-direction: row;
 }
 
 .storyBlock:hover {
     cursor: pointer;
     filter: brightness(120%);
+}
+
+.storyBlockView-Title > .storyBlock {
+    width: 90vw;
 }
 
 .blockId {

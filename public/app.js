@@ -15,10 +15,6 @@ function renderBlock(result) {
     <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
-		<i class="material-icons">add</i>
-    </button>
-    <button type="button" class="storyBlock-View">View Stories</button>
     </div>`
 }
 
@@ -105,11 +101,12 @@ function displayBlockWithStories(arr) {
 }
 
 function handleGetAllBlocksWithStories() {
-    $('.js-block-result').on('click', 'button.storyBlock-View', function (event) {
+    $('.js-block-result').on('click', 'div.storyBlock', function (event) {
         event.preventDefault();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId);
         const resultPromise = getBlocksWithStories(blockId);
+        $('.storyCreateInterface').empty();
 
         resultPromise.catch(err => {
             console.error('Error', err);
@@ -122,8 +119,6 @@ function handleGetAllBlocksWithStories() {
     })
 }
 
-
-
 function renderInsideBlockViewTitle(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="background-color:${result.color}">
@@ -132,8 +127,8 @@ function renderInsideBlockViewTitle(result) {
     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
     <i class="material-icons">add</i>
     </button>
-    <button type="button" class="storyBlock-View">View Stories</button>
-    </div>`
+    </div>
+   `
 }
 
 function renderCreateStoryInterface(title, id) {
