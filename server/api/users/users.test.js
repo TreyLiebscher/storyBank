@@ -52,22 +52,29 @@ describe('Users API routes', function () {
         await closeServer();
     });
 
-    describe('GET /users/ (some records)', () => {
-        it('should respond with JSON', async () => {
-            await deleteCollections(['usermodels'])
+    describe('CRUD /users/user', () => {
+        let createdUser, deletedUser
 
-            await Promise.all(seedData.map(item => UserModel.create(item)))
+        it('should create a new user (POST)', async () => {
+            const email = 'test@test.com';
+            const password = 'password123';
+
             const res = await chai
                 .request(app)
-                .get('/users/')
-            expect(res).to.have.status(200);
+                .post('/users/user/createUser')
+                .send({
+                    email,
+                    password
+                })
+            expect(res).to.have.status(200)
             expect(res).to.be.json;
-            const { body, } = res
-            const { total, users: records } = body
-            expect(records).to.be.an('array');
-            expect(records).to.have.lengthOf(SEED_DATA_LENGTH);
-            expect(total).to.equal(SEED_DATA_LENGTH);
 
-        });
+            const {user} = res.body;
+            createdUser = user;
+            expect(user).to.be.an('object');
+            expect(user.email).to.equal(email);
+            expect(user.id).to.be.a('string');
+        })
     })
+
 })

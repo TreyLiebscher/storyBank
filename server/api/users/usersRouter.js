@@ -8,8 +8,7 @@ const {UserModel} = require('./userModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 const router = express.Router();
 
-//user signup (create new user)
-
+//POST user signup (create new user)
 async function createNewUser(req, res) {
     const requiredFields = ['email', 'password'];
     for (let i = 0; i < requiredFields.length; i++) {
@@ -34,5 +33,34 @@ async function createNewUser(req, res) {
 }
 
 router.post('/user/createUser', tryCatch(createNewUser));
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+router.get('/storyblocks', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+router.get('/storyblocks/block/:id', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+router.post('/storyblock/block/create', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+
+async function getUserProfile(req, res) {
+    const userProfile = await UserModel.findOne({email: req.user.email});
+
+    res.json({
+        user: userProfile.serialize()
+    });
+}
+
+router.get('/profile', jwtAuth, tryCatch(getUserProfile));
+
 
 module.exports = router;
