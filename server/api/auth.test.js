@@ -230,6 +230,18 @@ describe('Auth endpoints', function () {
 
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
+
+            //login with the new password
+            const loginRes = await chai
+            .request(app)
+            .post('/users/login')
+            .send({ email, password:newPassword })
+
+            expect(loginRes).to.have.status(200);
+            expect(loginRes.body).to.be.an('object');
+
+
+
         });
     });
 });

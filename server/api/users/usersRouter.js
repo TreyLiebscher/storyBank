@@ -4,24 +4,24 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const jsonParser = bodyParser.json();
 
-const {UserModel} = require('./userModel');
+const { UserModel } = require('./userModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 const config = require('../../../config')
-const {localStrategy, jwtStrategy} = require('../../../auth/strategies');
+const { localStrategy, jwtStrategy } = require('../../../auth/strategies');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 const router = express.Router();
 
-const createAuthToken = function(user) {
-    return jwt.sign({user}, config.JWT_SECRET, {
+const createAuthToken = function (user) {
+    return jwt.sign({ user }, config.JWT_SECRET, {
         subject: user.email,
         expiresIn: config.JWT_EXPIRY,
         algorithm: 'HS256'
     });
 };
 
-const localAuth = passport.authenticate('local', {session: false, failWithError: false});
+const localAuth = passport.authenticate('local', { session: false, failWithError: false });
 
 //POST user signup (create new user)
 async function createNewUser(req, res) {
@@ -34,7 +34,7 @@ async function createNewUser(req, res) {
             return res.status(400).send(message)
         }
     }
-    
+
     const userPassword = await UserModel.hashPassword(req.body.password);
 
     const userRecord = await UserModel.create({
@@ -49,7 +49,7 @@ async function createNewUser(req, res) {
 
 router.post('/user/createUser', tryCatch(createNewUser));
 
-const jwtAuth = passport.authenticate('jwt', {session: false});
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.get('/storyblocks', jwtAuth, (req, res) => {
     //TODO implement this
@@ -68,7 +68,7 @@ router.post('/storyblock/block/create', jwtAuth, (req, res) => {
 
 
 async function getUserProfile(req, res) {
-    const userProfile = await UserModel.findOne({email: req.user.email});
+    const userProfile = await UserModel.findOne({ email: req.user.email });
 
     res.json({
         user: userProfile.serialize()
@@ -83,12 +83,12 @@ router.post('/login', localAuth, (req, res) => {
 
     const authToken = createAuthToken(req.user.serialize());
     const email = req.user.serialize().email;
-    res.json({authToken, email});
+    res.json({ authToken, email });
 });
 
 router.post('/refresh-auth-token', jwtAuth, (req, res) => {
     const authToken = createAuthToken(req.user);
-    res.json({authToken});
+    res.json({ authToken });
 });
 
 
@@ -103,10 +103,11 @@ async function changePassword(req, res) {
         }
     }
 
-    const {newPassword} = req.body
+    const { newPassword } = req.body
     const hashedNewPassword = await UserModel.hashPassword(newPassword);
 
-    const userRecord = await UserModel.findByIdAndUpdate(req.user.id, {password:hashedNewPassword});
+    const userRecordByEmail = await UserModel.findOne({ email: req.user.email })
+    const userRecord = await UserModel.findByIdAndUpdate(userRecordByEmail._id, { password: hashedNewPassword });
 
     res.json({
         user: userRecord.serialize()
