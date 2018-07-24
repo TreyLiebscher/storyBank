@@ -32,7 +32,7 @@ function renderCreateBlockInterface() {
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
-        <input id="myColorPickerPopover" class="form-control" type="text" value="Click to select a color" name="selectedColor">
+        <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>
         <button type="submit" id="js-blockCreateButton">Create!</button>
     </form>
     `
@@ -43,6 +43,23 @@ function viewCreateBlockInterface() {
         event.preventDefault();
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
+        YUI().use(
+            'aui-color-picker-popover',
+            function(Y) {
+              var colorPicker = new Y.ColorPickerPopover(
+                {
+                  trigger: '#myColorPickerPopover',
+                  zIndex: 2
+                }
+              ).render();
+          
+              colorPicker.on('select',
+                function(event) {
+                  event.trigger.setStyle('backgroundColor', event.color);
+                }
+              );
+            }
+        );
         componentHandler.upgradeDom();
     });
 }
@@ -53,7 +70,7 @@ function handleCreateBlockSubmit() {
 
     const $form = $('#createBlock'),
         title = $form.find('input[name="title"]').val(),
-        color = $form.find('input[name="selectedColor"]').attr('style'),
+        color = $form.find('button[name="selectedColor"]').attr('style'),
         url = $form.attr('action');
 
     const posting = $.post(url, {
@@ -272,23 +289,23 @@ function viewPrettyCreateStoryInterface(){
     });
 }
 
-YUI().use(
-    'aui-color-picker-popover',
-    function(Y) {
-      var colorPicker = new Y.ColorPickerPopover(
-        {
-          trigger: '#myColorPickerPopover',
-          zIndex: 2
-        }
-      ).render();
+// YUI().use(
+//     'aui-color-picker-popover',
+//     function(Y) {
+//       var colorPicker = new Y.ColorPickerPopover(
+//         {
+//           trigger: '#myColorPickerPopover',
+//           zIndex: 2
+//         }
+//       ).render();
   
-      colorPicker.on('select',
-        function(event) {
-          event.trigger.setStyle('backgroundColor', event.color);
-        }
-      );
-    }
-);
+//       colorPicker.on('select',
+//         function(event) {
+//           event.trigger.setStyle('backgroundColor', event.color);
+//         }
+//       );
+//     }
+// );
 
 
 function storyBank() {
