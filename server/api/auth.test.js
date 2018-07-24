@@ -6,11 +6,11 @@ const jwt = require('jsonwebtoken');
 
 const {app, runServer, closeServer} = require('../server');
 const {UserModel} = require('./users/userModel');
-const {JWT_SECRET, TEST_DATABASE_URL} = require('../../config');
+const {JWT_SECRET, TEST_DATABASE_URL, PORT} = require('../../config');
 
 const expect = chai.expect;
 
-const AUTH_REFRESH_ROUTE = '/auth/refresh-auth-token';
+const AUTH_REFRESH_ROUTE = '/users/refresh-auth-token';
 
 chai.use(chaiHttp);
 
@@ -19,7 +19,7 @@ describe('Auth endpoints', function() {
     const password = 'password123';
 
     before(function () {
-        return runServer(TEST_DATABASE_URL);
+        return runServer(TEST_DATABASE_URL, PORT);
     });
 
     after(function () {
@@ -39,11 +39,11 @@ describe('Auth endpoints', function() {
         return UserModel.remove({});
     });
 
-    describe('/auth/login', function() {
+    describe('/users/login', function() {
         it('Should reject requests with no credentials', function () {
             return chai
                 .request(app)
-                .post('/auth/login')
+                .post('/users/login')
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
                         throw err;
@@ -56,7 +56,7 @@ describe('Auth endpoints', function() {
         it('Should reject requests with incorrect email', function() {
             return chai
                 .request(app)
-                .post('/auth/login')
+                .post('/users/login')
                 .send({email: 'wrongEmail', password})
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
@@ -70,7 +70,7 @@ describe('Auth endpoints', function() {
         it('Should reject requests with incorrect passwords', function() {
             return chai
                 .request(app)
-                .post('/auth/login')
+                .post('/users/login')
                 .send({email, password: 'wrongPassword'})
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
@@ -84,7 +84,7 @@ describe('Auth endpoints', function() {
         it('Should return a valid auth token', function() {
             return chai
                 .request(app)
-                .post('/auth/login')
+                .post('/users/login')
                 .send({email, password})
                 .then(res => {
                     expect(res).to.have.status(200);
@@ -106,7 +106,7 @@ describe('Auth endpoints', function() {
         it('Should reject requests with no JWT token', function() {
             return chai
                 .request(app)
-                .post('/auth/refresh-auth-token')
+                .post('/users/refresh-auth-token')
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
                         throw err;
@@ -158,7 +158,7 @@ describe('Auth endpoints', function() {
 
             return chai
                 .request(app)
-                .post('/auth/refresh')
+                .post('/users/refresh')
                 .set('authorization', `Bearer ${token}`)
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
@@ -186,7 +186,7 @@ describe('Auth endpoints', function() {
 
             return chai
                 .request(app)
-                .post('/auth/refresh-auth-token')
+                .post('/users/refresh-auth-token')
                 .set('authorization', `Bearer ${token}`)
                 .then(res => {
                     expect(res).to.have.status(200);

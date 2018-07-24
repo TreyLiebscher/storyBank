@@ -6,7 +6,22 @@ const jsonParser = bodyParser.json();
 
 const {UserModel} = require('./userModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
+const config = require('../../../config')
+const {localStrategy, jwtStrategy} = require('../../../auth/strategies');
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
 const router = express.Router();
+
+const createAuthToken = function(user) {
+    return jwt.sign({user}, config.JWT_SECRET, {
+        subject: user.email,
+        expiresIn: config.JWT_EXPIRY,
+        algorithm: 'HS256'
+    });
+};
+
+const localAuth = passport.authenticate('local', {session: false, failWithError: false});
 
 //POST user signup (create new user)
 async function createNewUser(req, res) {
@@ -61,6 +76,20 @@ async function getUserProfile(req, res) {
 }
 
 router.get('/profile', jwtAuth, tryCatch(getUserProfile));
+
+
+router.post('/login', localAuth, (req, res) => {
+    console.log('Login attempt successful', req.email, req.password, req.user)
+
+    const authToken = createAuthToken(req.user.serialize());
+    const email = req.user.serialize().email;
+    res.json({authToken, email});
+});
+
+router.post('/refresh-auth-token', jwtAuth, (req, res) => {
+    const authToken = createAuthToken(req.user);
+    res.json({authToken});
+});
 
 
 module.exports = router;
