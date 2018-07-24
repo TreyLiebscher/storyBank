@@ -56,7 +56,7 @@ describe('Users API routes', function () {
         let createdUser, deletedUser
 
         it('should create a new user (POST)', async () => {
-            const email = 'test@test.com';
+            const email = 'test2@test.com';
             const password = 'password123';
 
             const res = await chai

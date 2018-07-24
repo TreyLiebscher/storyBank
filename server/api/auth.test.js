@@ -28,7 +28,8 @@ describe('Auth endpoints', function () {
         return closeServer();
     });
 
-    beforeEach(function () {
+    beforeEach(async function () {
+        await UserModel.remove({})
         return UserModel.hashPassword(password).then(hashedPassword => {
             return UserModel.create({
                 email,
@@ -38,7 +39,7 @@ describe('Auth endpoints', function () {
     });
 
     afterEach(function () {
-        return UserModel.remove({});
+        // return UserModel.remove({});
     });
 
     describe('/users/login', function () {
