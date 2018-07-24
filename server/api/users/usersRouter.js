@@ -92,4 +92,28 @@ router.post('/refresh-auth-token', jwtAuth, (req, res) => {
 });
 
 
+async function changePassword(req, res) {
+    const requiredFields = ['newPassword', 'retypeNewPassword'];
+    for (let i = 0; i < requiredFields.length; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`;
+            console.error(message);
+            return res.status(404).send(message);
+        }
+    }
+
+    const {newPassword} = req.body
+    const hashedNewPassword = await UserModel.hashPassword(newPassword);
+
+    const userRecord = await UserModel.findByIdAndUpdate(req.user.id, {password:hashedNewPassword});
+
+    res.json({
+        user: userRecord.serialize()
+    })
+}
+
+router.post('/changepassword', jwtAuth, tryCatch(changePassword));
+
+
 module.exports = router;
