@@ -142,7 +142,7 @@ function renderInsideBlockViewTitle(result) {
     <div class="storyBlock" id="${result.id}" style="${result.color}">
     <p class="blockTitle">${result.title}</p>
     <p class="blockId">${result.id}</p>
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  mdl-color-text--blue-grey-300 addStory" type="button">
     <i class="material-icons">add</i>
     </button>
     </div>
@@ -288,25 +288,6 @@ function viewPrettyCreateStoryInterface(){
         componentHandler.upgradeDom();
     });
 }
-
-// YUI().use(
-//     'aui-color-picker-popover',
-//     function(Y) {
-//       var colorPicker = new Y.ColorPickerPopover(
-//         {
-//           trigger: '#myColorPickerPopover',
-//           zIndex: 2
-//         }
-//       ).render();
-  
-//       colorPicker.on('select',
-//         function(event) {
-//           event.trigger.setStyle('backgroundColor', event.color);
-//         }
-//       );
-//     }
-// );
-
 
 function storyBank() {
     $(handleGetAllBlocks);

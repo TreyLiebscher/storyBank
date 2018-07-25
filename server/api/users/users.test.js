@@ -33,7 +33,7 @@ const seedData = [
 ]
 const SEED_DATA_LENGTH = seedData.length
 
-//TODO factor this out and learn to type
+
 async function deleteCollections(namesArr) {
     const collections = await mongoose.connection.db.collections();
 

@@ -38,10 +38,6 @@ describe('Auth endpoints', function () {
         })
     });
 
-    afterEach(function () {
-        // return UserModel.remove({});
-    });
-
     describe('/users/login', function () {
         it('Should reject requests with no credentials', function () {
             return chai

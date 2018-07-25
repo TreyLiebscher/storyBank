@@ -4,28 +4,28 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Mocha Tests",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "runtimeExecutable": "/home/tudor/.nvm/versions/node/v8.9.0/bin/node",
-            "args": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
-                "${workspaceFolder}/server/api/auth.test.js"
-            ],
-            "internalConsoleOptions": "openOnSessionStart"
-        },
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Mocha Tests",
+        //     "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        //     "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node",
+        //     "args": [
+        //         "-u",
+        //         "tdd",
+        //         "--timeout",
+        //         "999999",
+        //         "--colors",
+        //         "${workspaceFolder}/public/signup-login.js"
+        //     ],
+        //     "internalConsoleOptions": "openOnSessionStart"
+        // },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/server/api/stories/storiesRouter.js",
-            "runtimeExecutable": "/home/tudor/.nvm/versions/node/v8.9.0/bin/node"
+            "program": "${workspaceFolder}/public/signup-login.js",
+            "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node"
         }
     ]
 }
