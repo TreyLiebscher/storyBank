@@ -54,13 +54,16 @@ function handleCreateNewUser() {
 }
 
 function renderLogInForm() {
-    return `<form class="js-logIn-form" type="submit" id="logInForm">
+
+	const logInURL = API_URLS.userLogIn;
+
+    return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="userName" class="mdl-textfield__input">
+		<input id="userName" class="mdl-textfield__input" name="userEmail">
 		<label class="mdl-textfield__label" for="userName">Email</label>
 	</div>
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="password" class="mdl-textfield__input" type="password">
+		<input id="password" class="mdl-textfield__input" type="password" name="password">
 		<label class="mdl-textfield__label" for="password">Password</label>
 	</div>
 	<button type="submit">Log In</button>
@@ -75,6 +78,23 @@ function handleLogInClick() {
         $('#formsHolder').html(logIn);
         componentHandler.upgradeDom();
     });
+}
+
+function handleUserLogIn() {
+	const $form = $('#logInForm'),
+		email = $form.find('input[name="userEmail"]').val(),
+		password = $form.find('input[name="password"]').val();
+
+		const url = $form.attr('action');
+
+		const userLoginRequest = $.post(url, {
+			email: email,
+			password: password
+		});
+
+		userLoginRequest.done(function (data) {
+			console.log(data);
+		});
 }
 
 function handleUserFormsSubmit() {
@@ -92,7 +112,7 @@ function handleUserFormsSubmit() {
 
         if (formID === 'logInForm') {
             
-            
+            handleUserLogIn();
         }
 
     });
