@@ -15,23 +15,35 @@ const {
     getConfig
 } = require('../../api/api')
 const BlockModel = getConfig('storyblock').models.block
+const { testUtilCreateUser } = require('../users/userModel')
+
+async function testUserLoginToken() {
+    const loginRes = await chai
+        .request(app)
+        .post('/users/login')
+        .send({
+            email, password
+        })
+    const authToken = loginRes.body.authToken
+    return authToken
+}
 
 const expect = chai.expect;
 const should = chai.should()
 chai.use(chaiHttp)
 
 const seedData = [{
-        title: 'Block 1',
-        color: 'blue'
-    },
-    {
-        title: 'Block 2',
-        color: 'green'
-    },
-    {
-        title: 'Block 3',
-        color: 'red'
-    },
+    title: 'Block 1',
+    color: 'blue'
+},
+{
+    title: 'Block 2',
+    color: 'green'
+},
+{
+    title: 'Block 3',
+    color: 'red'
+},
 ]
 const SEED_DATA_LENGTH = seedData.length
 
@@ -42,10 +54,18 @@ async function deleteCollections(namesArr) {
     return await Promise.all(filteredCollections.map(c => c.remove()))
 }
 
+const email = 'test@test.com';
+const password = 'password123';
+let testUser
+
 describe('block API routes', function () {
 
     before(async () => {
         await runServer(TEST_DATABASE_URL, PORT)
+        testUser = await testUtilCreateUser()
+        //TODO add a comment
+        seedData.forEach(i=>i.user_id = testUser._id)
+        console.log(seedData)
     })
 
     after(async () => {
@@ -63,8 +83,11 @@ describe('block API routes', function () {
             const color = 'purple';
             const newColor = 'green';
 
+            
+
             //create a post directly in the db
             const record = await BlockModel.create({
+                user_id: testUser._id,
                 title, color
             })
 
@@ -90,9 +113,12 @@ describe('block API routes', function () {
             const title = 'Some useless block';
             const color = 'purple';
 
+            const authToken = await testUserLoginToken()
+
             const res = await chai
                 .request(app)
                 .post('/storyblock/block/create')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send({
                     title,
                     color

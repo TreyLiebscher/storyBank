@@ -4,6 +4,13 @@ const BlockModel = require('./blockModel');
 const StoriesModel = require('../stories/storyModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
+const passport = require('passport');
+const { localStrategy, jwtStrategy } = require('../../../auth/strategies');
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+
 const router = express.Router();
 
 const LIMIT = 10;
@@ -33,6 +40,9 @@ function getFieldsFromRequest(fieldNamesArr, req) {
 // // // // POST
 async function createBlock(req, res) {
     const record = await BlockModel.create({
+        // jwtAuth will set req.user to the logged in user
+        // populate user_id with the logged in user's id
+        user_id:req.user.id,         
         date: new Date(),
         title: req.body.title || 'Untitled Story',
         color: req.body.color
@@ -42,7 +52,7 @@ async function createBlock(req, res) {
     });
 }
 
-router.post('/block/create', tryCatch(createBlock));
+router.post('/block/create', jwtAuth, tryCatch(createBlock));
 
 // // // // GET
 async function getBlocks(req, res) {

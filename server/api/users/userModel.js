@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const UsersSchema = new mongoose.Schema({
     email: {
-        unique:true,
+        unique: true,
         type: String,
         required: true
     },
@@ -15,10 +15,10 @@ const UsersSchema = new mongoose.Schema({
     },
 
 }, {
-    timestamps: {
-        createdAt: 'createdAt'
-    }
-});
+        timestamps: {
+            createdAt: 'createdAt'
+        }
+    });
 
 UsersSchema.methods.serialize = function () {
 
@@ -38,4 +38,22 @@ UsersSchema.statics.hashPassword = function (password) {
 
 const UserModel = mongoose.model('UserModel', UsersSchema);
 
-module.exports = {UserModel};
+
+const email = 'test@test.com';
+const password = 'password123';
+
+const testUtilCreateUser = async () => {
+    await UserModel.remove({})
+    return UserModel.hashPassword(password).then(hashedPassword => {
+        return UserModel.create({
+            email,
+            password: hashedPassword
+        })
+    })
+}
+
+module.exports = {
+    UserModel,
+    testUtilCreateUser
+};
+
