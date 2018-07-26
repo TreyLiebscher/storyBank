@@ -4,5 +4,5 @@ const API_URLS = {
     createStory: '/stories/story/create', //NOTE: need to append  block id
     getBlocksWithStories: '/storyblock/blocks/stories',
     createNewUser: '/users/user/createUser',
-    userLogIn: '/login'
+    userLogIn: '/users/login'
 }

@@ -15,7 +15,12 @@ const BlockSchema = new mongoose.Schema({
     stories: [{
         type: Schema.Types.ObjectId,
         ref: 'storiesmodel'
-    }]
+    }],
+    user_id: {
+        required:true,
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }
 
 }, {
     timestamps: {

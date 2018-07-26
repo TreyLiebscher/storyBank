@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
 const { app, runServer, closeServer } = require('../server');
-const { UserModel } = require('./users/userModel');
+const { UserModel, testUtilCreateUser } = require('./users/userModel');
 const { JWT_SECRET, TEST_DATABASE_URL, PORT } = require('../../config');
 
 const expect = chai.expect;
@@ -14,6 +14,7 @@ const AUTH_REFRESH_ROUTE = '/users/refresh-auth-token';
 
 chai.use(chaiHttp);
 
+// same as in UserModel
 const email = 'test@test.com';
 const password = 'password123';
 
@@ -28,15 +29,7 @@ describe('Auth endpoints', function () {
         return closeServer();
     });
 
-    beforeEach(async function () {
-        await UserModel.remove({})
-        return UserModel.hashPassword(password).then(hashedPassword => {
-            return UserModel.create({
-                email,
-                password: hashedPassword
-            })
-        })
-    });
+    beforeEach(testUtilCreateUser);
 
     describe('/users/login', function () {
         it('Should reject requests with no credentials', function () {
@@ -80,7 +73,7 @@ describe('Auth endpoints', function () {
                     expect(res).to.have.status(401);
                 });
         });
-        it('Should return a valid auth token', function () {
+        it('Should login with an email and password and return a valid auth token', function () {
             return chai
                 .request(app)
                 .post('/users/login')

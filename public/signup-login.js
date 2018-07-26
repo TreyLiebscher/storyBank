@@ -1,5 +1,7 @@
 'use strict';
 
+let AUTH_TOKEN
+
 function renderSignUpForm() {
 
 	const createURL = API_URLS.createNewUser;
@@ -94,6 +96,7 @@ function handleUserLogIn() {
 
 		userLoginRequest.done(function (data) {
 			console.log(data);
+			AUTH_TOKEN = data.authToken
 		});
 }
 

@@ -45,19 +45,19 @@ function viewCreateBlockInterface() {
         $('.storyBlockCreateHolder').html(blockInterface);
         YUI().use(
             'aui-color-picker-popover',
-            function(Y) {
-              var colorPicker = new Y.ColorPickerPopover(
-                {
-                  trigger: '#myColorPickerPopover',
-                  zIndex: 2
-                }
-              ).render();
-          
-              colorPicker.on('select',
-                function(event) {
-                  event.trigger.setStyle('backgroundColor', event.color);
-                }
-              );
+            function (Y) {
+                var colorPicker = new Y.ColorPickerPopover(
+                    {
+                        trigger: '#myColorPickerPopover',
+                        zIndex: 2
+                    }
+                ).render();
+
+                colorPicker.on('select',
+                    function (event) {
+                        event.trigger.setStyle('backgroundColor', event.color);
+                    }
+                );
             }
         );
         componentHandler.upgradeDom();
@@ -73,9 +73,23 @@ function handleCreateBlockSubmit() {
         color = $form.find('button[name="selectedColor"]').attr('style'),
         url = $form.attr('action');
 
-    const posting = $.post(url, {
-        title: title,
-        color: color
+    // const posting = $.post(url, {
+    //     title: title,
+    //     color: color
+    // });
+
+    const posting = $.ajax({
+        type: "POST",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        },
+        dataType: 'json',
+        data: JSON.stringify({
+            title: title,
+            color: color
+        })
     });
 
     posting.done(function (data) {
@@ -243,7 +257,7 @@ function handleFormsSubmit() {
     });
 }
 //Planned layout of inside block view
-function renderPrettyInsideView(result){
+function renderPrettyInsideView(result) {
     return `
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 				<header class="mdl-layout__header">
@@ -276,7 +290,7 @@ function renderPrettyInsideView(result){
 			  </div>`
 }
 
-function viewPrettyCreateStoryInterface(){
+function viewPrettyCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.mdl-layout__header-row').find('.mdl-layout-title').text();

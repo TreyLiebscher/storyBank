@@ -79,7 +79,7 @@ router.get('/profile', jwtAuth, tryCatch(getUserProfile));
 
 
 router.post('/login', localAuth, (req, res) => {
-    console.log('Login attempt successful', req.email, req.password, req.user)
+    console.log('Login attempt successful', req.user)
 
     const authToken = createAuthToken(req.user.serialize());
     const email = req.user.serialize().email;
