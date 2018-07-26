@@ -54,6 +54,32 @@ async function createBlock(req, res) {
 
 router.post('/block/create', jwtAuth, tryCatch(createBlock));
 
+// // // // GET blocks associated with user
+async function getUserBlocks(req, res) {
+    const offset = parseInt(req.params.offset || 0);
+    const total = await BlockModel.countDocuments()
+
+    if (offset > total || offset < 0) {
+        return res.status(400).json({message: 'OUT_OF_BOUNDS'});
+    }
+
+    const records = await BlockModel
+        .find({user_id: req.user.id})
+        .sort([
+            ['date', -1]
+        ])
+        .skip(offset)
+        .limit(LIMIT)
+
+    res.json({
+        pageSize: LIMIT,
+        total,
+        blocks: records.map(record => record.serialize())
+    })
+}
+
+router.get('/myblocks', jwtAuth, tryCatch(getUserBlocks));
+
 // // // // GET
 async function getBlocks(req, res) {
     const offset = parseInt(req.params.offset || 0);

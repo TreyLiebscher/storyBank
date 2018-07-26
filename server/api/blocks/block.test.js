@@ -15,14 +15,17 @@ const {
     getConfig
 } = require('../../api/api')
 const BlockModel = getConfig('storyblock').models.block
-const { testUtilCreateUser } = require('../users/userModel')
+const {
+    testUtilCreateUser
+} = require('../users/userModel')
 
 async function testUserLoginToken() {
     const loginRes = await chai
         .request(app)
         .post('/users/login')
         .send({
-            email, password
+            email,
+            password
         })
     const authToken = loginRes.body.authToken
     return authToken
@@ -33,17 +36,17 @@ const should = chai.should()
 chai.use(chaiHttp)
 
 const seedData = [{
-    title: 'Block 1',
-    color: 'blue'
-},
-{
-    title: 'Block 2',
-    color: 'green'
-},
-{
-    title: 'Block 3',
-    color: 'red'
-},
+        title: 'Block 1',
+        color: 'blue'
+    },
+    {
+        title: 'Block 2',
+        color: 'green'
+    },
+    {
+        title: 'Block 3',
+        color: 'red'
+    },
 ]
 const SEED_DATA_LENGTH = seedData.length
 
@@ -63,8 +66,8 @@ describe('block API routes', function () {
     before(async () => {
         await runServer(TEST_DATABASE_URL, PORT)
         testUser = await testUtilCreateUser()
-        //TODO add a comment
-        seedData.forEach(i=>i.user_id = testUser._id)
+        //Adds a user id to the seed data for auth testing
+        seedData.forEach(i => i.user_id = testUser._id)
         console.log(seedData)
     })
 
@@ -83,12 +86,13 @@ describe('block API routes', function () {
             const color = 'purple';
             const newColor = 'green';
 
-            
+
 
             //create a post directly in the db
             const record = await BlockModel.create({
                 user_id: testUser._id,
-                title, color
+                title,
+                color
             })
 
             //make an API HTTP request with an updated title
@@ -176,7 +180,12 @@ describe('block API routes', function () {
     describe('GET /storyblock/blocks (no records)', () => {
         it('should respond with JSON', async () => {
             await deleteCollections(['blockmodels'])
-            const res = await chai.request(app).get('/storyblock/blocks')
+            const authToken = await testUserLoginToken()
+
+            const res = await chai
+                .request(app)
+                .get('/storyblock/blocks')
+                .set('Authorization', `Bearer ${authToken}`)
             expect(res).to.have.status(200)
             expect(res).to.be.json;
 

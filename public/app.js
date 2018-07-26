@@ -46,12 +46,10 @@ function viewCreateBlockInterface() {
         YUI().use(
             'aui-color-picker-popover',
             function (Y) {
-                var colorPicker = new Y.ColorPickerPopover(
-                    {
-                        trigger: '#myColorPickerPopover',
-                        zIndex: 2
-                    }
-                ).render();
+                var colorPicker = new Y.ColorPickerPopover({
+                    trigger: '#myColorPickerPopover',
+                    zIndex: 2
+                }).render();
 
                 colorPicker.on('select',
                     function (event) {
@@ -72,11 +70,6 @@ function handleCreateBlockSubmit() {
         title = $form.find('input[name="title"]').val(),
         color = $form.find('button[name="selectedColor"]').attr('style'),
         url = $form.attr('action');
-
-    // const posting = $.post(url, {
-    //     title: title,
-    //     color: color
-    // });
 
     const posting = $.ajax({
         type: "POST",
@@ -99,20 +92,39 @@ function handleCreateBlockSubmit() {
     });
 
 }
+//Could be of some use in future but will most likely be removed
+// function handleGetAllBlocks() {
+//     $('.js-all-block-display').on('click', function (event) {
+//         event.preventDefault();
+//         const blockPromise = getAllBlocks();
 
-function handleGetAllBlocks() {
+//         blockPromise.catch(err => {
+//             console.error('Error', err);
+//         })
+
+//         blockPromise.then(blockResponse => {
+//             return displayBlock(blockResponse);
+//         })
+//     });
+// }
+
+function getUserBlocks() {
     $('.js-all-block-display').on('click', function (event) {
         event.preventDefault();
-        const blockPromise = getAllBlocks();
 
-        blockPromise.catch(err => {
-            console.error('Error', err);
-        })
+        const record = $.ajax({
+            type: "GET",
+            url: `${API_URLS.getUserBlocks}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AUTH_TOKEN}`
+            }
+        });
 
-        blockPromise.then(blockResponse => {
-            return displayBlock(blockResponse);
-        })
-    });
+        record.done(function (data) {
+            return displayBlock(data);
+        });
+    })
 }
 
 function renderInsideBlockView(result) {
@@ -304,7 +316,8 @@ function viewPrettyCreateStoryInterface() {
 }
 
 function storyBank() {
-    $(handleGetAllBlocks);
+    // $(handleGetAllBlocks);
+    $(getUserBlocks);
     $(handleGetAllBlocksWithStories);
     $(viewCreateBlockInterface);
     $(viewCreateStoryInterface);
