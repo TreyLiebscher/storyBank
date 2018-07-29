@@ -37,7 +37,7 @@ function renderProfileHeader(result) {
 	<p>${result.email}</p>`
 }
 
-// // //
+
 function handleCreateNewUser() {
 	const $form = $('#signUpForm'),
 		email = $form.find('input[name="userEmail"]').val(),
@@ -51,11 +51,9 @@ function handleCreateNewUser() {
 		email: email,
 		password: password
 	});
-
+	//This will use the url for logging in but retain email/password
+	//creating a new user
 	const logInURL = API_URLS.userLogIn;
-
-
-
 
 	userRecord.done(function (data) {
 		$('#formsHolder').empty();
@@ -63,15 +61,19 @@ function handleCreateNewUser() {
 			email: email,
 			password: password
 		});
-
+		//User has been created and will
+		//now be signed in automatically
 		userLoginRequest.done(function (data) {
 			console.log(data);
+			const logOutButton = renderLogOutButton();
+			$('.storyBankHeader').append(logOutButton);
+			$('.userProfileName').html(data.email);
 			AUTH_TOKEN = data.authToken;
 		});
-		
+
 	});
 }
-// // //
+
 function renderLogInForm() {
 
 	const logInURL = API_URLS.userLogIn;
@@ -115,6 +117,9 @@ function handleUserLogIn() {
 		console.log(data);
 		AUTH_TOKEN = data.authToken;
 		$('#formsHolder').empty();
+		const logOutButton = renderLogOutButton();
+		$('.storyBankHeader').append(logOutButton);
+		$('.userProfileName').html(data.email);
 	});
 }
 
@@ -139,6 +144,25 @@ function handleUserFormsSubmit() {
 	});
 }
 
+function renderLogOutButton() {
+	return `
+	<button type="button" class="userButton userLogOut">Log Out</button>`
+}
+
+function handleLogOutUser() {
+	$('.storyBankHeader').on('click', 'button.userLogOut', function (event) {
+		event.preventDefault();
+		console.log('logout button was clicked');
+		AUTH_TOKEN = null;
+		$('.storyBankHeader').find('.userLogOut').remove();
+		$('.userProfileName').empty();
+		$('.js-block-result').empty();
+		$('.storyBlockView-Title').empty();
+		$('.storyBlockView').empty();
+	});
+}
+
 $(handleSignUpClick);
 $(handleLogInClick);
 $(handleUserFormsSubmit);
+$(handleLogOutUser);
