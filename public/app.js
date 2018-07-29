@@ -10,6 +10,11 @@ function getBlocksWithStories(blockId, callback) {
     return $.getJSON(requestURI, callback);
 }
 
+function getStoryById(storyId, callback) {
+    const requestURI = `${API_URLS.getStoryById}/${storyId}`;
+    return $.getJSON(requestURI, callback);
+}
+
 function renderBlock(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="${result.color}">
@@ -137,7 +142,8 @@ function renderInsideBlockView(result) {
 }
 
 function displayBlockWithStories(arr) {
-    const results = arr.stories.map((item) => renderInsideBlockView(item));
+    // const results = arr.stories.map((item) => renderInsideBlockView(item));
+    const results = arr.stories.map((item) => renderStoryQuickView(item));
     const blockResult = renderInsideBlockViewTitle(arr.block);
     $('.storyBlockView').html(results);
     $('.storyBlockView-Title').html(blockResult);
@@ -216,10 +222,45 @@ function viewCreateStoryInterface() {
 
 function renderStory(result) {
     return `
-        <h3>${result.title}</h3>
-        <img class="storyImage" src="${result.image}">
-        <p>${result.content}</p>
+        <h3>${result.story.title}</h3>
+        <img class="storyImage" src="${result.story.image}">
+        <p>${result.story.content}</p>
     `
+}
+
+function displayStory(result) {
+    const story = renderStory(result);
+    $('.storyBlockView').html(story);
+}
+
+function renderStoryQuickView(result) {
+    return `
+    <div class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
+    
+    background-repeat: no-repeat;
+    
+    background-position: center;">
+    <h3>${result.title}</h3>
+    <p class="storyId">${result._id}</p>
+    </div>
+    `
+}
+
+function handleViewStory() {
+    $('.storyBlockView').on('click', 'div.storyQuickView', function (event) {
+        event.preventDefault();
+        const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
+        console.log('The story id is:', storyId);
+        const resultPromise = getStoryById(storyId);
+        $('.storyBlockView').empty();
+        resultPromise.catch(err => {
+            console.error('Error', err);
+        })
+
+        resultPromise.then(resultResponse => {
+            return displayStory(resultResponse);
+        })
+    })
 }
 
 function handleCreateStory() {
@@ -242,7 +283,8 @@ function handleCreateStory() {
     const posting = $.post(url, formData);
 
     posting.done(function (data) {
-        const content = renderStory(data.story);
+        // const content = renderStory(data.story);
+        const content = renderStoryQuickView(data.story);
         $('.storyBlockView').append(content);
         $('.storyCreateInterface').empty();
     });
@@ -268,61 +310,15 @@ function handleFormsSubmit() {
 
     });
 }
-//Planned layout of inside block view
-function renderPrettyInsideView(result) {
-    return `
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-				<header class="mdl-layout__header">
-				  <div class="mdl-layout__header-row">
-					<!-- Title -->
-					<span class="mdl-layout-title">${result.title}</span>
-					<!-- Add spacer, to align navigation to the right -->
-					<div class="mdl-layout-spacer"></div>
-					<!-- Navigation. We hide it in small screens. -->
-                    <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <p class="blockId">${result.id}</p>
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored addStory" type="button">
-                    <i class="material-icons">add</i>
-                    </button>
-					</nav>
-				  </div>
-				</header>
-				<div class="mdl-layout__drawer">
-				  <span class="mdl-layout-title">Title</span>
-				  <nav class="mdl-navigation">
-					<p>story 1</p>
-				  </nav>
-				</div>
-				<main class="mdl-layout__content">
-                  <div class="page-content">
-                  <div class="storyCreateInterface"></div>
-                  <div class="storyBlockView"></div>
-                  </div>
-				</main>
-			  </div>`
-}
-
-function viewPrettyCreateStoryInterface() {
-    $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
-        event.preventDefault();
-        const blockTitle = $(event.target).closest('.mdl-layout__header-row').find('.mdl-layout-title').text();
-        console.log(blockTitle); //for testing needs removal
-        const blockId = $(event.target).closest('.mdl-layout__header-row').find('.blockId').text();
-        console.log(blockId); //for testing needs removal
-        const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
-        $('.storyCreateInterface').html(createStoryInterface);
-        componentHandler.upgradeDom();
-    });
-}
 
 function storyBank() {
     // $(handleGetAllBlocks);
     $(getUserBlocks);
     $(handleGetAllBlocksWithStories);
+    $(handleViewStory);
     $(viewCreateBlockInterface);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
-    // $(viewPrettyCreateStoryInterface);
 }
 
 $(storyBank);

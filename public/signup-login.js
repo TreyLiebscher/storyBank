@@ -159,6 +159,8 @@ function handleLogOutUser() {
 		$('.js-block-result').empty();
 		$('.storyBlockView-Title').empty();
 		$('.storyBlockView').empty();
+		$('.storyCreateInterface').empty();
+		$('.storyBlockCreateHolder').empty();
 	});
 }
 

@@ -23,14 +23,16 @@ async function createStory(req, res) {
 }
 
 async function createStoryInBlock(req, res) {
-    
-    const blockRecord = await BlockModel.findOne({_id: req.params.id});
+
+    const blockRecord = await BlockModel.findOne({
+        _id: req.params.id
+    });
 
     //this validates block _id
-    if(blockRecord === null) {
+    if (blockRecord === null) {
         throw new Error('Block does not exist');
     }
-    
+
     const record = await StoriesModel.create({
         date: new Date(),
         title: req.body.title || 'Untitled Story',
@@ -76,6 +78,22 @@ async function getStories(req, res) {
 router.get('/storiesall', tryCatch(getStories));
 
 router.get('/storiesall/:offset', tryCatch(getStories));
+
+// // // // GET by id
+
+async function getStory(req, res) {
+    const record = await StoriesModel.findById(req.params.id)
+    if (record === null) {
+        return res.status(404).json({
+            message: 'Not Found'
+        });
+    }
+    res.json({
+        story: record.serialize()
+    })
+}
+
+router.get('/story/:id', tryCatch(getStory));
 
 
 // // // // PUT

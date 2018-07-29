@@ -53,10 +53,10 @@
 
 .storyBlock:hover {
     cursor: pointer;
-    filter: brightness(120%);
+    box-shadow: 0 0 20px 1px white;
 }
 
-.storyBlockView-Title > .storyBlock {
+.storyBlockView-Title>.storyBlock {
     width: 90vw;
 }
 
@@ -65,7 +65,8 @@
     max-height: 50vh;
 }
 
-.blockId {
+.blockId,
+.storyId {
     display: none;
 }
 
@@ -82,5 +83,17 @@
     flex-direction: column;
     width: 70vw;
     margin: auto;
-    /* border: 1px solid black; */
+}
+
+.storyQuickView {
+    font-size: 12px;
+    width: 17vw;
+    height: 17vh;
+    margin: 1% auto 0 auto;
+    border: 3px solid white;
+    border-radius: 5%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
 }
