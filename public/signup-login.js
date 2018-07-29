@@ -6,7 +6,7 @@ function renderSignUpForm() {
 
 	const createURL = API_URLS.createNewUser;
 
-    return `<form class="js-signUp-form" id="signUpForm" action="${createURL}" method="POST">
+	return `<form class="js-signUp-form" id="signUpForm" action="${createURL}" method="POST">
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="userName" class="mdl-textfield__input" name="userEmail">
 		<label class="mdl-textfield__label" for="userName">Email</label>
@@ -19,17 +19,17 @@ function renderSignUpForm() {
 		<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
 		<label class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 	</div>
-	<button type="submit">Create Account</button>
+	<button type="submit" class="userButton">Create Account</button>
     </form>`
 }
 
 function handleSignUpClick() {
-    $('#signUp').on('click', function (event) {
-        event.preventDefault();
-        const signUp = renderSignUpForm();
-        $('#formsHolder').html(signUp);
-        componentHandler.upgradeDom();
-    });
+	$('#signUp').on('click', function (event) {
+		event.preventDefault();
+		const signUp = renderSignUpForm();
+		$('#formsHolder').html(signUp);
+		componentHandler.upgradeDom();
+	});
 }
 
 function renderProfileHeader(result) {
@@ -37,29 +37,46 @@ function renderProfileHeader(result) {
 	<p>${result.email}</p>`
 }
 
+// // //
 function handleCreateNewUser() {
 	const $form = $('#signUpForm'),
 		email = $form.find('input[name="userEmail"]').val(),
-		password = $form.find('input[name="password"]').val();
-		
-		const url = $form.attr('action');
-		
-		const userRecord = $.post(url, {
+		password = $form.find('input[name="password"]').val(),
+		confirmPassword = $form.find('input[name="passwordConfirm"]');
+
+	const url = $form.attr('action');
+
+
+	const userRecord = $.post(url, {
+		email: email,
+		password: password
+	});
+
+	const logInURL = API_URLS.userLogIn;
+
+
+
+
+	userRecord.done(function (data) {
+		$('#formsHolder').empty();
+		const userLoginRequest = $.post(logInURL, {
 			email: email,
 			password: password
 		});
 
-		userRecord.done(function (data) {
-			const userProfile = renderProfileHeader(data.user);
-			$('.userProfileContainer').html(userProfile)
+		userLoginRequest.done(function (data) {
+			console.log(data);
+			AUTH_TOKEN = data.authToken;
 		});
+		
+	});
 }
-
+// // //
 function renderLogInForm() {
 
 	const logInURL = API_URLS.userLogIn;
 
-    return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
+	return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="userName" class="mdl-textfield__input" name="userEmail">
 		<label class="mdl-textfield__label" for="userName">Email</label>
@@ -68,18 +85,18 @@ function renderLogInForm() {
 		<input id="password" class="mdl-textfield__input" type="password" name="password">
 		<label class="mdl-textfield__label" for="password">Password</label>
 	</div>
-	<button type="submit">Log In</button>
+	<button type="submit" class="userButton">Log In</button>
     </form>
     `
 }
 
 function handleLogInClick() {
-    $('#logIn').on('click', function (event) {
-        event.preventDefault();
-        const logIn = renderLogInForm();
-        $('#formsHolder').html(logIn);
-        componentHandler.upgradeDom();
-    });
+	$('#logIn').on('click', function (event) {
+		event.preventDefault();
+		const logIn = renderLogInForm();
+		$('#formsHolder').html(logIn);
+		componentHandler.upgradeDom();
+	});
 }
 
 function handleUserLogIn() {
@@ -87,38 +104,39 @@ function handleUserLogIn() {
 		email = $form.find('input[name="userEmail"]').val(),
 		password = $form.find('input[name="password"]').val();
 
-		const url = $form.attr('action');
+	const url = $form.attr('action');
 
-		const userLoginRequest = $.post(url, {
-			email: email,
-			password: password
-		});
+	const userLoginRequest = $.post(url, {
+		email: email,
+		password: password
+	});
 
-		userLoginRequest.done(function (data) {
-			console.log(data);
-			AUTH_TOKEN = data.authToken
-		});
+	userLoginRequest.done(function (data) {
+		console.log(data);
+		AUTH_TOKEN = data.authToken;
+		$('#formsHolder').empty();
+	});
 }
 
 function handleUserFormsSubmit() {
 
-    $('body').submit(function (event) {
-        event.preventDefault();
+	$('body').submit(function (event) {
+		event.preventDefault();
 
-        const formID = $(event.target).attr('id')
-        console.log('Submitted form id is:', formID)
+		const formID = $(event.target).attr('id')
+		console.log('Submitted form id is:', formID)
 
-        if (formID === 'signUpForm') {
-            
-            handleCreateNewUser();
-        }
+		if (formID === 'signUpForm') {
 
-        if (formID === 'logInForm') {
-            
-            handleUserLogIn();
-        }
+			handleCreateNewUser();
+		}
 
-    });
+		if (formID === 'logInForm') {
+
+			handleUserLogIn();
+		}
+
+	});
 }
 
 $(handleSignUpClick);

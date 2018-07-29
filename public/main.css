@@ -2,6 +2,33 @@
     box-sizing: border-box;
 }
 
+.storyBankBody {
+    color: white;
+    background-color: #133947;
+}
+
+.storyBankHeader {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    border-bottom: 1px solid white;
+    margin: auto auto 2% auto;
+}
+
+.storyBankTitle {
+    margin-right: 2%;
+}
+
+.storyBankHeader .userButton {
+    float: right;
+}
+
+.userButton {
+    color: white;
+    background-color: #133947;
+    border: 3px solid white;
+}
+
 .blockHolder {
     margin: auto;
     border: 2px solid black;
@@ -9,13 +36,19 @@
     flex-wrap: wrap;
 }
 
-.storyBlock {
-    font-size: 12px;
-    width: 75vw;
-    margin: 1% auto 0 auto;
-    border: 1px solid black;
+.js-block-result {
     display: flex;
     flex-direction: row;
+    width: 90vw;
+}
+
+.storyBlock {
+    font-size: 12px;
+    width: 17vw;
+    height: 17vh;
+    margin: 1% auto 0 auto;
+    border: 3px solid white;
+    border-radius: 5%;
 }
 
 .storyBlock:hover {
