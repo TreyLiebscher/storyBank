@@ -1,21 +1,15 @@
 'use strict';
-//block related
+
 function getAllBlocks(callback) {
     const requestURI = `${API_URLS.getBlocks}`
     return $.getJSON(requestURI, callback)
 }
-//block related
+
 function getBlocksWithStories(blockId, callback) {
     const requestURI = `${API_URLS.getBlocksWithStories}/${blockId}`;
     return $.getJSON(requestURI, callback);
 }
 
-//story related
-function getStoryById(storyId, callback) {
-    const requestURI = `${API_URLS.getStoryById}/${storyId}`;
-    return $.getJSON(requestURI, callback);
-}
-//block related
 function renderBlock(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="${result.color}">
@@ -23,13 +17,13 @@ function renderBlock(result) {
         <p class="blockId">${result.id}</p>
     </div>`
 }
-//block related
+
 function displayBlock(arr) {
     const results = arr.blocks.map((item) => renderBlock(item));
     $('.js-block-result').html(results);
     componentHandler.upgradeDom();
 }
-//block related
+
 function renderCreateBlockInterface() {
     return `
     <h2>Create a new Story Block</h2>
@@ -44,7 +38,7 @@ function renderCreateBlockInterface() {
     </form>
     `
 }
-//block related
+
 function viewCreateBlockInterface() {
     $('.js-create-block-view').on('click', function (event) {
         event.preventDefault();
@@ -68,15 +62,13 @@ function viewCreateBlockInterface() {
         componentHandler.upgradeDom();
     });
 }
-//block related
+
 function hideCreateBlockInterface() {
     $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
         $('.storyBlockCreateHolder').empty();
     });
 }
 
-
-//block related
 function handleCreateBlockSubmit() {
 
     const $form = $('#createBlock'),
@@ -105,7 +97,7 @@ function handleCreateBlockSubmit() {
     });
 
 }
-//block related
+
 function getUserBlocks() {
     $('.js-all-block-display').on('click', function (event) {
         event.preventDefault();
@@ -124,7 +116,7 @@ function getUserBlocks() {
         });
     })
 }
-//block related
+
 function renderInsideBlockView(result) {
     return `
     <h3>${result.title}</h3>
@@ -134,7 +126,6 @@ function renderInsideBlockView(result) {
     `
 }
 
-//block related
 function displayBlockWithStories(arr) {
     // const results = arr.stories.map((item) => renderInsideBlockView(item));
     const results = arr.stories.map((item) => renderStoryQuickView(item));
@@ -144,8 +135,6 @@ function displayBlockWithStories(arr) {
     componentHandler.upgradeDom();
 }
 
-
-//block related
 function handleGetAllBlocksWithStories() {
     $('.js-block-result').on('click', 'div.storyBlock', function (event) {
         event.preventDefault();
@@ -164,7 +153,7 @@ function handleGetAllBlocksWithStories() {
 
     })
 }
-//block related
+
 function renderInsideBlockViewTitle(result) {
     return `
     <div class="storyBlock" id="${result.id}" style="${result.color}">
@@ -177,49 +166,6 @@ function renderInsideBlockViewTitle(result) {
    `
 }
 
-//story related
-function renderCreateStoryInterface(title, id) {
-
-    const createURL = API_URLS.createStory
-
-    return `		<h3>Add a story to ${title}</h3>
-    <form id="createStory" action="${createURL}/${id}" method="POST">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="title" class="mdl-textfield__input" name="title">
-            <label class="mdl-textfield__label" for="title">Title</label>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="image" class="mdl-textfield__input" name="image">
-            <label class="mdl-textfield__label" for="image">Image</label>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield">
-            <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
-            <label class="mdl-textfield__label" for="content">Write your story</label>
-        </div>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
-            <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
-            <span class="mdl-switch__label">publicStatus?</span>
-        </label>
-        <button type="submit">Add to block</button>
-    </form>`
-}
-
-//story related
-function viewCreateStoryInterface() {
-    $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
-        event.preventDefault();
-        const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
-        console.log(blockTitle); //for testing needs removal
-        const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
-        console.log(blockId); //for testing needs removal
-        const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
-        $('.storyBlockView').hide('slow');
-        $('.storyCreateInterface').html(createStoryInterface);
-        componentHandler.upgradeDom();
-    });
-}
-
-//block related
 function viewAllStoriesInBlock() {
     $('.storyBlockView-Title').on('click', 'button#displayAllStories', function (event) {
         event.preventDefault();
@@ -236,85 +182,6 @@ function viewAllStoriesInBlock() {
             return displayBlockWithStories(resultResponse);
         })
     })
-}
-
-//story related
-function renderStory(result) {
-    return `
-        <div class="storyDetailView">
-        <h3>${result.story.title}</h3>
-        <img class="storyImage" src="${result.story.image}">
-        <p>${result.story.content}</p>
-        </div>
-    `
-}
-
-//story related
-function displayStory(result) {
-    const story = renderStory(result);
-    $('.storyBlockView').html(story);
-}
-
-//story related
-function renderStoryQuickView(result) {
-    return `
-    <div class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
-    
-    background-repeat: no-repeat;
-    
-    background-position: center;">
-    <h3 class="quickViewTitle">${result.title}</h3>
-    <p class="storyId">${result._id}</p>
-    </div>
-    `
-}
-
-//story related
-function handleViewStory() {
-    $('.storyBlockView').on('click', 'div.storyQuickView', function (event) {
-        event.preventDefault();
-        const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
-        console.log('The story id is:', storyId);
-        const resultPromise = getStoryById(storyId);
-        $('.storyBlockView').empty();
-        resultPromise.catch(err => {
-            console.error('Error', err);
-        })
-
-        resultPromise.then(resultResponse => {
-            return displayStory(resultResponse);
-        })
-    })
-}
-
-//story related
-function handleCreateStory() {
-    const $form = $('#createStory'),
-        title = $form.find('input[name="title"]').val(),
-        image = $form.find('input[name="image"]').val(),
-        content = $form.find('textarea[name="content"]').val();
-
-    const ckBox = $form.find("#switch-2")
-    const publicStatus = ckBox.is(':checked')
-    const url = $form.attr('action');
-
-    const formData = {
-        title: title,
-        image: image,
-        content: content,
-        publicStatus: publicStatus
-    }
-
-    const posting = $.post(url, formData);
-
-    posting.done(function (data) {
-        // const content = renderStory(data.story);
-        const content = renderStoryQuickView(data.story);
-        $('.storyBlockView').show('slow');
-        $('.storyBlockView').append(content);
-        $('.storyCreateInterface').empty();
-        componentHandler.upgradeDom();
-    });
 }
 
 function handleFormsSubmit() {
@@ -338,15 +205,12 @@ function handleFormsSubmit() {
     });
 }
 
-function storyBank() {
-    $(getUserBlocks); //block
-    $(handleGetAllBlocksWithStories); //block
-    $(viewAllStoriesInBlock); //story
-    $(handleViewStory); //story
-    $(viewCreateBlockInterface); //block
-    $(hideCreateBlockInterface); //block
-    $(viewCreateStoryInterface); //story
+function storyBlock() {
+    $(getUserBlocks);
+    $(handleGetAllBlocksWithStories);
+    $(viewCreateBlockInterface);
+    $(hideCreateBlockInterface);
     $(handleFormsSubmit);
 }
 
-$(storyBank);
+$(storyBlock);
