@@ -7,6 +7,11 @@
     background-color: #133947;
 }
 
+.storyBankMainContent {
+    width: 90vw;
+    margin: auto;
+}
+
 .storyBankHeader {
     display: flex;
     flex-direction: row;
@@ -38,15 +43,19 @@
 
 .js-block-result {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
     width: 90vw;
 }
 
 .storyBlock {
+    display: inline-block;
     font-size: 12px;
-    width: 17vw;
-    height: 17vh;
-    margin: 1% auto 0 auto;
+    width: 20%;
+    height: 20vh;
+    /* margin: 1% auto 0 auto; */
+    margin: 10px 0 0 10px;
+    flex-grow: 1;
     border: 3px solid white;
     border-radius: 5%;
 }
@@ -58,12 +67,13 @@
 
 .storyBlockView-Title>.storyBlock {
     width: 90vw;
-}
-
-.storyBlockView {
+    height: 5vh;
     display: flex;
     flex-direction: row;
+    border-radius: 0;
 }
+
+
 
 .storyImage {
     max-width: 75vw;
@@ -90,16 +100,35 @@
     margin: auto;
 }
 
+.storyBlockView {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .storyQuickView {
-    font-size: 12px;
-    width: 17vw;
-    height: 17vh;
-    margin: 1% auto 0 auto;
+    display: inline-block;
+    margin: 10px 0 0 10px;
+    flex-grow: 1;
+    height: 18vh;
+    width: 20%;
     border: 3px solid white;
     border-radius: 5%;
+    overflow-y: scroll;
+}
+
+.quickViewTitle {
+    font-size: 15px;
+    font-size: 2.75vw;
 }
 
 .storyQuickView:hover {
     cursor: pointer;
     filter: brightness(130%);
+}
+
+#displayAllStories,
+.addStory {
+    border: 1px solid white;
+    height: 90%;
+    background: none;
 }
