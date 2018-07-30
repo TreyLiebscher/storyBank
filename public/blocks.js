@@ -12,10 +12,10 @@ function getBlocksWithStories(blockId, callback) {
 
 function renderBlock(result) {
     return `
-    <div class="storyBlock" id="${result.id}" style="${result.color}">
+    <button class="storyBlock" id="${result.id}" style="${result.color}" type="button">
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
-    </div>`
+    </button>`
 }
 
 function displayBlock(arr) {
@@ -32,18 +32,24 @@ function renderCreateBlockInterface() {
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
-        <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>
+
+        <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>        
+
+         
         <button type="submit" id="js-blockCreateButton">Create!</button>
         <button type="button" id="cancelBlockCreate">Cancel</button>
     </form>
     `
 }
 
+
+
 function viewCreateBlockInterface() {
     $('.js-create-block-view').on('click', function (event) {
         event.preventDefault();
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
+        
         YUI().use(
             'aui-color-picker-popover',
             function (Y) {
@@ -60,6 +66,7 @@ function viewCreateBlockInterface() {
             }
         );
         componentHandler.upgradeDom();
+        
     });
 }
 
@@ -136,7 +143,7 @@ function displayBlockWithStories(arr) {
 }
 
 function handleGetAllBlocksWithStories() {
-    $('.js-block-result').on('click', 'div.storyBlock', function (event) {
+    $('.js-block-result').on('click', 'button.storyBlock', function (event) {
         event.preventDefault();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId);
@@ -170,6 +177,7 @@ function viewAllStoriesInBlock() {
     $('.storyBlockView-Title').on('click', 'button#displayAllStories', function (event) {
         event.preventDefault();
         $('.storyCreateInterface').empty();
+        $('.storyBlockView').show('slow');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         console.log(blockId);
         const resultPromise = getBlocksWithStories(blockId);

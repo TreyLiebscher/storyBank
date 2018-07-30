@@ -28,6 +28,7 @@ function renderCreateStoryInterface(title, id) {
             <span class="mdl-switch__label">publicStatus?</span>
         </label>
         <button type="submit">Add to block</button>
+        <button type="button" id="cancelStoryCreate">Cancel</button>
     </form>`
 }
 
@@ -42,6 +43,13 @@ function viewCreateStoryInterface() {
         $('.storyBlockView').hide('slow');
         $('.storyCreateInterface').html(createStoryInterface);
         componentHandler.upgradeDom();
+    });
+}
+
+function hideStoryCreateInterface() {
+    $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function(event) {
+        $('.storyCreateInterface').empty();
+        $('.storyBlockView').show('slow');
     });
 }
 
@@ -112,6 +120,7 @@ function handleCreateStory() {
     posting.done(function (data) {
         // const content = renderStory(data.story);
         const content = renderStoryQuickView(data.story);
+        console.log('story id is', data.story.id);
         $('.storyBlockView').show('slow');
         $('.storyBlockView').append(content);
         $('.storyCreateInterface').empty();
@@ -123,6 +132,7 @@ function stories() {
     $(viewAllStoriesInBlock); //story
     $(handleViewStory); //story
     $(viewCreateStoryInterface); //story
+    $(hideStoryCreateInterface);
 }
 
 $(stories);
