@@ -39,6 +39,7 @@ function renderCreateBlockInterface() {
         </div>
         <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>
         <button type="submit" id="js-blockCreateButton">Create!</button>
+        <button type="button" id="cancelBlockCreate">Cancel</button>
     </form>
     `
 }
@@ -64,6 +65,12 @@ function viewCreateBlockInterface() {
             }
         );
         componentHandler.upgradeDom();
+    });
+}
+
+function hideCreateBlockInterface() {
+    $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
+        $('.storyBlockCreateHolder').empty();
     });
 }
 
@@ -215,6 +222,7 @@ function viewCreateStoryInterface() {
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId); //for testing needs removal
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
+        $('.storyBlockView').hide('slow');
         $('.storyCreateInterface').html(createStoryInterface);
         componentHandler.upgradeDom();
     });
@@ -222,9 +230,11 @@ function viewCreateStoryInterface() {
 
 function renderStory(result) {
     return `
+        <div class="storyDetailView">
         <h3>${result.story.title}</h3>
         <img class="storyImage" src="${result.story.image}">
         <p>${result.story.content}</p>
+        </div>
     `
 }
 
@@ -285,6 +295,7 @@ function handleCreateStory() {
     posting.done(function (data) {
         // const content = renderStory(data.story);
         const content = renderStoryQuickView(data.story);
+        $('.storyBlockView').show('slow');
         $('.storyBlockView').append(content);
         $('.storyCreateInterface').empty();
     });
@@ -317,6 +328,7 @@ function storyBank() {
     $(handleGetAllBlocksWithStories);
     $(handleViewStory);
     $(viewCreateBlockInterface);
+    $(hideCreateBlockInterface);
     $(viewCreateStoryInterface);
     $(handleFormsSubmit);
 }

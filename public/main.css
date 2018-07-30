@@ -60,6 +60,11 @@
     width: 90vw;
 }
 
+.storyBlockView {
+    display: flex;
+    flex-direction: row;
+}
+
 .storyImage {
     max-width: 75vw;
     max-height: 50vh;
@@ -92,8 +97,9 @@
     margin: 1% auto 0 auto;
     border: 3px solid white;
     border-radius: 5%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center; 
+}
+
+.storyQuickView:hover {
+    cursor: pointer;
+    filter: brightness(130%);
 }
