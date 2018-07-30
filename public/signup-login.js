@@ -67,6 +67,9 @@ function handleCreateNewUser() {
 			console.log(data);
 			const logOutButton = renderLogOutButton();
 			$('.storyBankHeader').append(logOutButton);
+			$('.storyBankHeader').find('.userSignUp').hide('slow');
+			$('.storyBankHeader').find('.userLogIn').hide('slow');
+			$('.js-create-block-view').show('slow');
 			$('.userProfileName').html(data.email);
 			AUTH_TOKEN = data.authToken;
 		});
@@ -79,13 +82,13 @@ function renderLogInForm() {
 	const logInURL = API_URLS.userLogIn;
 
 	return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+	<div id="mdlFloat" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="userName" class="mdl-textfield__input" name="userEmail">
 		<label class="mdl-textfield__label" for="userName">Email</label>
 	</div>
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="password" class="mdl-textfield__input" type="password" name="password">
-		<label class="mdl-textfield__label" for="password">Password</label>
+		<label id ="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
 	</div>
 	<button type="submit" class="userButton">Log In</button>
     </form>
@@ -119,7 +122,23 @@ function handleUserLogIn() {
 		$('#formsHolder').empty();
 		const logOutButton = renderLogOutButton();
 		$('.storyBankHeader').append(logOutButton);
+		$('.storyBankHeader').find('.userSignUp').hide('slow');
+		$('.storyBankHeader').find('.userLogIn').hide('slow');
+		$('.js-create-block-view').show('slow');
 		$('.userProfileName').html(data.email);
+
+		const record = $.ajax({
+            type: "GET",
+            url: `${API_URLS.getUserBlocks}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AUTH_TOKEN}`
+            }
+        });
+
+        record.done(function (data) {
+            return displayBlock(data);
+        });
 	});
 }
 
@@ -155,6 +174,9 @@ function handleLogOutUser() {
 		console.log('logout button was clicked');
 		AUTH_TOKEN = null;
 		$('.storyBankHeader').find('.userLogOut').remove();
+		$('.storyBankHeader').find('.userSignUp').show('slow');
+		$('.storyBankHeader').find('.userLogIn').show('slow');
+		$('.js-create-block-view').hide('slow');
 		$('.userProfileName').empty();
 		$('.js-block-result').empty();
 		$('.storyBlockView-Title').empty();
