@@ -48,7 +48,6 @@
 
 .js-block-result {
     display: flex;
-    /* flex-direction: row; */
     flex-wrap: wrap;
     width: 90vw;
 }
@@ -59,7 +58,6 @@
     width: 20%;
     height: 20vh;
     margin: 10px 0 0 10px;
-    /* flex-grow: 1; */
     border: 3px solid white;
     border-radius: 5%;
 }
