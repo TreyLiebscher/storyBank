@@ -4,22 +4,36 @@ const StoriesModel = require('./storyModel');
 const BlockModel = require('../blocks/blockModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
+const passport = require('passport');
+const { localStrategy, jwtStrategy } = require('../../../auth/strategies');
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
 const router = express.Router();
 
 const LIMIT = 10;
 
-// // // // POST
-async function createStory(req, res) {
-    const record = await StoriesModel.create({
-        date: new Date(),
-        title: req.body.title || 'Untitled Story',
-        image: req.body.image,
-        content: req.body.content,
-        publicStatus: req.body.publicStatus
-    })
-    res.json({
-        story: record.serialize()
-    });
+const STORY_MODEL_FIELDS = ['title', 'image', 'content', 'publicStatus'] //an array of updatable field names
+
+function getFieldsFromRequest(fieldNamesArr, req) {
+    const requestFieldNames = Object.keys(req.body)
+
+    // new to reduce? 
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce    
+    return fieldNamesArr.reduce((acc, fieldName) => {
+
+        if (requestFieldNames.includes(fieldName)) { // is this field name present in the request?
+            const value = req.body[fieldName]
+
+            // is there an usable value? 
+            // if so, add it to the reduce() return object
+            if (value !== undefined) {
+                acc[fieldName] = value
+            }
+        }
+        return acc
+    }, {})
 }
 
 async function createStoryInBlock(req, res) {
@@ -47,9 +61,7 @@ async function createStoryInBlock(req, res) {
     });
 }
 
-router.post('/story/create', tryCatch(createStory));
-
-router.post('/story/create/:id', tryCatch(createStoryInBlock));
+router.post('/story/create/:id', jwtAuth, tryCatch(createStoryInBlock));
 
 // // // // GET
 async function getStories(req, res) {
@@ -99,33 +111,18 @@ router.get('/story/:id', tryCatch(getStory));
 // // // // PUT
 async function updateStory(req, res) {
 
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-        const message = (
-            `Request path id (${req.params.id}) and request body id ` +
-            `(${req.body.id}) must match`
-        );
-        console.error(message);
-        return res.status(400).json({
-            message: message
-        });
+    const existingRecord = await StoriesModel.findById(req.params.id);
+    if (existingRecord === null) {
+        return res.status(404).json({message: 'NOT_FOUND'})
     }
+    const newFieldValues = getFieldsFromRequest(STORY_MODEL_FIELDS, req);
 
-    const toUpdate = {};
-    const updateableFields = ['title', 'image', 'content', 'publicStatus'];
-
-    updateableFields.forEach(field => {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-
-    const record = await StoriesModel
-        .findByIdAndUpdate(req.params.id, {
-            $set: toUpdate
-        })
-    res.json({
-        story: record.serialize()
-    });
+    const updatedRecord = await StoriesModel.findByIdAndUpdate(
+        {'_id': req.params.id},
+        {$set: newFieldValues},
+        {new: true}
+    )
+    res.json({story: updatedRecord.serialize()})
 }
 
 router.put('/story/update/:id', tryCatch(updateStory));

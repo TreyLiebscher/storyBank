@@ -115,7 +115,20 @@ function handleCreateStory() {
         publicStatus: publicStatus
     }
 
-    const posting = $.post(url, formData);
+    // const posting = $.post(url, formData);
+
+    const posting = $.ajax({
+        type: "POST",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        },
+        dataType: 'json',
+        data: JSON.stringify(formData)
+    });
+
+
 
     posting.done(function (data) {
         // const content = renderStory(data.story);

@@ -154,6 +154,22 @@ describe('block API routes', function () {
             expect(retrievedBlock).to.deep.equal(createdBlock);
         })
 
+        // // // // 
+        it('should retrieve a block and associated stories by id (GET)', async () => {
+            const res = await chai.request(app).get(`/storyblock/blocks/stories/${createdBlock.id}`)
+            expect(res).to.have.status(200)
+            expect(res).to.be.json;
+            const {
+                block: retrievedBlock
+            } = res.body
+            const {
+                stories : retrievedStories
+            } = res.body
+            expect(retrievedStories).to.be.an('array');
+            //need to verify whether or not there ARE stories associated w/ block
+            expect(retrievedBlock).to.deep.equal(createdBlock);
+        })
+
         //NOTE this depends on the previous it() being sucessful
         it('should delete a block by id (DELETE)', async () => {
             const res = await chai.request(app).delete(`/storyblock/block/delete/${createdBlock.id}`)
