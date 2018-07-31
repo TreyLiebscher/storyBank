@@ -40,7 +40,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/public/app.js",
+            "program": "${workspaceFolder}/public/blocks.js",
             "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node"
         }
     ]

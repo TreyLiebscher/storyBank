@@ -159,8 +159,9 @@ function renderInsideBlockViewTitle(result) {
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
         
-        <button class="addStory">Add New Story</button>
-        <button id="displayAllStories">Show All Stories</button>
+        <button class="addStory userButton">Add New Story</button>
+        <button id="displayAllStories" class="userButton">Show All Stories</button>
+        <button id="displayDeleteMenu" class="userButton">Delete Block</button>
     </div>
    `
 }
@@ -184,6 +185,64 @@ function viewAllStoriesInBlock() {
     })
 }
 
+function renderDeleteMenu(title, id) {
+
+    const deleteUrl = API_URLS.deleteBlock;
+
+    return `
+    <form id="deleteBlock" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
+    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>? Doing so will also delete all of the stories within!</p>
+    <button id="deleteBlockSubmit" class="deleteButton userButton" type="submit">Yes</button>
+    <button id="cancelBlockDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+    </form>
+    `
+}
+
+function displayDeleteMenu() {
+    $('.storyBlockView-Title').on('click', 'button#displayDeleteMenu', function (event) {
+        event.preventDefault();
+        $('.storyCreateInterface').empty();
+        $('.storyBlockCreateHolder').empty();
+        $('.deleteMenuHolder').removeClass('hide');
+        const blockTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
+        const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
+        const deleteMenu = renderDeleteMenu(blockTitle, blockId);
+        $('.deleteMenuHolder').html(deleteMenu);
+    });
+}
+
+function hideDeleteMenu() {
+    $('.deleteMenuHolder').on('click', 'button#cancelBlockDeletion', function (event) {
+        event.preventDefault();
+        $('.deleteMenuHolder').addClass('hide');
+    });
+}
+
+function handleBlockDeletion() {
+    const $form = $('#deleteBlock'),
+        url = $form.attr('action');
+
+
+    const deleting = $.ajax({
+        type: "DELETE",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        }
+    })
+
+    deleting.done(function (data) {
+        console.log(`${data.message}`);
+        const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        $('.deleteMenuHolder').html(message);
+        $('.storyBlockView-Title').empty();
+        $('.storyBlock').remove(`#${data.block.id}`)
+    });
+}
+
+
+
 function handleFormsSubmit() {
 
     $('body').submit(function (event) {
@@ -194,6 +253,10 @@ function handleFormsSubmit() {
 
         if (formID === 'createBlock') {
             handleCreateBlockSubmit()
+        }
+
+        if (formID === 'deleteBlock') {
+            handleBlockDeletion()
         }
 
         if (formID === 'createStory') {
@@ -208,6 +271,9 @@ function storyBlock() {
     $(handleGetAllBlocksWithStories);
     $(viewCreateBlockInterface);
     $(hideCreateBlockInterface);
+    $(displayDeleteMenu);
+    $(hideDeleteMenu);
+
     $(handleFormsSubmit);
 }
 
