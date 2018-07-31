@@ -51,21 +51,6 @@ router.post('/user/createUser', tryCatch(createNewUser));
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
-router.get('/storyblocks', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
-router.get('/storyblocks/block/:id', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
-router.post('/storyblock/block/create', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
 
 async function getUserProfile(req, res) {
     const userProfile = await UserModel.findOne({ email: req.user.email });
