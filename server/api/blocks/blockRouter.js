@@ -5,10 +5,15 @@ const StoriesModel = require('../stories/storyModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const passport = require('passport');
-const { localStrategy, jwtStrategy } = require('../../../auth/strategies');
+const {
+    localStrategy,
+    jwtStrategy
+} = require('../../../auth/strategies');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-const jwtAuth = passport.authenticate('jwt', { session: false });
+const jwtAuth = passport.authenticate('jwt', {
+    session: false
+});
 
 
 const router = express.Router();
@@ -42,7 +47,7 @@ async function createBlock(req, res) {
     const record = await BlockModel.create({
         // jwtAuth will set req.user to the logged in user
         // populate user_id with the logged in user's id
-        user_id:req.user.id,         
+        user_id: req.user.id,
         date: new Date(),
         title: req.body.title || 'Untitled Story',
         color: req.body.color
@@ -60,11 +65,15 @@ async function getUserBlocks(req, res) {
     const total = await BlockModel.countDocuments()
 
     if (offset > total || offset < 0) {
-        return res.status(400).json({message: 'OUT_OF_BOUNDS'});
+        return res.status(400).json({
+            message: 'OUT_OF_BOUNDS'
+        });
     }
 
     const records = await BlockModel
-        .find({user_id: req.user.id})
+        .find({
+            user_id: req.user.id
+        })
         .sort([
             ['date', -1]
         ])
@@ -86,7 +95,9 @@ async function getBlocks(req, res) {
     const total = await BlockModel.countDocuments()
 
     if (offset > total || offset < 0) {
-        return res.status(400).json({message: 'OUT_OF_BOUNDS'});
+        return res.status(400).json({
+            message: 'OUT_OF_BOUNDS'
+        });
     }
 
     const records = await BlockModel
@@ -112,9 +123,13 @@ router.get('/blocks/:offset', tryCatch(getBlocks));
 async function getBlock(req, res) {
     const record = await BlockModel.findById(req.params.id)
     if (record === null) {
-        return res.status(404).json({ message: 'NOT_FOUND' })
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
-    res.json({ block: record.serialize() })
+    res.json({
+        block: record.serialize()
+    })
 }
 
 router.get('/block/:id', tryCatch(getBlock));
@@ -122,14 +137,23 @@ router.get('/block/:id', tryCatch(getBlock));
 async function getBlockWithStories(req, res) {
     const record = await BlockModel.findById(req.params.id);
     if (record === null) {
-        return res.status(404).json({message: 'NOT_FOUND'})
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
 
-    const storyRecordArr = await StoriesModel.find({block: req.params.id});
+    const storyRecordArr = await StoriesModel.find({
+        block: req.params.id
+    });
     if (record === null) {
-        return res.status(404).json({message: 'No stories in this block'})
+        return res.status(404).json({
+            message: 'No stories in this block'
+        })
     }
-    res.json({block: record.serialize(), stories: storyRecordArr.map(record=>record.serialize())});
+    res.json({
+        block: record.serialize(),
+        stories: storyRecordArr.map(record => record.serialize())
+    });
 }
 
 router.get('/blocks/stories/:id', tryCatch(getBlockWithStories));
@@ -138,16 +162,22 @@ router.get('/blocks/stories/:id', tryCatch(getBlockWithStories));
 async function updateBlock(req, res) {
     const existingRecord = await BlockModel.findById(req.params.id)
     if (existingRecord === null) {
-        return res.status(404).json({ message: 'NOT_FOUND' })
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
     const newFieldValues = getFieldsFromRequest(BLOCK_MODEL_FIELDS, req)
 
-    const updatedRecord = await BlockModel.findByIdAndUpdate(
-        { '_id': req.params.id },
-        { $set: newFieldValues },
-        { new: true } 
-    )
-    res.json({ block: updatedRecord.serialize() })
+    const updatedRecord = await BlockModel.findByIdAndUpdate({
+        '_id': req.params.id
+    }, {
+        $set: newFieldValues
+    }, {
+        new: true
+    })
+    res.json({
+        block: updatedRecord.serialize()
+    })
 }
 
 router.put('/block/update/:id', tryCatch(updateBlock));
@@ -156,9 +186,14 @@ router.put('/block/update/:id', tryCatch(updateBlock));
 async function deleteBlock(req, res) {
     const record = await BlockModel.findByIdAndRemove(req.params.id)
     if (record === null) {
-        return res.status(404).json({ message: 'NOT_FOUND' })
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
-    res.json({ block: record.serialize() })
+    res.json({
+        block: record.serialize(),
+        message: 'Block has been deleted'
+    })
 }
 
 // Delete

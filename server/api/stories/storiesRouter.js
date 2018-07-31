@@ -131,7 +131,13 @@ router.put('/story/update/:id', tryCatch(updateStory));
 async function deleteStory(req, res) {
     const record = await StoriesModel
         .findByIdAndRemove(req.params.id)
-    res.status(204).end()
+    if (record === null) {
+        return res.status(404).json({message: 'NOT_FOUND'})
+    }
+    res.json({
+        story: record.serialize(),
+        message: 'Story has been deleted'
+    })
 }
 
 router.delete('/story/delete/:id', tryCatch(deleteStory));

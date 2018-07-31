@@ -77,7 +77,7 @@ const email = 'test@test.com';
 const password = 'password123';
 let testUser
 
-describe('storyBank API routes', function () {
+describe('story API routes', function () {
 
     before(async () => {
         await runServer(TEST_DATABASE_URL, PORT);
@@ -132,32 +132,7 @@ describe('storyBank API routes', function () {
             expect(story.publicStatus).to.equal(newPublicStatus);
         })
         
-        // it('should create a new story', async () => {
-        //     const newStory = {
-        //         title: 'new story',
-        //         content: 'just some new stuff',
-        //         image: 'upload img',
-        //         publicStatus: true,
-        //         storyBlock: '1234'
-        //     };
-        //     const res = await chai
-        //         .request(app)
-        //         .post('/stories/story/create')
-        //         .send(newStory)
-        //     expect(res).to.have.status(200);
-        //     expect(res).to.be.json;
-
-        //     const {
-        //         story
-        //     } = res.body;
-        //     expect(story).to.be.an('object');
-        //     expect(story.title).to.equal(newStory.title);
-        //     expect(story.id).to.be.a('string');
-        //     const createdAt = new Date(story.createdAt);
-        //     expect(createdAt).to.be.a('date');
-        //     expect(createdAt.toDateString()).to.not.equal('Invalid Date');
-        // });
-        // // // //
+        
         it('should create a new story within a block', async () => {
             
             const record = await BlockModel.create({
