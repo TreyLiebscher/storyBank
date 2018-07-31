@@ -34,7 +34,7 @@ function renderCreateBlockInterface() {
         </div>
 
         <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>        
-
+        <input type="hidden" id="color" />
          
         <button type="submit" id="js-blockCreateButton">Create!</button>
         <button type="button" id="cancelBlockCreate">Cancel</button>
@@ -49,8 +49,19 @@ function viewCreateBlockInterface() {
         event.preventDefault();
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
+
+        $("#myColorPickerPopover").spectrum("destroy");
+        $("#myColorPickerPopover").spectrum({
+            change: function(color) {
+                const selectedColor = color.toHexString(); // #ff0000
+                console.log('you turned %s', selectedColor)
+                $('#color').val(selectedColor)
+            },
+            color: "#f00"
+        });
+
         
-        YUI().use(
+/*         YUI().use(
             'aui-color-picker-popover',
             function (Y) {
                 var colorPicker = new Y.ColorPickerPopover({
@@ -64,7 +75,7 @@ function viewCreateBlockInterface() {
                     }
                 );
             }
-        );
+        ); */
         componentHandler.upgradeDom();
         
     });
