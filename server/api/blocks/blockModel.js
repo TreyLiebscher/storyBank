@@ -36,7 +36,7 @@ BlockSchema.methods.serialize = function () {
         title: this.title,
         color: this.color,
         createdAt: this.createdAt,
-        stories: this.stories
+        // stories: this.stories.map(record=>record.serialize())
     };
 }
 
