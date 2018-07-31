@@ -12,7 +12,7 @@ function getBlocksWithStories(blockId, callback) {
 
 function renderBlock(result) {
     return `
-    <button class="storyBlock" id="${result.id}" style="${result.color}" type="button">
+    <button class="storyBlock" id="${result.id}" style="background-color: ${result.color}" type="button">
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
     </button>`
@@ -33,11 +33,11 @@ function renderCreateBlockInterface() {
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
 
-        <button id="myColorPickerPopover" class="form-control" type="button" name="selectedColor">Select a color</button>        
+        <button id="colorPicker" class="colorButton userButton" type="button" name="selectedColor">Select a color</button>        
         <input type="hidden" id="color" />
          
-        <button type="submit" id="js-blockCreateButton">Create!</button>
-        <button type="button" id="cancelBlockCreate">Cancel</button>
+        <button type="submit" id="js-blockCreateButton" class="userButton">Create!</button>
+        <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
     </form>
     `
 }
@@ -50,32 +50,16 @@ function viewCreateBlockInterface() {
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
 
-        $("#myColorPickerPopover").spectrum("destroy");
-        $("#myColorPickerPopover").spectrum({
+        $("#colorPicker").spectrum("destroy");
+        $("#colorPicker").spectrum({
             change: function(color) {
-                const selectedColor = color.toHexString(); // #ff0000
+                const selectedColor = color.toHexString();
                 console.log('you turned %s', selectedColor)
+                $('#colorPicker').css("background-color", selectedColor);
                 $('#color').val(selectedColor)
             },
             color: "#f00"
         });
-
-        
-/*         YUI().use(
-            'aui-color-picker-popover',
-            function (Y) {
-                var colorPicker = new Y.ColorPickerPopover({
-                    trigger: '#myColorPickerPopover',
-                    zIndex: 2
-                }).render();
-
-                colorPicker.on('select',
-                    function (event) {
-                        event.trigger.setStyle('backgroundColor', event.color);
-                    }
-                );
-            }
-        ); */
         componentHandler.upgradeDom();
         
     });
@@ -91,7 +75,7 @@ function handleCreateBlockSubmit() {
 
     const $form = $('#createBlock'),
         title = $form.find('input[name="title"]').val(),
-        color = $form.find('button[name="selectedColor"]').attr('style'),
+        color = $form.find('input[id="color"]').val(),
         url = $form.attr('action');
 
     const posting = $.ajax({
@@ -174,7 +158,7 @@ function handleGetAllBlocksWithStories() {
 
 function renderInsideBlockViewTitle(result) {
     return `
-    <div class="storyBlock" id="${result.id}" style="${result.color}">
+    <div class="storyBlock" id="${result.id}" style="background-color: ${result.color}">
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
         

@@ -9,15 +9,15 @@ function renderSignUpForm() {
 	return `<form class="js-signUp-form" id="signUpForm" action="${createURL}" method="POST">
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="userName" class="mdl-textfield__input" name="userEmail">
-		<label class="mdl-textfield__label" for="userName">Email</label>
+		<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
 	</div>
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="password" class="mdl-textfield__input" type="password" name="password">
-		<label class="mdl-textfield__label" for="password">Password</label>
+		<label id="passwordLabel" class="mdl-textfield__label" for="password">Password</label>
 	</div>
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
-		<label class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
+		<label id= "passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 	</div>
 	<button type="submit" class="userButton">Create Account</button>
     </form>`
@@ -84,7 +84,7 @@ function renderLogInForm() {
 	return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
 	<div id="mdlFloat" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="userName" class="mdl-textfield__input" name="userEmail">
-		<label class="mdl-textfield__label" for="userName">Email</label>
+		<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
 	</div>
 	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 		<input id="password" class="mdl-textfield__input" type="password" name="password">

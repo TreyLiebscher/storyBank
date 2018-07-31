@@ -145,18 +145,13 @@
     background: none;
 }
 
-#password {
+#userName,
+#password,
+#passwordConfirm {
     border-bottom: 1px solid white;
 }
-    
-#passwordLabel {
+#userNameLabel,    
+#passwordLabel,
+#passwordConfirmLabel {
     color: white;
-}
-
-#password:focus + #passwordLabel {
-    color: gray;
-}
-
-#password:focus {
-    border-bottom: 1px solid gray;
 }

@@ -15,7 +15,6 @@
     "mongoose": "^5.2.2",
     "mongoose-seed": "^0.5.0",
     "morgan": "^1.9.0",
-    "nyc": "^12.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -25,13 +24,15 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "faker": "^4.1.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2"
   },
   "scripts": {
     "test": "npm run test:api",
     "start": "node server/server.js",
-    "test:api": "mocha 'server/**/*.test.js' --exit --timeout 10000 --reporter min",
-    "develop": "nodemon --watch server --watch config.js server/server.js"
+    "test:api": "nyc mocha 'server/**/*.test.js' --exit --timeout 10000 --reporter min",
+    "develop": "nodemon --watch server --watch config.js server/server.js",
+    "testCover": "nyc mocha"
   },
   "author": "",
   "license": "ISC"

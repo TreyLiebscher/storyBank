@@ -27,8 +27,8 @@ function renderCreateStoryInterface(title, id) {
             <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
             <span class="mdl-switch__label">publicStatus?</span>
         </label>
-        <button type="submit">Add to block</button>
-        <button type="button" id="cancelStoryCreate">Cancel</button>
+        <button type="submit" class="userButton">Add to block</button>
+        <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
     </form>`
 }
 
