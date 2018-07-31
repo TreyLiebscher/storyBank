@@ -125,11 +125,11 @@ async function getBlockWithStories(req, res) {
         return res.status(404).json({message: 'NOT_FOUND'})
     }
 
-    const storyRecord = await StoriesModel.find({block: req.params.id});
+    const storyRecordArr = await StoriesModel.find({block: req.params.id});
     if (record === null) {
         return res.status(404).json({message: 'No stories in this block'})
     }
-    res.json({block: record.serialize(), stories: storyRecord});
+    res.json({block: record.serialize(), stories: storyRecordArr.map(record=>record.serialize())});
 }
 
 router.get('/blocks/stories/:id', tryCatch(getBlockWithStories));

@@ -76,7 +76,7 @@ function renderStoryQuickView(result) {
     
     background-position: center;">
     <h3 class="quickViewTitle">${result.title}</h3>
-    <p class="storyId">${result._id}</p>
+    <p class="storyId">${ result.id }</p>
     </div>
     `
 }
