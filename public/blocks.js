@@ -42,8 +42,6 @@ function renderCreateBlockInterface() {
     `
 }
 
-
-
 function viewCreateBlockInterface() {
     $('.js-create-block-view').on('click', function (event) {
         event.preventDefault();
@@ -52,7 +50,7 @@ function viewCreateBlockInterface() {
 
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
-            change: function(color) {
+            change: function (color) {
                 const selectedColor = color.toHexString();
                 console.log('you turned %s', selectedColor)
                 $('#colorPicker').css("background-color", selectedColor);
@@ -61,7 +59,7 @@ function viewCreateBlockInterface() {
             color: "#f00"
         });
         componentHandler.upgradeDom();
-        
+
     });
 }
 
@@ -129,7 +127,6 @@ function renderInsideBlockView(result) {
 }
 
 function displayBlockWithStories(arr) {
-    // const results = arr.stories.map((item) => renderInsideBlockView(item));
     const results = arr.stories.map((item) => renderStoryQuickView(item));
     const blockResult = renderInsideBlockViewTitle(arr.block);
     $('.storyBlockView').html(results);
@@ -196,12 +193,10 @@ function handleFormsSubmit() {
         console.log('Submitted form id is:', formID)
 
         if (formID === 'createBlock') {
-            //create block logic here
             handleCreateBlockSubmit()
         }
 
         if (formID === 'createStory') {
-            //create story logic here
             handleCreateStory()
         }
 

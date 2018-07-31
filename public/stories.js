@@ -47,7 +47,7 @@ function viewCreateStoryInterface() {
 }
 
 function hideStoryCreateInterface() {
-    $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function(event) {
+    $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function (event) {
         $('.storyCreateInterface').empty();
         $('.storyBlockView').show('slow');
     });
@@ -71,9 +71,7 @@ function displayStory(result) {
 function renderStoryQuickView(result) {
     return `
     <div class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
-    
     background-repeat: no-repeat;
-    
     background-position: center;">
     <h3 class="quickViewTitle">${result.title}</h3>
     <p class="storyId">${ result.id }</p>
@@ -115,8 +113,6 @@ function handleCreateStory() {
         publicStatus: publicStatus
     }
 
-    // const posting = $.post(url, formData);
-
     const posting = $.ajax({
         type: "POST",
         url: url,
@@ -128,10 +124,7 @@ function handleCreateStory() {
         data: JSON.stringify(formData)
     });
 
-
-
     posting.done(function (data) {
-        // const content = renderStory(data.story);
         const content = renderStoryQuickView(data.story);
         console.log('story id is', data.story.id);
         $('.storyBlockView').show('slow');
@@ -142,9 +135,9 @@ function handleCreateStory() {
 }
 
 function stories() {
-    $(viewAllStoriesInBlock); //story
-    $(handleViewStory); //story
-    $(viewCreateStoryInterface); //story
+    $(viewAllStoriesInBlock);
+    $(handleViewStory);
+    $(viewCreateStoryInterface);
     $(hideStoryCreateInterface);
 }
 
