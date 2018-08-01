@@ -190,10 +190,21 @@ async function deleteBlock(req, res) {
             message: 'NOT_FOUND'
         })
     }
+
+    const storiesRecord = await StoriesModel
+    .find({block: req.params.id})
+    .remove()
+    if (storiesRecord === null) {
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
+    }
+
     res.json({
         block: record.serialize(),
+        // stories: storiesRecord.map(record => record.serialize()), //TODO make this work
         message: 'Block has been deleted'
-    })
+    });
 }
 
 // Delete

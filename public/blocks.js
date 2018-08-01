@@ -237,6 +237,7 @@ function handleBlockDeletion() {
         const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView-Title').empty();
+        $('.storyBlockView').empty();
         $('.storyBlock').remove(`#${data.block.id}`)
     });
 }
