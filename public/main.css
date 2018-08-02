@@ -5,6 +5,7 @@
 .storyBankBody {
     color: white;
     background-color: #133947;
+    height: 100%;
 }
 
 .storyBankMainContent {
@@ -35,7 +36,8 @@
     /* margin-left: 2%; */
 }
 
-.userButton:hover, .userButton:focus {
+.userButton:hover,
+.userButton:focus {
     color: #133947;
     background: white;
 }
@@ -55,6 +57,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 90vw;
+    height: 100%;
 }
 
 .storyBlock {
@@ -123,6 +126,11 @@
     margin: 0 auto 2% auto;
 }
 
+.deleteMenuHolder .userButton:hover,
+.userButton:focus {
+    color: black;
+}
+
 .deleteBlockTitle {
     color: red;
 }
@@ -143,10 +151,10 @@
     position: relative;
 }
 
-.storyImage { 
+.storyImage {
     max-width: 75vw;
-    max-height: 50vh; 
-} 
+    max-height: 50vh;
+}
 
 .imageThumb {
     max-width: 30vw;

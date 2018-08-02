@@ -11,6 +11,20 @@ const API_URLS = {
     userLogIn: '/users/login'
 }
 
+function renderErrorMessage() {
+    return `
+        <p class="errorMessage">Something went wrong, please try again</p>
+        <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
+    `
+}
+
+function displayErrorMessage() {
+    const message = renderErrorMessage();
+    $('.deleteMenuHolder').removeClass('hide');
+    $('.deleteMenuHolder').html(message);
+}
+
 $( document ).ajaxError(function(err) {
     console.error('TODO: display a nice error div', err )
+    displayErrorMessage();
   });
