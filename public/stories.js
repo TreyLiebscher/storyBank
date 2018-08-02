@@ -120,7 +120,6 @@ function onChooseFile(event, onLoadFileHandler) {
     if (!input.files[0])
         return undefined;
     let file = input.files[0];
-    debugger
     let fr = new FileReader();
     fr.onload = onLoadFileHandler;
     // fr.readAsText(file);
