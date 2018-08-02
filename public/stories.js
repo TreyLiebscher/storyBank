@@ -62,7 +62,7 @@ function hideStoryCreateInterface() {
 function renderStory(result) {
     //if user chooses not to provide an image
     let image;
-    if (result.story.image === undefined || null) {
+    if (!(result.story.image)) {
         image = `<br>`;
     } else {
         image = `<img class="storyImage" src="${result.story.image}">`;
