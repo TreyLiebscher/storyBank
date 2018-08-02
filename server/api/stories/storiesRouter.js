@@ -78,7 +78,7 @@ async function getStories(req, res) {
     }
 
     const records = await StoriesModel
-        .find({})
+        .find({publicStatus: true})
         .sort([
             ['date', -1]
         ])
