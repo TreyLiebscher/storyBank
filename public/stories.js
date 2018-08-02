@@ -17,13 +17,13 @@ function renderCreateStoryInterface(title, id) {
             <input id="title" class="mdl-textfield__input" name="title">
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             
         <input type ="file" 
             onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' 
             id="image" class="mdl-textfield__input" name="image">
 
-            <label class="mdl-textfield__label" for="image">Image</label>
+        <div class="imageThumbBox">
+            <img id="storyImagePreview" class="imageThumb" src="">
         </div>
         <div class="mdl-textfield mdl-js-textfield">
             <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
@@ -63,7 +63,9 @@ function renderStory(result) {
     return `
         <div class="storyDetailView">
         <h3>${result.story.title}</h3>
+        <div class="imageBox">
         <img class="storyImage" src="${result.story.image}">
+        </div>
         <p>${result.story.content}</p>
         </div>
     `
@@ -105,8 +107,9 @@ function handleViewStory() {
 
 function onFileLoad(elementId, event) {
     const data = event.target.result;
-    console.log('Got file data', data)
-    lastUpload = data
+    console.log('Got file data', data);
+    $('#storyImagePreview').attr('src', data);
+    lastUpload = data;
 }
 
 function onChooseFile(event, onLoadFileHandler) {
@@ -122,14 +125,12 @@ function onChooseFile(event, onLoadFileHandler) {
     let file = input.files[0];
     let fr = new FileReader();
     fr.onload = onLoadFileHandler;
-    // fr.readAsText(file);
     fr.readAsDataURL(file)
 }
 
 function handleCreateStory() {
     const $form = $('#createStory'),
         title = $form.find('input[name="title"]').val(),
-        // image = $form.find('input[name="image"]').val(),
         content = $form.find('textarea[name="content"]').val();
 
     const ckBox = $form.find("#switch-2")
@@ -143,7 +144,7 @@ function handleCreateStory() {
         publicStatus: publicStatus
     }
 
-   
+
 
     const posting = $.ajax({
         type: "POST",

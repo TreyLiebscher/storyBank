@@ -134,9 +134,14 @@
     position: relative;
 }
 
-.storyImage {
+.storyImage { 
     max-width: 75vw;
-    max-height: 50vh;
+    max-height: 50vh; 
+} 
+
+.imageThumb {
+    max-width: 30vw;
+    max-height: 20vh;
 }
 
 .blockId,
