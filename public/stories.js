@@ -62,11 +62,13 @@ function hideStoryCreateInterface() {
 function renderStory(result) {
     return `
         <div class="storyDetailView">
-        <h3>${result.story.title}</h3>
+        <h3 class="storyTitle">${result.story.title}</h3>
+        <p class="storyId">${ result.story.id }</p>
         <div class="imageBox">
         <img class="storyImage" src="${result.story.image}">
         </div>
         <p>${result.story.content}</p>
+        <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
         </div>
     `
 }
@@ -78,7 +80,7 @@ function displayStory(result) {
 
 function renderStoryQuickView(result) {
     return `
-    <div class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
+    <div type="button" class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
     background-repeat: no-repeat;
     background-position: center;">
     <h3 class="quickViewTitle">${result.title}</h3>
@@ -168,11 +170,77 @@ function handleCreateStory() {
     });
 }
 
+function renderStoryDeleteMenu(title, id) {
+
+    const deleteUrl = API_URLS.deleteStory;
+
+    return `
+    <form id="deleteStory" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
+    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>?</p>
+    <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
+    <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+    </form>
+    `
+}
+
+function displayDeleteStoryMenu() {
+    $('.storyBlockView').on('click', 'button', 'button#displayStoryDeleteMenu', function (event) {
+        event.preventDefault();
+        $('.deleteMenuHolder').removeClass('hide');
+        const storyId = $(event.target).closest('.storyDetailView').find('.storyId').text();
+        const storyTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
+        const deleteMenu = renderStoryDeleteMenu(storyTitle, storyId);
+        $('.deleteMenuHolder').html(deleteMenu);
+    });
+}
+
+function hideStoryDeleteMenu() {
+    $('.deleteMenuHolder').on('click', 'button#cancelStoryDeletion', function (event) {
+        event.preventDefault();
+        $('.deleteMenuHolder').addClass('hide');
+    });
+}
+
+function handleStoryDeletion() {
+    const $form = $('#deleteStory'),
+        url = $form.attr('action');
+
+    const deleting = $.ajax({
+        type: "DELETE",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        }
+    })
+
+    deleting.done(function (data) {
+        console.log(`${data.message}, kiwi`);
+        const message = `<p>${data.message}</p><button id="cancelStoryDeletion" class="userButton" type="button">Ok</button>`;
+        $('.deleteMenuHolder').html(message);
+        $('.storyBlockView').empty();
+        const blockId = $('.storyBlockView-Title').find('.blockId').text();
+        console.log(blockId);
+        const resultPromise = getBlocksWithStories(blockId);
+
+        resultPromise.catch(err => {
+            console.error('Error', err);
+        })
+
+        resultPromise.then(resultResponse => {
+            return displayBlockWithStories(resultResponse);
+        })
+
+    })
+}
+
 function stories() {
     $(viewAllStoriesInBlock);
     $(handleViewStory);
     $(viewCreateStoryInterface);
     $(hideStoryCreateInterface);
+    $(displayDeleteStoryMenu);
+    $(hideStoryDeleteMenu);
 }
 
 $(stories);

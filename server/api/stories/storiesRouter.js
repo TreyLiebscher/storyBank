@@ -50,7 +50,7 @@ async function createStoryInBlock(req, res) {
     const record = await StoriesModel.create({
         date: new Date(),
         title: req.body.title || 'Untitled Story',
-        image: req.body.image,
+        image: req.body.image || 'https://forums.androidcentral.com/attachments/wallpapers-ringtones-themes/266649d1504030131t-pure-black-wallpaper-pure-black-wallpaper-159.jpg',
         content: req.body.content,
         publicStatus: req.body.publicStatus,
         block: blockRecord._id
@@ -140,6 +140,6 @@ async function deleteStory(req, res) {
     })
 }
 
-router.delete('/story/delete/:id', tryCatch(deleteStory));
+router.delete('/story/delete/:id', jwtAuth, tryCatch(deleteStory));
 
 module.exports = router;

@@ -35,6 +35,11 @@
     /* margin-left: 2%; */
 }
 
+.userButton:hover, .userButton:focus {
+    color: #133947;
+    background: white;
+}
+
 .js-create-block-view {
     display: none;
 }
@@ -73,6 +78,10 @@
     display: flex;
     flex-direction: row;
     border-radius: 0;
+}
+
+.storyBlockView-Title>.storyBlock {
+    box-shadow: none;
 }
 
 .storyBlock>button {
@@ -176,7 +185,7 @@
     height: 18vh;
     width: 20%;
     border: 3px solid white;
-    border-radius: 5%;
+    /* border-radius: 2%; */
     overflow-y: scroll;
 }
 

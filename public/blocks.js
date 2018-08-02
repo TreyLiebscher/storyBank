@@ -264,6 +264,10 @@ function handleFormsSubmit() {
             handleCreateStory()
         }
 
+        if (formID === 'deleteStory') {
+            handleStoryDeletion();
+        }
+
     });
 }
 
