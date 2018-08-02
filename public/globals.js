@@ -9,3 +9,7 @@ const API_URLS = {
     createNewUser: '/users/user/createUser',
     userLogIn: '/users/login'
 }
+
+$( document ).ajaxError(function(err) {
+    console.error('TODO: display a nice error div', err )
+  });

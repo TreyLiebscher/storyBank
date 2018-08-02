@@ -2,6 +2,22 @@
 
 let AUTH_TOKEN
 
+
+function saveLoginResponse(data) {
+	Cookies.set('APP_LOGIN_TOKEN', JSON.stringify(data));
+}
+function restoreLoginResponse() {
+	const dataStr = Cookies.get('APP_LOGIN_TOKEN');
+	if (dataStr) {
+		const data = JSON.parse(dataStr)
+		console.log('Saved login data', data)
+		navigateToStories(data, false)
+		//TODO: go to story list
+	}
+}
+
+
+
 function renderSignUpForm() {
 
 	const createURL = API_URLS.createNewUser;
@@ -72,6 +88,8 @@ function handleCreateNewUser() {
 			$('.js-create-block-view').show('slow');
 			$('.userProfileName').html(data.email);
 			AUTH_TOKEN = data.authToken;
+			saveLoginResponse(data)
+
 		});
 
 	});
@@ -104,6 +122,35 @@ function handleLogInClick() {
 	});
 }
 
+
+function navigateToStories(data, saveResponse = false) {
+	console.log(data);
+	AUTH_TOKEN = data.authToken;
+	if (saveResponse) {
+		saveLoginResponse(data)
+	}
+	$('#formsHolder').empty();
+	const logOutButton = renderLogOutButton();
+	$('.storyBankHeader').append(logOutButton);
+	$('.storyBankHeader').find('.userSignUp').hide('slow');
+	$('.storyBankHeader').find('.userLogIn').hide('slow');
+	$('.js-create-block-view').show('slow');
+	$('.userProfileName').html(data.email);
+
+	const record = $.ajax({
+		type: "GET",
+		url: `${API_URLS.getUserBlocks}`,
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${AUTH_TOKEN}`
+		}
+	});
+
+	record.done(function (data) {
+		return displayBlock(data);
+	});
+}
+
 function handleUserLogIn() {
 	const $form = $('#logInForm'),
 		email = $form.find('input[name="userEmail"]').val(),
@@ -116,30 +163,7 @@ function handleUserLogIn() {
 		password: password
 	});
 
-	userLoginRequest.done(function (data) {
-		console.log(data);
-		AUTH_TOKEN = data.authToken;
-		$('#formsHolder').empty();
-		const logOutButton = renderLogOutButton();
-		$('.storyBankHeader').append(logOutButton);
-		$('.storyBankHeader').find('.userSignUp').hide('slow');
-		$('.storyBankHeader').find('.userLogIn').hide('slow');
-		$('.js-create-block-view').show('slow');
-		$('.userProfileName').html(data.email);
-
-		const record = $.ajax({
-            type: "GET",
-            url: `${API_URLS.getUserBlocks}`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${AUTH_TOKEN}`
-            }
-        });
-
-        record.done(function (data) {
-            return displayBlock(data);
-        });
-	});
+	userLoginRequest.done(data => navigateToStories(data, true));
 }
 
 function handleUserFormsSubmit() {
@@ -190,3 +214,4 @@ $(handleSignUpClick);
 $(handleLogInClick);
 $(handleUserFormsSubmit);
 $(handleLogOutUser);
+$(restoreLoginResponse)

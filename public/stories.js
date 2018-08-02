@@ -1,5 +1,7 @@
 'use strict';
 
+let lastUpload
+
 function getStoryById(storyId, callback) {
     const requestURI = `${API_URLS.getStoryById}/${storyId}`;
     return $.getJSON(requestURI, callback);
@@ -16,7 +18,11 @@ function renderCreateStoryInterface(title, id) {
             <label class="mdl-textfield__label" for="title">Title</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="image" class="mdl-textfield__input" name="image">
+            
+        <input type ="file" 
+            onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' 
+            id="image" class="mdl-textfield__input" name="image">
+
             <label class="mdl-textfield__label" for="image">Image</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
@@ -96,10 +102,35 @@ function handleViewStory() {
     })
 }
 
+
+function onFileLoad(elementId, event) {
+    const data = event.target.result;
+    console.log('Got file data', data)
+    lastUpload = data
+}
+
+function onChooseFile(event, onLoadFileHandler) {
+    if (typeof window.FileReader !== 'function')
+        throw ("The file API isn't supported on this browser.");
+    let input = event.target;
+    if (!input)
+        throw ("The browser does not properly implement the event object");
+    if (!input.files)
+        throw ("This browser does not support the `files` property of the file input.");
+    if (!input.files[0])
+        return undefined;
+    let file = input.files[0];
+    debugger
+    let fr = new FileReader();
+    fr.onload = onLoadFileHandler;
+    // fr.readAsText(file);
+    fr.readAsDataURL(file)
+}
+
 function handleCreateStory() {
     const $form = $('#createStory'),
         title = $form.find('input[name="title"]').val(),
-        image = $form.find('input[name="image"]').val(),
+        // image = $form.find('input[name="image"]').val(),
         content = $form.find('textarea[name="content"]').val();
 
     const ckBox = $form.find("#switch-2")
@@ -108,10 +139,12 @@ function handleCreateStory() {
 
     const formData = {
         title: title,
-        image: image,
+        image: lastUpload,
         content: content,
         publicStatus: publicStatus
     }
+
+   
 
     const posting = $.ajax({
         type: "POST",
@@ -125,6 +158,7 @@ function handleCreateStory() {
     });
 
     posting.done(function (data) {
+        lastUpload = null
         const content = renderStoryQuickView(data.story);
         console.log('story id is', data.story.id);
         $('.storyBlockView').show('slow');
