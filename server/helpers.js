@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 
 function expressTryCatchWrapper(fn) {
     return async function (req, resp) {
@@ -13,6 +14,13 @@ function expressTryCatchWrapper(fn) {
     }
 }
 
+async function deleteCollections(namesArr) {
+    const collections = await mongoose.connection.db.collections()
+    const filteredCollections = collections.filter(item => namesArr.includes(item.collectionName))
+    return await Promise.all(filteredCollections.map(c => c.remove()))
+}
+
 module.exports = {
-    expressTryCatchWrapper
+    expressTryCatchWrapper,
+    deleteCollections
 }

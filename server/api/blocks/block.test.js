@@ -1,23 +1,31 @@
+'use strict';
+
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-const mongoose = require('mongoose')
+
 const {
     closeServer,
     runServer,
     app
 } = require('../../server')
+
 const {
     TEST_DATABASE_URL,
     PORT
 } = require('../../../config')
+
 const {
     getConfig
 } = require('../../api/api')
+
 const BlockModel = getConfig('storyblock').models.block
+
 const {
     testUtilCreateUser
 } = require('../users/userModel')
+
+const deleteCollections = require('../../helpers').deleteCollections;
 
 async function testUserLoginToken() {
     const loginRes = await chai
@@ -32,7 +40,6 @@ async function testUserLoginToken() {
 }
 
 const expect = chai.expect;
-const should = chai.should()
 chai.use(chaiHttp)
 
 const seedData = [{
@@ -49,13 +56,6 @@ const seedData = [{
     },
 ]
 const SEED_DATA_LENGTH = seedData.length
-
-// TODO move this into helpers.js
-async function deleteCollections(namesArr) {
-    const collections = await mongoose.connection.db.collections()
-    const filteredCollections = collections.filter(item => namesArr.includes(item.collectionName))
-    return await Promise.all(filteredCollections.map(c => c.remove()))
-}
 
 const email = 'test@test.com';
 const password = 'password123';
@@ -163,7 +163,7 @@ describe('block API routes', function () {
                 block: retrievedBlock
             } = res.body
             const {
-                stories : retrievedStories
+                stories: retrievedStories
             } = res.body
             expect(retrievedStories).to.be.an('array');
             //need to verify whether or not there ARE stories associated w/ block

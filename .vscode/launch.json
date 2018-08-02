@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Mocha Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node",
+            "runtimeExecutable": "/home/linuxbrew/.linuxbrew/bin/node",
             "args": [
                 "-u",
                 "tdd",

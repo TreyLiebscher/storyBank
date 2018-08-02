@@ -12,7 +12,6 @@ function restoreLoginResponse() {
 		const data = JSON.parse(dataStr)
 		console.log('Saved login data', data)
 		navigateToStories(data, false)
-		//TODO: go to story list
 	}
 }
 

@@ -2,8 +2,6 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const faker = require('faker');
-const mongoose = require('mongoose');
 
 const {
     app,
@@ -21,6 +19,8 @@ const BlockModel = getConfig('storyblock').models.block
 const {
     testUtilCreateUser
 } = require('../users/userModel')
+
+const deleteCollections = require('../../helpers').deleteCollections;
 
 const {
     TEST_DATABASE_URL,
@@ -40,38 +40,31 @@ async function testUserLoginToken() {
 }
 
 const expect = chai.expect;
-const should = chai.should();
 chai.use(chaiHttp);
 
 const seedData = [{
-        title: 'Story1',
-        image: 'Image1',
-        content: 'Content1',
-        publicStatus: true
-    },
-    {
-        title: 'Story2',
-        image: 'Image2',
-        content: 'Content2',
-        publicStatus: false
-    },
-    {
-        title: 'Story3',
-        image: 'Image3',
-        content: 'Content3',
-        publicStatus: true
-    },
+    title: 'Story1',
+    image: 'Image1',
+    content: 'Content1',
+    publicStatus: true
+},
+{
+    title: 'Story2',
+    image: 'Image2',
+    content: 'Content2',
+    publicStatus: false
+},
+{
+    title: 'Story3',
+    image: 'Image3',
+    content: 'Content3',
+    publicStatus: true
+},
 ]
 
+
+
 const SEED_DATA_LENGTH = seedData.length;
-
-async function deleteCollections(namesArr) {
-    const collections = await mongoose.connection.db.collections();
-
-    const filteredCollections = collections.filter(item => namesArr.includes(item.collectionName));
-
-    return await Promise.all(filteredCollections.map(c => c.remove()));
-}
 
 const email = 'test@test.com';
 const password = 'password123';
@@ -91,7 +84,7 @@ describe('story API routes', function () {
     });
 
     describe('CRUD /stories/story', () => {
-        
+
         let createdStory, deletedStory
 
         it('should update a story by id (PUT)', async () => {
@@ -131,16 +124,16 @@ describe('story API routes', function () {
             expect(story.content).to.equal(newContent);
             expect(story.publicStatus).to.equal(newPublicStatus);
         })
-        
-        
-        it('should create a new story within a block', async () => {
-            
+
+
+        it('should create a new story within a block (POST)', async () => {
+
             const record = await BlockModel.create({
                 user_id: testUser._id,
                 title: 'a test block',
                 color: 'blue'
             })
-            
+
             const newStory = {
                 title: 'new story',
                 content: 'just some new stuff',
@@ -163,6 +156,7 @@ describe('story API routes', function () {
             const {
                 story
             } = res.body;
+            createdStory = story;
             expect(story).to.be.an('object');
             expect(story.title).to.equal(newStory.title);
             expect(story.block).to.equal(record.id);
@@ -171,6 +165,31 @@ describe('story API routes', function () {
             expect(createdAt).to.be.a('date');
             expect(createdAt.toDateString()).to.not.equal('Invalid Date');
         });
+
+        it('should delete a story by id (DELETE)', async () => {
+            
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+            .request(app)
+            .delete(`/stories/story/delete/${createdStory.id}`)
+            .set('Authorization', `Bearer ${authToken}`)
+            expect(res).to.have.status(200)
+            expect(res).to.be.json;
+            const {
+                story
+            } = res.body
+            deletedStory = story
+            expect(story).to.deep.equal(createdStory);
+        });
+
+        it('should return a 404 for a non-existent post', async () => {
+            const nxID = deletedStory.id;
+            const res = await chai.request(app).get(`/stories/story/${nxID}`)
+            expect(res).to.have.status(404)
+            expect(res).to.be.json;
+        })
+
     });
 
     describe('GET /stories/storiesall (no records)', () => {
@@ -179,17 +198,17 @@ describe('story API routes', function () {
             const res = await chai
                 .request(app)
                 .get('/stories/storiesall')
-                expect(res).to.have.status(200);
-                expect(res).to.be.json;
-                expect(res.body.stories).to.deep.equal([]);
+            expect(res).to.have.status(200);
+            expect(res).to.be.json;
+            expect(res.body.stories).to.deep.equal([]);
         });
 
         it('should fail when the offset parameter is out of bounds', async () => {
             const res = await chai
                 .request(app)
                 .get('/stories/storiesall/10')
-                expect(res).to.be.json;
-                expect(res).to.have.status(500)
+            expect(res).to.be.json;
+            expect(res).to.have.status(500)
         });
     });
 
@@ -201,11 +220,11 @@ describe('story API routes', function () {
             const res = await chai
                 .request(app)
                 .get('/stories/storiesall')
-                expect(res).to.have.status(200);
-                expect(res).to.be.json;
-                expect(res.body.stories).to.be.an('array');
-                expect(res.body.stories).to.have.lengthOf(3);
-                expect(res.body.total).to.equal(3);
+            expect(res).to.have.status(200);
+            expect(res).to.be.json;
+            expect(res.body.stories).to.be.an('array');
+            expect(res.body.stories).to.have.lengthOf(3);
+            expect(res.body.total).to.equal(3);
 
         });
 
@@ -213,11 +232,11 @@ describe('story API routes', function () {
             const res = await chai
                 .request(app)
                 .get('/stories/storiesall/2')
-                expect(res).to.be.json;
-                expect(res).to.have.status(200);
-                expect(res.body.stories).to.be.an('array');
-                expect(res.body.stories).to.have.lengthOf(1);
-                expect(res.body.total).to.equal(3);
+            expect(res).to.be.json;
+            expect(res).to.have.status(200);
+            expect(res.body.stories).to.be.an('array');
+            expect(res.body.stories).to.have.lengthOf(1);
+            expect(res.body.total).to.equal(3);
         });
     });
 });

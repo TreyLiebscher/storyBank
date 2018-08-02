@@ -2,8 +2,6 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const faker = require('faker');
-const mongoose = require('mongoose');
 
 const {
     app,
@@ -15,8 +13,6 @@ const {
     getConfig
 } = require('../../api/api');
 
-const UserModel = getConfig('users').models.users;
-
 const {
     TEST_DATABASE_URL,
     PORT
@@ -24,23 +20,7 @@ const {
 
 
 const expect = chai.expect;
-const should = chai.should();
 chai.use(chaiHttp);
-
-const seedData = [
-    { email: 'foo@example.com', password: 'secret' },
-    { email: 'bar@example.com', password: 'haxx0r' },
-]
-const SEED_DATA_LENGTH = seedData.length
-
-
-async function deleteCollections(namesArr) {
-    const collections = await mongoose.connection.db.collections();
-
-    const filteredCollections = collections.filter(item => namesArr.includes(item.collectionName));
-
-    return await Promise.all(filteredCollections.map(c => c.remove()));
-}
 
 describe('Users API routes', function () {
 
@@ -69,7 +49,7 @@ describe('Users API routes', function () {
             expect(res).to.have.status(200)
             expect(res).to.be.json;
 
-            const {user} = res.body;
+            const { user } = res.body;
             createdUser = user;
             expect(user).to.be.an('object');
             expect(user.email).to.equal(email);
