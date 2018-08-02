@@ -60,12 +60,20 @@ function hideStoryCreateInterface() {
 }
 
 function renderStory(result) {
+    //if user chooses not to provide an image
+    let image;
+    if (result.story.image === undefined || null) {
+        image = `<br>`;
+    } else {
+        image = `<img class="storyImage" src="${result.story.image}">`;
+    }
+    
     return `
         <div class="storyDetailView">
         <h3 class="storyTitle">${result.story.title}</h3>
-        <p class="storyId">${ result.story.id }</p>
+        <p class="storyId">${result.story.id }</p>
         <div class="imageBox">
-        <img class="storyImage" src="${result.story.image}">
+        ${image}
         </div>
         <p>${result.story.content}</p>
         <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
@@ -79,10 +87,17 @@ function displayStory(result) {
 }
 
 function renderStoryQuickView(result) {
+    let backgroundStyle;
+    if (!(result.image)) {
+        backgroundStyle = `"background-color: #000000"` 
+    } else {
+        backgroundStyle = `"background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
+        background-repeat: no-repeat;
+        background-position: center;"`
+    }
+
     return `
-    <div type="button" class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
-    background-repeat: no-repeat;
-    background-position: center;">
+    <div type="button" class="storyQuickView" style=${backgroundStyle}>
     <h3 class="quickViewTitle">${result.title}</h3>
     <p class="storyId">${ result.id }</p>
     </div>
