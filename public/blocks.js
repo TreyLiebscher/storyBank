@@ -161,6 +161,7 @@ function renderInsideBlockViewTitle(result) {
         
         <button class="addStory userButton">Add New Story</button>
         <button id="displayAllStories" class="userButton">Show All Stories</button>
+        <button id="editBlock" class="userButton">Edit</button>
         <button id="displayDeleteMenu" class="userButton">Delete Block</button>
     </div>
    `
@@ -258,6 +259,10 @@ function handleFormsSubmit() {
 
         if (formID === 'deleteBlock') {
             handleBlockDeletion()
+        }
+
+        if (formID === 'editBlock') {
+            handleBlockUpdate()
         }
 
         if (formID === 'createStory') {

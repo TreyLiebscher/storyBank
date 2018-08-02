@@ -52,7 +52,7 @@ const seedData = [{
     title: 'Story2',
     image: 'Image2',
     content: 'Content2',
-    publicStatus: false
+    publicStatus: true
 },
 {
     title: 'Story3',
