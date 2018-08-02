@@ -192,8 +192,10 @@ async function deleteBlock(req, res) {
     }
 
     const storiesRecord = await StoriesModel
-    .find({block: req.params.id})
-    .remove()
+        .find({
+            block: req.params.id
+        })
+        .remove()
     if (storiesRecord === null) {
         return res.status(404).json({
             message: 'NOT_FOUND'

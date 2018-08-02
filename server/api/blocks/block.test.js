@@ -114,8 +114,12 @@ describe('block API routes', function () {
 
 
         it('should create a new block (POST)', async () => {
-            const title = 'Some useless block';
-            const color = 'purple';
+
+            const newBlock = await BlockModel.create({
+                user_id: testUser._id,
+                title: 'New Block',
+                color: 'purple'
+            })
 
             const authToken = await testUserLoginToken()
 
@@ -123,10 +127,7 @@ describe('block API routes', function () {
                 .request(app)
                 .post('/storyblock/block/create')
                 .set('Authorization', `Bearer ${authToken}`)
-                .send({
-                    title,
-                    color
-                })
+                .send(newBlock)
             expect(res).to.have.status(200)
             expect(res).to.be.json;
 
@@ -135,7 +136,7 @@ describe('block API routes', function () {
             } = res.body
             createdBlock = block
             expect(block).to.be.an('object');
-            expect(block.title).to.equal(title)
+            expect(block.title).to.equal(newBlock.title)
             expect(block.id).to.be.a('string')
             expect(block.createdAt).to.be.a('string')
             const createdAt = new Date(block.createdAt)
@@ -187,6 +188,7 @@ describe('block API routes', function () {
             const nxID = deletedBlock.id
             const res = await chai.request(app).get(`/storyblock/block/${nxID}`)
             expect(res).to.have.status(404)
+            expect(res.body.message).to.equal('NOT_FOUND')
             expect(res).to.be.json;
         })
 
@@ -250,6 +252,5 @@ describe('block API routes', function () {
 
 
     })
-
 
 })

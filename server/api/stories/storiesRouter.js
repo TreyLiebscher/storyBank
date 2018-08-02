@@ -5,10 +5,15 @@ const BlockModel = require('../blocks/blockModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
 
 const passport = require('passport');
-const { localStrategy, jwtStrategy } = require('../../../auth/strategies');
+const {
+    localStrategy,
+    jwtStrategy
+} = require('../../../auth/strategies');
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-const jwtAuth = passport.authenticate('jwt', { session: false });
+const jwtAuth = passport.authenticate('jwt', {
+    session: false
+});
 
 const router = express.Router();
 
@@ -113,16 +118,22 @@ async function updateStory(req, res) {
 
     const existingRecord = await StoriesModel.findById(req.params.id);
     if (existingRecord === null) {
-        return res.status(404).json({message: 'NOT_FOUND'})
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
     const newFieldValues = getFieldsFromRequest(STORY_MODEL_FIELDS, req);
 
-    const updatedRecord = await StoriesModel.findByIdAndUpdate(
-        {'_id': req.params.id},
-        {$set: newFieldValues},
-        {new: true}
-    )
-    res.json({story: updatedRecord.serialize()})
+    const updatedRecord = await StoriesModel.findByIdAndUpdate({
+        '_id': req.params.id
+    }, {
+        $set: newFieldValues
+    }, {
+        new: true
+    })
+    res.json({
+        story: updatedRecord.serialize()
+    })
 }
 
 router.put('/story/update/:id', tryCatch(updateStory));
@@ -132,7 +143,9 @@ async function deleteStory(req, res) {
     const record = await StoriesModel
         .findByIdAndRemove(req.params.id)
     if (record === null) {
-        return res.status(404).json({message: 'NOT_FOUND'})
+        return res.status(404).json({
+            message: 'NOT_FOUND'
+        })
     }
     res.json({
         story: record.serialize(),
