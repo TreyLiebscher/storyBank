@@ -4,7 +4,8 @@
 
 .storyBankBody {
     color: white;
-    background-color: #133947;
+    /* background-color: #133947; */
+    background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/xT5hzmO/nighttime-campfire_e1vx-fat__F0000.png');
     height: 100%;
 }
 
@@ -68,11 +69,16 @@
     margin: 10px 0 0 10px;
     border: 3px solid white;
     border-radius: 5%;
+    -webkit-transition: transform 1s, box-shadow 0.5s; 
+    -moz-transition: transform 1s, box-shadow 0.5s;
+    -o-transition: transform 1s, box-shadow 0.5s;
+    transition: transform 1s, box-shadow 0.5s;
 }
 
 .storyBlock:hover {
     cursor: pointer;
     box-shadow: 0 0 20px 1px white;
+    border: 2px solid white;
 }
 
 .storyBlockView-Title>.storyBlock {
