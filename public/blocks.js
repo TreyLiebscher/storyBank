@@ -30,7 +30,7 @@ function renderCreateBlockInterface() {
     <form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
-            <label class="mdl-textfield__label" for="title">Title</label>
+            <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
         </div>
 
         <button id="colorPicker" class="colorButton userButton" type="button" name="selectedColor">Select a color</button>        

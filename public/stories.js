@@ -15,7 +15,7 @@ function renderCreateStoryInterface(title, id) {
     <form id="createStory" action="${createURL}/${id}" method="POST">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
-            <label class="mdl-textfield__label" for="title">Title</label>
+            <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
         </div>
             
         <input type ="file" 
@@ -25,9 +25,9 @@ function renderCreateStoryInterface(title, id) {
         <div class="imageThumbBox">
             <img id="storyImagePreview" class="imageThumb" src="">
         </div>
-        <div class="mdl-textfield mdl-js-textfield">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
-            <label class="mdl-textfield__label" for="content">Write your story</label>
+            <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
         </div>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
             <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
