@@ -27,6 +27,9 @@ const {
 
 const deleteCollections = require('../../helpers').deleteCollections;
 
+const email = 'test@test.com';
+const password = 'password123';
+
 async function testUserLoginToken() {
     const loginRes = await chai
         .request(app)
@@ -38,6 +41,8 @@ async function testUserLoginToken() {
     const authToken = loginRes.body.authToken
     return authToken
 }
+
+let testUser;
 
 const expect = chai.expect;
 chai.use(chaiHttp)
@@ -55,11 +60,9 @@ const seedData = [{
         color: 'red'
     },
 ]
+
 const SEED_DATA_LENGTH = seedData.length
 
-const email = 'test@test.com';
-const password = 'password123';
-let testUser
 
 describe('block API routes', function () {
 
@@ -86,9 +89,8 @@ describe('block API routes', function () {
             const color = 'purple';
             const newColor = 'green';
 
+            const authToken = await testUserLoginToken();
 
-
-            //create a post directly in the db
             const record = await BlockModel.create({
                 user_id: testUser._id,
                 title,
@@ -98,18 +100,42 @@ describe('block API routes', function () {
             //make an API HTTP request with an updated title
             const res = await chai
                 .request(app)
-                .put(`/storyblock/block/update/${record._id}`) // // need correct URL
+                .put(`/storyblock/block/update/${record._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send({
                     title: newTitle,
                     color: newColor
-                })
+                });
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             const {
                 block
             } = res.body
+            createdBlock = block;
             expect(block.title).to.equal(newTitle);
             expect(block.color).to.equal(newColor);
+        })
+
+        it('should return a 404 for a non-existent post', async () => {
+
+            const authToken = await testUserLoginToken();
+            //Deletes the newly created block ^^ in order
+            //to test for its non-existence
+            const res = await chai
+            .request(app)
+            .delete(`/storyblock/block/delete/${createdBlock.id}`)
+            .set('Authorization', `Bearer ${authToken}`);
+
+            const nxID = createdBlock.id
+            const noRes = await chai
+                .request(app)
+                .put(`/storyblock/block/update/${nxID}`)
+                .set('Authorization', `Bearer ${authToken}`);
+            
+            expect(noRes).to.have.status(404);
+            expect(noRes.body.message).to.equal('NOT_FOUND');
+            expect(noRes).to.be.json;
         })
 
 
@@ -121,14 +147,15 @@ describe('block API routes', function () {
                 color: 'purple'
             })
 
-            const authToken = await testUserLoginToken()
+            const authToken = await testUserLoginToken();
 
             const res = await chai
                 .request(app)
                 .post('/storyblock/block/create')
                 .set('Authorization', `Bearer ${authToken}`)
-                .send(newBlock)
-            expect(res).to.have.status(200)
+                .send(newBlock);
+
+            expect(res).to.have.status(200);
             expect(res).to.be.json;
 
             const {
@@ -137,6 +164,7 @@ describe('block API routes', function () {
             createdBlock = block
             expect(block).to.be.an('object');
             expect(block.title).to.equal(newBlock.title)
+            expect(block.color).to.equal(newBlock.color)
             expect(block.id).to.be.a('string')
             expect(block.createdAt).to.be.a('string')
             const createdAt = new Date(block.createdAt)
@@ -146,7 +174,14 @@ describe('block API routes', function () {
 
         //NOTE this depends on the previous it() being sucessful
         it('should retrieve a block by id (GET)', async () => {
-            const res = await chai.request(app).get(`/storyblock/block/${createdBlock.id}`)
+
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+                .request(app)
+                .get(`/storyblock/block/${createdBlock.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             const {
@@ -157,7 +192,14 @@ describe('block API routes', function () {
 
         // // // // 
         it('should retrieve a block and associated stories by id (GET)', async () => {
-            const res = await chai.request(app).get(`/storyblock/blocks/stories/${createdBlock.id}`)
+
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+                .request(app)
+                .get(`/storyblock/blocks/stories/${createdBlock.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             const {
@@ -173,7 +215,14 @@ describe('block API routes', function () {
 
         //NOTE this depends on the previous it() being sucessful
         it('should delete a block by id (DELETE)', async () => {
-            const res = await chai.request(app).delete(`/storyblock/block/delete/${createdBlock.id}`)
+
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+                .request(app)
+                .delete(`/storyblock/block/delete/${createdBlock.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             const {
@@ -185,8 +234,15 @@ describe('block API routes', function () {
 
         //NOTE this depends on the previous it() being sucessful
         it('should return a 404 for non-existent post', async () => {
+
+            const authToken = await testUserLoginToken();
+
             const nxID = deletedBlock.id
-            const res = await chai.request(app).get(`/storyblock/block/${nxID}`)
+            const res = await chai
+                .request(app)
+                .get(`/storyblock/block/${nxID}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(404)
             expect(res.body.message).to.equal('NOT_FOUND')
             expect(res).to.be.json;
@@ -198,6 +254,7 @@ describe('block API routes', function () {
     describe('GET /storyblock/blocks (no records)', () => {
         it('should respond with JSON', async () => {
             await deleteCollections(['blockmodels'])
+
             const authToken = await testUserLoginToken()
 
             const res = await chai
@@ -212,7 +269,14 @@ describe('block API routes', function () {
         })
 
         it('should fail when the offset param is out of bounds', async () => {
-            const res = await chai.request(app).get('/storyblock/blocks/10')
+
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+                .request(app)
+                .get('/storyblock/blocks/10')
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.be.json;
             expect(res).to.have.status(400)
         })
@@ -226,11 +290,17 @@ describe('block API routes', function () {
             // start fresh by deleting all posts
             await deleteCollections(['blockmodels'])
 
+            const authToken = await testUserLoginToken();
+
             // create posts directly in the database using the model and seedData (not the API)
             await Promise.all(seedData.map(item => BlockModel.create(item)))
 
             // retrieve posts through an API call
-            const res = await chai.request(app).get('/storyblock/blocks')
+            const res = await chai
+                .request(app)
+                .get('/storyblock/blocks')
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             expect(res.body.blocks).to.be.an('array');
@@ -239,8 +309,15 @@ describe('block API routes', function () {
         })
 
         it('should account for the offset param', async () => {
+
+            const authToken = await testUserLoginToken();
+
             const numRecordsToSkip = 2
-            const res = await chai.request(app).get(`/storyblock/blocks/${numRecordsToSkip}`)
+            const res = await chai
+                .request(app)
+                .get(`/storyblock/blocks/${numRecordsToSkip}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.be.json;
             expect(res).to.have.status(200)
             expect(res.body.blocks).to.be.an('array');

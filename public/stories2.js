@@ -165,16 +165,7 @@ function handleStoryDeletion() {
         $('.storyBlockView').empty();
         const blockId = $('.storyBlockView-Title').find('.blockId').text();
         console.log(blockId);
-        const resultPromise = getBlocksWithStories(blockId);
-
-        resultPromise.catch(err => {
-            console.error('Error', err);
-        })
-
-        resultPromise.then(resultResponse => {
-            return displayBlockWithStories(resultResponse);
-        })
-
+        getBlocksWithStories(blockId);
     })
 }
 

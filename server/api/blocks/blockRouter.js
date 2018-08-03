@@ -115,9 +115,9 @@ async function getBlocks(req, res) {
     })
 }
 
-router.get('/blocks', tryCatch(getBlocks));
+router.get('/blocks', jwtAuth, tryCatch(getBlocks));
 
-router.get('/blocks/:offset', tryCatch(getBlocks));
+router.get('/blocks/:offset', jwtAuth, tryCatch(getBlocks));
 
 // // // // GET by id
 async function getBlock(req, res) {
@@ -132,7 +132,7 @@ async function getBlock(req, res) {
     })
 }
 
-router.get('/block/:id', tryCatch(getBlock));
+router.get('/block/:id', jwtAuth, tryCatch(getBlock));
 
 async function getBlockWithStories(req, res) {
     const record = await BlockModel.findById(req.params.id);
@@ -156,7 +156,7 @@ async function getBlockWithStories(req, res) {
     });
 }
 
-router.get('/blocks/stories/:id', tryCatch(getBlockWithStories));
+router.get('/blocks/stories/:id', jwtAuth, tryCatch(getBlockWithStories));
 
 // // // // PUT
 async function updateBlock(req, res) {
@@ -181,7 +181,7 @@ async function updateBlock(req, res) {
     })
 }
 
-router.put('/block/update/:id', tryCatch(updateBlock));
+router.put('/block/update/:id', jwtAuth, tryCatch(updateBlock));
 
 // // // // DELETE
 async function deleteBlock(req, res) {
@@ -210,7 +210,6 @@ async function deleteBlock(req, res) {
     });
 }
 
-// Delete
-router.delete('/block/delete/:id', tryCatch(deleteBlock));
+router.delete('/block/delete/:id', jwtAuth, tryCatch(deleteBlock));
 
 module.exports = router;

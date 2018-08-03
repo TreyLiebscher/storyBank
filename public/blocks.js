@@ -1,13 +1,20 @@
 'use strict';
 
-function getAllBlocks(callback) {
-    const requestURI = `${API_URLS.getBlocks}`
-    return $.getJSON(requestURI, callback)
-}
+function getBlocksWithStories(blockId) {
 
-function getBlocksWithStories(blockId, callback) {
-    const requestURI = `${API_URLS.getBlocksWithStories}/${blockId}`;
-    return $.getJSON(requestURI, callback);
+    const posting = $.ajax({
+        type: "GET",
+        url: `${API_URLS.getBlocksWithStories}/${blockId}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        },
+    });
+
+    posting.done(function (data) {
+        return displayBlockWithStories(data);
+        console.log('kiwi getBwS returns',data);
+    })
 }
 
 function renderBlock(result) {
@@ -139,18 +146,9 @@ function handleGetAllBlocksWithStories() {
         event.preventDefault();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId);
-        const resultPromise = getBlocksWithStories(blockId);
         $('.storyCreateInterface').empty();
-
-        resultPromise.catch(err => {
-            console.error('Error', err);
-        })
-
-        resultPromise.then(resultResponse => {
-            return displayBlockWithStories(resultResponse);
-        })
-
-    })
+        getBlocksWithStories(blockId);
+    });
 }
 
 function renderInsideBlockViewTitle(result) {

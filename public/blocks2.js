@@ -81,6 +81,8 @@ function handleBlockUpdate() {
         const oldBlock = `.storyBlock[id="${data.block.id}"]`;
         $('.js-block-result').find(oldBlock).replaceWith(newBlock);
         $('.storyBlockView-Title').find(oldBlock).replaceWith(newBlockDashboard);
+        //TODO this will temporarily replace storyQuickView with background images
+        //with the solid color. Must only change for quickviews with NO bg image
         $('.storyBlockView').find('.storyQuickView').attr('style', `background-color: ${data.block.color}`);
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
