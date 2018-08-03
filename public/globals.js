@@ -8,6 +8,7 @@ const API_URLS = {
     getBlocksWithStories: '/storyblock/blocks/stories',
     getStoryById: '/stories/story', //NOTE: need to append story id
     deleteStory: '/stories/story/delete', //NOTE: need to append story id
+    updateStory: '/stories/story/update', //NOTE: need to append story id
     createNewUser: '/users/user/createUser',
     userLogIn: '/users/login'
 }

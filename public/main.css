@@ -232,6 +232,12 @@
     filter: brightness(130%);
 }
 
+.publicStatusInfo {
+    display: block;
+    float: right;
+    margin-bottom: 0;
+}
+
 #userName,
 #password,
 #passwordConfirm,

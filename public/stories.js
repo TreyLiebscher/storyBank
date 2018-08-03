@@ -67,6 +67,14 @@ function renderStory(result) {
     } else {
         image = `<img class="storyImage" src="${result.story.image}">`;
     }
+
+    let publicStatus;
+
+    if(result.story.publicStatus === true) {
+        publicStatus = `Public`;
+    } else {
+        publicStatus = `Not Public`;
+    }
     
     return `
         <div class="storyDetailView">
@@ -76,6 +84,7 @@ function renderStory(result) {
         ${image}
         </div>
         <p>${result.story.content}</p>
+        <p class="publicStatusInfo">${publicStatus}</p>
         <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
         </div>
     `
@@ -98,9 +107,18 @@ function renderStoryQuickView(result) {
         background-position: center;"`
     }
 
+    let publicStatus;
+
+    if(result.publicStatus === true) {
+        publicStatus = `Public`;
+    } else {
+        publicStatus = `Not Public`;
+    }
+
     return `
     <div type="button" class="storyQuickView" style=${backgroundStyle}>
     <h3 class="quickViewTitle">${result.title}</h3>
+    <p class="publicStatusInfo">${publicStatus}</p>
     <p class="storyId">${ result.id }</p>
     </div>
     `
