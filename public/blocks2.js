@@ -77,8 +77,7 @@ function handleBlockUpdate() {
         console.log(newBlock);
         $('.js-block-result').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlock);
         $('.storyBlockView-Title').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlockDashboard);
-        //TODO: find each story with default colot background
-        // and replace with new background color
+        $('.storyBlockView').find('.storyQuickView').attr('style', `background-color: ${data.block.color}`);
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
         componentHandler.upgradeDom();
