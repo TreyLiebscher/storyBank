@@ -186,47 +186,12 @@ function viewAllStoriesInBlock() {
     })
 }
 
-//TODO move into globals
-function handleFormsSubmit() {
-
-    $('body').submit(function (event) {
-        event.preventDefault();
-
-        const formID = $(event.target).attr('id')
-        console.log('Submitted form id is:', formID)
-
-        if (formID === 'createBlock') {
-            handleCreateBlockSubmit()
-        }
-        if (formID === 'deleteBlock') {
-            handleBlockDeletion()
-        }
-        if (formID === 'editBlock') {
-            handleBlockUpdate()
-        }
-        if (formID === 'createStory') {
-            handleCreateStory()
-        }
-        if (formID === 'deleteStory') {
-            handleStoryDeletion();
-        }
-        if (formID === 'signUpForm') {
-			handleCreateNewUser();
-		}
-
-		if (formID === 'logInForm') {
-			handleUserLogIn();
-		}
-
-    });
-}
 
 function storyBlock() {
     $(getUserBlocks);
     $(handleGetAllBlocksWithStories);
     $(viewCreateBlockInterface);
     $(hideCreateBlockInterface);
-    $(handleFormsSubmit);
 }
 
 $(storyBlock);
