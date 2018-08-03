@@ -16,6 +16,12 @@ const API_URLS = {
     userLogIn: '/users/login'
 }
 
+//In case of Errors
+$(document).ajaxError(function (err) {
+    console.error(err)
+    displayErrorMessage();
+});
+
 function renderErrorMessage() {
     return `
         <p class="errorMessage">Something went wrong, please try again</p>
@@ -29,11 +35,16 @@ function displayErrorMessage() {
     $('.deleteMenuHolder').html(message);
 }
 
-$(document).ajaxError(function (err) {
-    console.error(err)
-    displayErrorMessage();
+//Loading Icon
+$(document)
+    .ajaxStart(function () {
+        $('.loadingHolder').show();
+    })
+    .ajaxStop(function () {
+        $('.loadingHolder').hide();
 });
 
+//Handles any form submission on page
 function handleFormsSubmit() {
 
     $('body').submit(function (event) {
@@ -42,6 +53,7 @@ function handleFormsSubmit() {
         const formID = $(event.target).attr('id')
         console.log('Submitted form id is:', formID)
 
+        //Blocks
         if (formID === 'createBlock') {
             handleCreateBlockSubmit()
         }
@@ -51,20 +63,20 @@ function handleFormsSubmit() {
         if (formID === 'editBlock') {
             handleBlockUpdate()
         }
+        //Stories
         if (formID === 'createStory') {
             handleCreateStory()
         }
         if (formID === 'deleteStory') {
             handleStoryDeletion();
         }
+        //Users
         if (formID === 'signUpForm') {
 			handleCreateNewUser();
 		}
-
 		if (formID === 'logInForm') {
 			handleUserLogIn();
 		}
-
     });
 }
 

@@ -50,7 +50,7 @@ function displayBlockUpdateMenu() {
 function handleBlockUpdate() {
     const $form = $('#editBlock'),
         title = $form.find('input[name="title"]').val(),
-        color = $form.find('input[id="color"]').val(),
+        color = $form.find('input[id="color"]').val() || $form.find('input[id="color"]').attr('style'),
         url = $form.attr('action');
 
     const posting = $.ajax({
@@ -141,14 +141,6 @@ function handleBlockDeletion() {
         $('.storyBlock').remove(`#${data.block.id}`)
     });
 }
-
-$(document)
-    .ajaxStart(function () {
-        $('.loadingHolder').show();
-    })
-    .ajaxStop(function () {
-        $('.loadingHolder').hide();
-    });
 
 
 function storyBlock2() {
