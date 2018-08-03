@@ -25,6 +25,8 @@ function renderBlockUpdateMenu(title, color, id) {
 function displayBlockUpdateMenu() {
     $('.storyBlockView-Title').on('click', 'button#editBlock', function (event) {
         event.preventDefault();
+        $('.storyBlockView-Title').hide('slow');
+        $('.storyBlockView').hide('slow');
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
@@ -69,21 +71,24 @@ function handleBlockUpdate() {
 
     posting.done(function (data) {
         console.log(data.message);
-        const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        const message = `
+        <p>${data.message}</p>
+        <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
+        `;
         $('.storyBlockCreateHolder').empty();
-        console.log('kiwi', data.block.title);
         const newBlock = renderBlock(data.block);
         const newBlockDashboard = renderInsideBlockViewTitle(data.block);
-        console.log(newBlock);
-        $('.js-block-result').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlock);
-        $('.storyBlockView-Title').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlockDashboard);
+        const oldBlock = `.storyBlock[id="${data.block.id}"]`;
+        $('.js-block-result').find(oldBlock).replaceWith(newBlock);
+        $('.storyBlockView-Title').find(oldBlock).replaceWith(newBlockDashboard);
         $('.storyBlockView').find('.storyQuickView').attr('style', `background-color: ${data.block.color}`);
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
+        $('.storyBlockView-Title').show('slow');
+        $('.storyBlockView').show('slow');
         componentHandler.upgradeDom();
     })
 }
-
 
 function renderDeleteMenu(title, id) {
 
