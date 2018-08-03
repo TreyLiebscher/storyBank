@@ -23,10 +23,8 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
             <input id="title" class="mdl-textfield__input" name="title" value="${title}">
             <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
         </div>
-
         <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="mdl-textfield__input"
             name="image">
-
         <div class="imageThumbBox">
             <img id="storyImagePreview" class="imageThumb">
             <img id="storyCurrentImagePreview" class="currentImageThumb" src="${image}">
@@ -50,7 +48,8 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
 function displayStoryUpdateMenu() {
     $('.storyBlockView').on('click', 'button#displayStoryEditMenu', function (event) {
         event.preventDefault();
-
+        //TODO try refactoring this by making a GET story by ID req
+        //and use the res object as ref rather than searching DOM
         const currentStorySelect = $(event.target).closest('.storyDetailView');
         const currentTitle = currentStorySelect.find('.storyTitle').text();
         const currentImage = currentStorySelect.find('.storyImage').attr('src');
@@ -115,4 +114,75 @@ function handleStoryUpdate() {
 
 }
 
-$(displayStoryUpdateMenu);
+function renderStoryDeleteMenu(title, id) {
+
+    const deleteUrl = API_URLS.deleteStory;
+
+    return `
+    <form id="deleteStory" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
+    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>?</p>
+    <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
+    <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+    </form>
+    `
+}
+
+function displayDeleteStoryMenu() {
+    $('.storyBlockView').on('click', 'button#displayStoryDeleteMenu', function (event) {
+        event.preventDefault();
+        $('.deleteMenuHolder').removeClass('hide');
+        const storyId = $(event.target).closest('.storyDetailView').find('.storyId').text();
+        const storyTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
+        const deleteMenu = renderStoryDeleteMenu(storyTitle, storyId);
+        $('.deleteMenuHolder').html(deleteMenu);
+    });
+}
+
+function hideStoryDeleteMenu() {
+    $('.deleteMenuHolder').on('click', 'button#cancelStoryDeletion', function (event) {
+        event.preventDefault();
+        $('.deleteMenuHolder').addClass('hide');
+    });
+}
+
+function handleStoryDeletion() {
+    const $form = $('#deleteStory'),
+        url = $form.attr('action');
+
+    const deleting = $.ajax({
+        type: "DELETE",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+        }
+    })
+
+    deleting.done(function (data) {
+        console.log(`${data.message}, kiwi`);
+        const message = `<p>${data.message}</p><button id="cancelStoryDeletion" class="userButton" type="button">Ok</button>`;
+        $('.deleteMenuHolder').html(message);
+        $('.storyBlockView').empty();
+        const blockId = $('.storyBlockView-Title').find('.blockId').text();
+        console.log(blockId);
+        const resultPromise = getBlocksWithStories(blockId);
+
+        resultPromise.catch(err => {
+            console.error('Error', err);
+        })
+
+        resultPromise.then(resultResponse => {
+            return displayBlockWithStories(resultResponse);
+        })
+
+    })
+}
+
+
+function stories2() {
+    $(displayDeleteStoryMenu);
+    $(hideStoryDeleteMenu);
+    $(displayStoryUpdateMenu);
+}
+
+$(stories2);

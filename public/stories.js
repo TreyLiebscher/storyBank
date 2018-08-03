@@ -1,6 +1,6 @@
 'use strict';
 
-let lastUpload
+let lastUpload;
 
 function getStoryById(storyId, callback) {
     const requestURI = `${API_URLS.getStoryById}/${storyId}`;
@@ -42,9 +42,7 @@ function viewCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
-        console.log(blockTitle); //for testing needs removal
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
-        console.log(blockId); //for testing needs removal
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
         $('.storyBlockView').hide('slow');
         $('.storyCreateInterface').html(createStoryInterface);
@@ -61,7 +59,6 @@ function hideStoryCreateInterface() {
 
 function renderStory(result) {
     //if user chooses not to provide an image
-    console.log(result, 'kiwi');
     let image;
     if (!(result.story.image)) {
         image = `<br>`;
@@ -71,12 +68,12 @@ function renderStory(result) {
 
     let publicStatus;
 
-    if(result.story.publicStatus === true) {
+    if (result.story.publicStatus === true) {
         publicStatus = `Public`;
     } else {
         publicStatus = `Not Public`;
     }
-    
+
     return `
         <div class="storyDetailView" id="${result.story.id}">
         <h3 class="storyTitle">${result.story.title}</h3>
@@ -100,19 +97,19 @@ function displayStory(result) {
 
 function renderStoryQuickView(result) {
     const blockColor = $('.js-block-result').find(`.storyBlock[id="${result.block}"]`).attr('style');
-    console.log('kiwi', blockColor);
+
     let backgroundStyle;
     if (!(result.image)) {
-        backgroundStyle = `"${blockColor}"` 
+        backgroundStyle = `"${blockColor}"`
     } else {
         backgroundStyle = `"background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
         background-repeat: no-repeat;
         background-position: center;"`
     }
 
+    //For converting boolean value into plain english for user
     let publicStatus;
-
-    if(result.publicStatus === true) {
+    if (result.publicStatus === true) {
         publicStatus = `Public`;
     } else {
         publicStatus = `Not Public`;
@@ -144,7 +141,7 @@ function handleViewStory() {
     })
 }
 
-
+//For image uploading purposes
 function onFileLoad(elementId, event) {
     const data = event.target.result;
     console.log('Got file data', data);
@@ -184,8 +181,6 @@ function handleCreateStory() {
         publicStatus: publicStatus
     }
 
-
-
     const posting = $.ajax({
         type: "POST",
         url: url,
@@ -208,77 +203,12 @@ function handleCreateStory() {
     });
 }
 
-function renderStoryDeleteMenu(title, id) {
-
-    const deleteUrl = API_URLS.deleteStory;
-
-    return `
-    <form id="deleteStory" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
-    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>?</p>
-    <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
-    <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
-    </form>
-    `
-}
-
-function displayDeleteStoryMenu() {
-    $('.storyBlockView').on('click', 'button#displayStoryDeleteMenu', function (event) {
-        event.preventDefault();
-        $('.deleteMenuHolder').removeClass('hide');
-        const storyId = $(event.target).closest('.storyDetailView').find('.storyId').text();
-        const storyTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
-        const deleteMenu = renderStoryDeleteMenu(storyTitle, storyId);
-        $('.deleteMenuHolder').html(deleteMenu);
-    });
-}
-
-function hideStoryDeleteMenu() {
-    $('.deleteMenuHolder').on('click', 'button#cancelStoryDeletion', function (event) {
-        event.preventDefault();
-        $('.deleteMenuHolder').addClass('hide');
-    });
-}
-
-function handleStoryDeletion() {
-    const $form = $('#deleteStory'),
-        url = $form.attr('action');
-
-    const deleting = $.ajax({
-        type: "DELETE",
-        url: url,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${AUTH_TOKEN}`
-        }
-    })
-
-    deleting.done(function (data) {
-        console.log(`${data.message}, kiwi`);
-        const message = `<p>${data.message}</p><button id="cancelStoryDeletion" class="userButton" type="button">Ok</button>`;
-        $('.deleteMenuHolder').html(message);
-        $('.storyBlockView').empty();
-        const blockId = $('.storyBlockView-Title').find('.blockId').text();
-        console.log(blockId);
-        const resultPromise = getBlocksWithStories(blockId);
-
-        resultPromise.catch(err => {
-            console.error('Error', err);
-        })
-
-        resultPromise.then(resultResponse => {
-            return displayBlockWithStories(resultResponse);
-        })
-
-    })
-}
 
 function stories() {
     $(viewAllStoriesInBlock);
     $(handleViewStory);
     $(viewCreateStoryInterface);
     $(hideStoryCreateInterface);
-    $(displayDeleteStoryMenu);
-    $(hideStoryDeleteMenu);
 }
 
 $(stories);
