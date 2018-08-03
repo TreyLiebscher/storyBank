@@ -6,6 +6,7 @@ let AUTH_TOKEN
 function saveLoginResponse(data) {
 	Cookies.set('APP_LOGIN_TOKEN', JSON.stringify(data));
 }
+
 function restoreLoginResponse() {
 	const dataStr = Cookies.get('APP_LOGIN_TOKEN');
 	if (dataStr) {
@@ -165,27 +166,6 @@ function handleUserLogIn() {
 	userLoginRequest.done(data => navigateToStories(data, true));
 }
 
-function handleUserFormsSubmit() {
-
-	$('body').submit(function (event) {
-		event.preventDefault();
-
-		const formID = $(event.target).attr('id')
-		console.log('Submitted form id is:', formID)
-
-		if (formID === 'signUpForm') {
-
-			handleCreateNewUser();
-		}
-
-		if (formID === 'logInForm') {
-
-			handleUserLogIn();
-		}
-
-	});
-}
-
 function renderLogOutButton() {
 	return `
 	<button type="button" class="userButton userLogOut">Log Out</button>`
@@ -209,8 +189,11 @@ function handleLogOutUser() {
 	});
 }
 
-$(handleSignUpClick);
-$(handleLogInClick);
-$(handleUserFormsSubmit);
-$(handleLogOutUser);
-$(restoreLoginResponse)
+function userLogInSignUp() {
+	$(handleSignUpClick);
+	$(handleLogInClick);
+	$(handleLogOutUser);
+	$(restoreLoginResponse);
+}
+
+$(userLogInSignUp);

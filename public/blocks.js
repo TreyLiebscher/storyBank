@@ -186,7 +186,7 @@ function viewAllStoriesInBlock() {
     })
 }
 
-
+//TODO move into globals
 function handleFormsSubmit() {
 
     $('body').submit(function (event) {
@@ -198,22 +198,25 @@ function handleFormsSubmit() {
         if (formID === 'createBlock') {
             handleCreateBlockSubmit()
         }
-
         if (formID === 'deleteBlock') {
             handleBlockDeletion()
         }
-
         if (formID === 'editBlock') {
             handleBlockUpdate()
         }
-
         if (formID === 'createStory') {
             handleCreateStory()
         }
-
         if (formID === 'deleteStory') {
             handleStoryDeletion();
         }
+        if (formID === 'signUpForm') {
+			handleCreateNewUser();
+		}
+
+		if (formID === 'logInForm') {
+			handleUserLogIn();
+		}
 
     });
 }
