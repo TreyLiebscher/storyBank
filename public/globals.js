@@ -57,15 +57,18 @@ function handleFormsSubmit() {
         if (formID === 'createBlock') {
             handleCreateBlockSubmit()
         }
-        if (formID === 'deleteBlock') {
-            handleBlockDeletion()
-        }
         if (formID === 'editBlock') {
             handleBlockUpdate()
+        }
+        if (formID === 'deleteBlock') {
+            handleBlockDeletion()
         }
         //Stories
         if (formID === 'createStory') {
             handleCreateStory()
+        }
+        if (formID === 'editStory') {
+            handleStoryUpdate();
         }
         if (formID === 'deleteStory') {
             handleStoryDeletion();

@@ -80,6 +80,7 @@ function renderStory(result) {
         <div class="storyDetailView">
         <h3 class="storyTitle">${result.story.title}</h3>
         <p class="storyId">${result.story.id }</p>
+        <p class="publicStatus">${result.story.publicStatus}</p>
         <div class="imageBox">
         ${image}
         </div>

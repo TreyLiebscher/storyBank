@@ -168,7 +168,8 @@
 }
 
 .blockId,
-.storyId {
+.storyId,
+.publicStatus {
     display: none;
 }
 
