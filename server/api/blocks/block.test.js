@@ -20,6 +20,7 @@ const {
 } = require('../../api/api')
 
 const BlockModel = getConfig('storyblock').models.block
+const StoriesModel = getConfig('stories').models.story
 
 const {
     testUtilCreateUser
@@ -123,16 +124,16 @@ describe('block API routes', function () {
             //Deletes the newly created block ^^ in order
             //to test for its non-existence
             const res = await chai
-            .request(app)
-            .delete(`/storyblock/block/delete/${createdBlock.id}`)
-            .set('Authorization', `Bearer ${authToken}`);
+                .request(app)
+                .delete(`/storyblock/block/delete/${createdBlock.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
 
             const nxID = createdBlock.id
             const noRes = await chai
                 .request(app)
                 .put(`/storyblock/block/update/${nxID}`)
                 .set('Authorization', `Bearer ${authToken}`);
-            
+
             expect(noRes).to.have.status(404);
             expect(noRes.body.message).to.equal('NOT_FOUND');
             expect(noRes).to.be.json;
@@ -157,6 +158,16 @@ describe('block API routes', function () {
 
             expect(res).to.have.status(200);
             expect(res).to.be.json;
+
+            //Create a story associated with the new block
+            //for testing later on
+            const newStory = await StoriesModel.create( {
+                title: 'new story',
+                content: 'just some new stuff',
+                image: 'upload img',
+                publicStatus: true,
+                block: res.body.block.id
+            })
 
             const {
                 block
@@ -200,6 +211,8 @@ describe('block API routes', function () {
                 .get(`/storyblock/blocks/stories/${createdBlock.id}`)
                 .set('Authorization', `Bearer ${authToken}`);
 
+            
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
             const {
@@ -209,6 +222,7 @@ describe('block API routes', function () {
                 stories: retrievedStories
             } = res.body
             expect(retrievedStories).to.be.an('array');
+            expect(retrievedStories[0].block).to.equal(retrievedBlock.id);
             //need to verify whether or not there ARE stories associated w/ block
             expect(retrievedBlock).to.deep.equal(createdBlock);
         })
