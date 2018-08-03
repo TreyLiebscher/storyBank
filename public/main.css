@@ -88,10 +88,9 @@
     display: flex;
     flex-direction: row;
     border-radius: 0;
-}
-
-.storyBlockView-Title>.storyBlock {
     box-shadow: none;
+    border: 1px solid white;
+    padding: 5px;
 }
 
 .storyBlock>button {
