@@ -197,6 +197,24 @@
     overflow-y: scroll;
 }
 
+.storyQuickView::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.storyQuickView::-webkit-scrollbar:vertical {
+    width: 10px;
+}
+
+.storyQuickView::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.storyQuickView::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
 .quickViewTitle {
     font-size: 15px;
     font-size: 2.75vw;

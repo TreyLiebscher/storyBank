@@ -87,9 +87,11 @@ function displayStory(result) {
 }
 
 function renderStoryQuickView(result) {
+    const blockColor = $('.js-block-result').find(`.storyBlock[id="${result.block}"]`).attr('style');
+    console.log('kiwi', blockColor);
     let backgroundStyle;
     if (!(result.image)) {
-        backgroundStyle = `"background-color: #000000"` 
+        backgroundStyle = `"${blockColor}"` 
     } else {
         backgroundStyle = `"background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
         background-repeat: no-repeat;
