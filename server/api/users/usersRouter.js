@@ -44,7 +44,7 @@ async function createNewUser(req, res) {
             return res.status(400).send(message)
         }
     }
-    ///////
+    
     const stringFields = ['email', 'password'];
     const nonStringField = stringFields.find(
         field => field in req.body && typeof req.body[field] !== 'string'
@@ -116,13 +116,6 @@ async function createNewUser(req, res) {
             location: 'email'
         });
     } 
-       
-
-    
-
-
-
-    ///////
 
     const userPassword = await UserModel.hashPassword(req.body.password);
 
