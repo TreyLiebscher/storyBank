@@ -32,3 +32,11 @@ function renderStoryUpdateMenu(title, image, content, id) {
     </form>
     `
 }
+
+function displayStoryUpdateMenu() {
+    $('.storyBlockView').on('click', 'button', 'button#displayStoryEditMenu', function(event) {
+        event.preventDefault();
+        const currentTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
+        const currentImage = $(event.target).closest()
+    })
+}

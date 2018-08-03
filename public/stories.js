@@ -86,6 +86,7 @@ function renderStory(result) {
         <p>${result.story.content}</p>
         <p class="publicStatusInfo">${publicStatus}</p>
         <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
+        <button type="button" id="displayStoryEditMenu" class="userButton">Edit</button>
         </div>
     `
 }
