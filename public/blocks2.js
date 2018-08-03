@@ -66,8 +66,21 @@ function handleBlockUpdate() {
             color: color
         })
     });
+
+    posting.done(function (data) {
+        console.log(data.message);
+        const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        $('.storyBlockCreateHolder').empty();
+        console.log('kiwi', data.block.title);
+        const newBlock = renderBlock(data.block);
+        const newBlockDashboard = renderInsideBlockViewTitle(data.block);
+        console.log(newBlock);
+        $('.js-block-result').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlock);
+        $('.storyBlockView-Title').find(`.storyBlock[id="${data.block.id}"]`).replaceWith(newBlockDashboard);
+        $('.deleteMenuHolder').removeClass('hide');
+        $('.deleteMenuHolder').html(message);
+        componentHandler.upgradeDom();
+    })
 }
-
-
 
 $(displayBlockUpdateMenu);

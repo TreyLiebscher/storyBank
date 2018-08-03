@@ -176,7 +176,8 @@ async function updateBlock(req, res) {
         new: true
     })
     res.json({
-        block: updatedRecord.serialize()
+        block: updatedRecord.serialize(),
+        message: 'Block updated successfully'
     })
 }
 
