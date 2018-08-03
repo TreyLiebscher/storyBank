@@ -132,7 +132,8 @@ async function updateStory(req, res) {
         new: true
     })
     res.json({
-        story: updatedRecord.serialize()
+        story: updatedRecord.serialize(),
+        message: 'Story updated successfully'
     })
 }
 

@@ -162,7 +162,8 @@
     max-height: 50vh;
 }
 
-.imageThumb {
+.imageThumb,
+.currentImageThumb {
     max-width: 30vw;
     max-height: 20vh;
 }

@@ -61,6 +61,7 @@ function hideStoryCreateInterface() {
 
 function renderStory(result) {
     //if user chooses not to provide an image
+    console.log(result, 'kiwi');
     let image;
     if (!(result.story.image)) {
         image = `<br>`;
@@ -77,7 +78,7 @@ function renderStory(result) {
     }
     
     return `
-        <div class="storyDetailView">
+        <div class="storyDetailView" id="${result.story.id}">
         <h3 class="storyTitle">${result.story.title}</h3>
         <p class="storyId">${result.story.id }</p>
         <p class="publicStatus">${result.story.publicStatus}</p>

@@ -20,7 +20,7 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
     <h3>Edit ${title}</h3>
     <form id="editStory" action="${updateUrl}/${id}" method="PUT">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="title" class="mdl-textfield__input" name="title" value=${title}>
+            <input id="title" class="mdl-textfield__input" name="title" value="${title}">
             <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
         </div>
 
@@ -28,7 +28,8 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
             name="image">
 
         <div class="imageThumbBox">
-            <img id="storyImagePreview" class="imageThumb" src="${image}">
+            <img id="storyImagePreview" class="imageThumb">
+            <img id="storyCurrentImagePreview" class="currentImageThumb" src="${image}">
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content">${content}</textarea>
@@ -58,7 +59,6 @@ function displayStoryUpdateMenu() {
         const currentPublicBoolean = currentStorySelect.find('.publicStatus').text();
         console.log('kiwi', currentPublicBoolean);
         const currentId = currentStorySelect.find('.storyId').text();
-
         const storyUpdateMenu = renderStoryUpdateMenu(
             currentTitle,
             currentImage,
@@ -101,12 +101,17 @@ function handleStoryUpdate() {
         data: JSON.stringify(formData)
     });
 
-    posting.done(function(data) {
+    posting.done(function (data) {
         console.log(data);
+        console.log(data.story.image);
         const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        $('.storyCreateInterface').empty();
+        const newStory = renderStory(data);
+        $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
+        $('.storyBlockView').show('slow');
+        $('.deleteMenuHolder').removeClass('hide');
+        $('.deleteMenuHolder').html(message);
     })
-
-
 
 }
 
