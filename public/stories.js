@@ -83,7 +83,7 @@ function renderStory(result) {
         <div class="imageBox">
         ${image}
         </div>
-        <p>${result.story.content}</p>
+        <p class="storyContent">${result.story.content}</p>
         <p class="publicStatusInfo">${publicStatus}</p>
         <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
         <button type="button" id="displayStoryEditMenu" class="userButton">Edit</button>
@@ -220,7 +220,7 @@ function renderStoryDeleteMenu(title, id) {
 }
 
 function displayDeleteStoryMenu() {
-    $('.storyBlockView').on('click', 'button', 'button#displayStoryDeleteMenu', function (event) {
+    $('.storyBlockView').on('click', 'button#displayStoryDeleteMenu', function (event) {
         event.preventDefault();
         $('.deleteMenuHolder').removeClass('hide');
         const storyId = $(event.target).closest('.storyDetailView').find('.storyId').text();

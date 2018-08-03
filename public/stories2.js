@@ -1,6 +1,6 @@
 'use strict';
 
-function renderStoryUpdateMenu(title, image, content, id) {
+function renderStoryUpdateMenu(title, image, content, publicStatus, id) {
 
     const updateUrl = API_URLS.updateStory;
 
@@ -34,9 +34,29 @@ function renderStoryUpdateMenu(title, image, content, id) {
 }
 
 function displayStoryUpdateMenu() {
-    $('.storyBlockView').on('click', 'button', 'button#displayStoryEditMenu', function(event) {
+    $('.storyBlockView').on('click', 'button#displayStoryEditMenu', function (event) {
         event.preventDefault();
-        const currentTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
-        const currentImage = $(event.target).closest()
-    })
+
+        const currentStorySelect = $(event.target).closest('.storyDetailView');
+        const currentTitle = currentStorySelect.find('.storyTitle').text();
+        const currentImage = currentStorySelect.find('.storyImage').attr('src');
+        const currentContent = currentStorySelect.find('.storyContent').text();
+        const currentPublicStatus = currentStorySelect.find('.publicStatusInfo').text();
+        const currentId = currentStorySelect.find('.storyId').text();
+
+        const storyUpdateMenu = renderStoryUpdateMenu(
+            currentTitle,
+            currentImage,
+            currentContent,
+            currentPublicStatus,
+            currentId
+        );
+
+        $('.storyBlockView').hide('slow');
+        $('.storyCreateInterface').html(storyUpdateMenu);
+        componentHandler.upgradeDom();
+    });
 }
+
+
+$(displayStoryUpdateMenu);
