@@ -221,9 +221,14 @@ describe('block API routes', function () {
             const {
                 stories: retrievedStories
             } = res.body
+            //Compare res with the story that was created on
+            //line 164
             expect(retrievedStories).to.be.an('array');
             expect(retrievedStories[0].block).to.equal(retrievedBlock.id);
-            //need to verify whether or not there ARE stories associated w/ block
+            expect(retrievedStories[0].title).to.equal('new story');
+            expect(retrievedStories[0].image).to.equal('upload img');
+            expect(retrievedStories[0].content).to.equal('just some new stuff');
+            expect(retrievedStories[0].publicStatus).to.equal(true);
             expect(retrievedBlock).to.deep.equal(createdBlock);
         })
 

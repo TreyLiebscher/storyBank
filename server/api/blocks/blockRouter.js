@@ -145,11 +145,7 @@ async function getBlockWithStories(req, res) {
     const storyRecordArr = await StoriesModel.find({
         block: req.params.id
     });
-    if (record === null) {
-        return res.status(404).json({
-            message: 'No stories in this block'
-        })
-    }
+
     res.json({
         block: record.serialize(),
         stories: storyRecordArr.map(record => record.serialize())
