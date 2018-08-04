@@ -119,6 +119,7 @@ describe('story API routes', function () {
             const {
                 story
             } = res.body
+            createdStory = story;
             expect(story.title).to.equal(newTitle);
             expect(story.image).to.equal(newImage);
             expect(story.content).to.equal(newContent);
@@ -164,7 +165,26 @@ describe('story API routes', function () {
             const createdAt = new Date(story.createdAt);
             expect(createdAt).to.be.a('date');
             expect(createdAt.toDateString()).to.not.equal('Invalid Date');
-        });
+        })
+
+        it('should retrieve a story by id (GET)', async () => {
+
+            const authToken = await testUserLoginToken();
+
+            const res = await chai
+                .request(app)
+                .get(`/stories/story/${createdStory.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
+            expect(res).to.have.status(200)
+            expect(res).to.be.json;
+            const {
+                story: retrievedStory
+            } = res.body
+            expect(retrievedStory).to.deep.equal(createdStory);
+        })
+
+
 
         it('should delete a story by id (DELETE)', async () => {
             
@@ -183,9 +203,41 @@ describe('story API routes', function () {
             expect(story).to.deep.equal(createdStory);
         });
 
-        it('should return a 404 for a non-existent post', async () => {
+        it('should return a 404 for a non-existent post (DELETE)', async () => {
+            
+            const authToken = await testUserLoginToken();
+
             const nxID = deletedStory.id;
-            const res = await chai.request(app).get(`/stories/story/${nxID}`)
+            const res = await chai
+            .request(app)
+            .delete(`/stories/story/delete/${nxID}`)
+            .set('Authorization', `Bearer ${authToken}`)
+            expect(res).to.have.status(404)
+            expect(res).to.be.json;
+        })
+
+        it('should return a 404 for a non-existent post (GET)', async () => {
+            
+            const authToken = await testUserLoginToken();
+
+            const nxID = deletedStory.id;
+            const res = await chai
+            .request(app)
+            .get(`/stories/story/${nxID}`)
+            .set('Authorization', `Bearer ${authToken}`)
+            expect(res).to.have.status(404)
+            expect(res).to.be.json;
+        })
+
+        it('should return a 404 for a non-existent post (PUT)', async () => {
+            
+            const authToken = await testUserLoginToken();
+
+            const nxID = deletedStory.id;
+            const res = await chai
+            .request(app)
+            .put(`/stories/story/update/${nxID}`)
+            .set('Authorization', `Bearer ${authToken}`)
             expect(res).to.have.status(404)
             expect(res).to.be.json;
         })
