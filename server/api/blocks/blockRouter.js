@@ -89,35 +89,7 @@ async function getUserBlocks(req, res) {
 
 router.get('/myblocks', jwtAuth, tryCatch(getUserBlocks));
 
-// // // // GET
-async function getBlocks(req, res) {
-    const offset = parseInt(req.params.offset || 0);
-    const total = await BlockModel.countDocuments()
-
-    if (offset > total || offset < 0) {
-        return res.status(400).json({
-            message: 'OUT_OF_BOUNDS'
-        });
-    }
-
-    const records = await BlockModel
-        .find({})
-        .sort([
-            ['date', -1]
-        ])
-        .skip(offset)
-        .limit(LIMIT)
-
-    res.json({
-        pageSize: LIMIT,
-        total,
-        blocks: records.map(record => record.serialize())
-    })
-}
-
-router.get('/blocks', jwtAuth, tryCatch(getBlocks));
-
-router.get('/blocks/:offset', jwtAuth, tryCatch(getBlocks));
+router.get('/myblocks/:offset', jwtAuth, tryCatch(getUserBlocks));
 
 // // // // GET by id
 async function getBlock(req, res) {
@@ -193,11 +165,12 @@ async function deleteBlock(req, res) {
             block: req.params.id
         })
         .remove()
-    if (storiesRecord === null) {
-        return res.status(404).json({
-            message: 'NOT_FOUND'
-        })
-    }
+    //TODO decide whether or not this is even necessary
+    // if (storiesRecord === null) {
+    //     return res.status(404).json({
+    //         message: 'NOT_FOUND'
+    //     })
+    // }
 
     res.json({
         block: record.serialize(),
