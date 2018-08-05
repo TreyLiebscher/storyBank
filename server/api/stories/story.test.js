@@ -44,19 +44,19 @@ chai.use(chaiHttp);
 
 const seedData = [{
     title: 'Story1',
-    image: 'Image1',
+    image: 'https://images.unsplash.com/photo-1533396257172-78e7d58da599?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5bf7d897fb549f63cff32455fb46d3df&auto=format&fit=crop&w=500&q=60',
     content: 'Content1',
     publicStatus: true
 },
 {
     title: 'Story2',
-    image: 'Image2',
+    image: 'https://images.unsplash.com/photo-1533407545866-336a9f316c94?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f17684a26a4c8410adedd7709168ef0c&auto=format&fit=crop&w=500&q=60',
     content: 'Content2',
     publicStatus: true
 },
 {
     title: 'Story3',
-    image: 'Image3',
+    image: 'https://images.unsplash.com/photo-1533475168512-29323dcb0512?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1c3f76730e7d21c8b6401321cf2aa58a&auto=format&fit=crop&w=500&q=60',
     content: 'Content3',
     publicStatus: true
 },

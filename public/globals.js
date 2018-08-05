@@ -11,6 +11,7 @@ const API_URLS = {
     getStoryById: '/stories/story', //NOTE: need to append story id
     deleteStory: '/stories/story/delete', //NOTE: need to append story id
     updateStory: '/stories/story/update', //NOTE: need to append story id
+    getPublicStories: '/stories/storiesall',
     //Users
     createNewUser: '/users/user/createUser',
     userLogIn: '/users/login'
