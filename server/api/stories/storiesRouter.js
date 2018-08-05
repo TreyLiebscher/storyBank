@@ -3,6 +3,7 @@ const express = require('express');
 const StoriesModel = require('./storyModel');
 const BlockModel = require('../blocks/blockModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
+const getFields = require('../../helpers').getFieldsFromRequest;
 
 const passport = require('passport');
 const {
@@ -21,25 +22,6 @@ const LIMIT = 10;
 
 const STORY_MODEL_FIELDS = ['title', 'image', 'content', 'publicStatus'] //an array of updatable field names
 
-function getFieldsFromRequest(fieldNamesArr, req) {
-    const requestFieldNames = Object.keys(req.body)
-
-    // new to reduce? 
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce    
-    return fieldNamesArr.reduce((acc, fieldName) => {
-
-        if (requestFieldNames.includes(fieldName)) { // is this field name present in the request?
-            const value = req.body[fieldName]
-
-            // is there an usable value? 
-            // if so, add it to the reduce() return object
-            if (value !== undefined) {
-                acc[fieldName] = value
-            }
-        }
-        return acc
-    }, {})
-}
 
 async function createStoryInBlock(req, res) {
 
@@ -122,7 +104,7 @@ async function updateStory(req, res) {
             message: 'NOT_FOUND'
         })
     }
-    const newFieldValues = getFieldsFromRequest(STORY_MODEL_FIELDS, req);
+    const newFieldValues = getFields(STORY_MODEL_FIELDS, req);
 
     const updatedRecord = await StoriesModel.findByIdAndUpdate({
         '_id': req.params.id

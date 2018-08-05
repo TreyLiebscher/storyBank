@@ -105,7 +105,7 @@ describe('block API routes', function () {
                 .set('Authorization', `Bearer ${authToken}`)
                 .send({
                     title: newTitle,
-                    unusable: 'bad field'
+                    color: newColor
                 });
 
             expect(res).to.have.status(200)
@@ -115,7 +115,7 @@ describe('block API routes', function () {
             } = res.body
             createdBlock = block;
             expect(block.title).to.equal(newTitle);
-            expect(block.color).to.equal(color);
+            expect(block.color).to.equal(newColor);
             expect(block.unusable).to.not.exist;
         })
 

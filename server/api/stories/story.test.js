@@ -94,7 +94,7 @@ describe('story API routes', function () {
             const publicStatus = false;
             const newTitle = 'New story';
             const newImage = 'New image';
-            const newContent = 'New content';
+            // const newContent = 'New content';
             const newPublicStatus = true;
 
             const record = await StoriesModel.create({
@@ -111,7 +111,7 @@ describe('story API routes', function () {
                 .send({
                     title: newTitle,
                     image: newImage,
-                    content: newContent,
+                    // content: newContent,
                     publicStatus: newPublicStatus
                 })
             expect(res).to.have.status(200)
@@ -122,7 +122,7 @@ describe('story API routes', function () {
             createdStory = story;
             expect(story.title).to.equal(newTitle);
             expect(story.image).to.equal(newImage);
-            expect(story.content).to.equal(newContent);
+            expect(story.content).to.equal(content);
             expect(story.publicStatus).to.equal(newPublicStatus);
         })
 

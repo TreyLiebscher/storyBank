@@ -3,6 +3,7 @@ const express = require('express');
 const BlockModel = require('./blockModel');
 const StoriesModel = require('../stories/storyModel');
 const tryCatch = require('../../helpers').expressTryCatchWrapper;
+const getFields = require('../../helpers').getFieldsFromRequest;
 
 const passport = require('passport');
 const {
@@ -22,26 +23,6 @@ const LIMIT = 10;
 
 const BLOCK_MODEL_FIELDS = ['title', 'color'] //an array of updatable field names
 
-function getFieldsFromRequest(fieldNamesArr, req) {
-    const requestFieldNames = Object.keys(req.body)
-
-    // new to reduce? 
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce    
-    return fieldNamesArr.reduce((acc, fieldName) => {
-
-        if (requestFieldNames.includes(fieldName)) { // is this field name present in the request?
-            const value = req.body[fieldName]
-
-            // is there an usable value? 
-            // if so, add it to the reduce() return object
-            if (value !== undefined) {
-                acc[fieldName] = value
-            }
-        }
-        return acc
-    }, {})
-}
-
 // // // // POST
 async function createBlock(req, res) {
     const record = await BlockModel.create({
@@ -49,7 +30,7 @@ async function createBlock(req, res) {
         // populate user_id with the logged in user's id
         user_id: req.user.id,
         date: new Date(),
-        title: req.body.title || 'Untitled Story',
+        title: req.body.title || 'Untitled Block',
         color: req.body.color
     })
     res.json({
@@ -134,7 +115,7 @@ async function updateBlock(req, res) {
             message: 'NOT_FOUND'
         })
     }
-    const newFieldValues = getFieldsFromRequest(BLOCK_MODEL_FIELDS, req)
+    const newFieldValues = getFields(BLOCK_MODEL_FIELDS, req)
 
     const updatedRecord = await BlockModel.findByIdAndUpdate({
         '_id': req.params.id
