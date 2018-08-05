@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
 const path = require('path');
-const fileUpload = require('express-fileupload');
 
 const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
 const { setupRoutes } = require('./api/api.js');
@@ -22,10 +21,6 @@ app.use('/app', express.static(path.join(__dirname, '../public')))
 app.use('*', function (req, res) {
     res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
 });
-
-app.use(fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 },
-  }));
 
 
 let server;
@@ -88,5 +83,3 @@ if (require.main === module) {
 }
 
 module.exports = {app, runServer, closeServer};
-
-
