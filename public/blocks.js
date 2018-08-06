@@ -33,8 +33,9 @@ function displayBlock(arr) {
 
 function renderCreateBlockInterface() {
     return `
-    <h2>Create a new Story Block</h2>
     <form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
+        <fieldset id="storyBankForm">
+        <legend>Create a new Story Block</legend>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
             <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
@@ -45,6 +46,7 @@ function renderCreateBlockInterface() {
          
         <button type="submit" id="js-blockCreateButton" class="userButton">Create!</button>
         <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
+        </fieldset>
     </form>
     `
 }

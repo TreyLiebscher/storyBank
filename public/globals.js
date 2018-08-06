@@ -84,4 +84,13 @@ function handleFormsSubmit() {
     });
 }
 
+function renderMessages(message) {
+    return `
+    <div class="userMessages">
+        <p>${message}</p>
+        <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
+    </div>
+    `;
+}
+
 $(handleFormsSubmit);

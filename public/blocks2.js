@@ -5,28 +5,28 @@ function renderBlockUpdateMenu(title, color, id) {
     const updateUrl = API_URLS.updateBlock;
 
     return `
-    <h2>Edit ${title}</h2>
     <form id="editBlock" type="submit" action="${updateUrl}/${id}" method="PUT">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="title" class="mdl-textfield__input" name="title" value="${title}">
-            <label class="mdl-textfield__label" for="title">Title</label>
-        </div>
-
-        <button id="colorPicker" value="" class="colorButton userButton" 
-        type="button" name="selectedColor" style="${color}">Change Color</button>        
-        <input type="hidden" id="color" />
-         
-        <button type="submit" id="js-blockCreateButton" class="userButton">Update</button>
-        <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
+        <fieldset id="storyBankForm">
+            <legend>Edit ${title}</legend>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input id="title" class="mdl-textfield__input" name="title" value="${title}">
+                <label class="mdl-textfield__label" for="title">Title</label>
+            </div>
+            <button id="colorPicker" value="" class="colorButton userButton" type="button" name="selectedColor" style="${color}">Change Color</button>
+            <input type="hidden" id="color" />
+            <button type="submit" id="js-blockCreateButton" class="userButton">Update</button>
+            <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
+        </fieldset>
     </form>
     `
 }
-
+//TODO create a hide blockupdate menu (will not return to regular view if user clicks cancel)
 function displayBlockUpdateMenu() {
     $('.storyBlockView-Title').on('click', 'button#editBlock', function (event) {
         event.preventDefault();
         $('.storyBlockView-Title').hide('slow');
         $('.storyBlockView').hide('slow');
+        $('.storyCreateInterface').hide('slow');
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
@@ -71,10 +71,7 @@ function handleBlockUpdate() {
 
     posting.done(function (data) {
         console.log(data.message);
-        const message = `
-        <p>${data.message}</p>
-        <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
-        `;
+        const message = renderMessages(data.message);
         $('.storyBlockCreateHolder').empty();
         const newBlock = renderBlock(data.block);
         const newBlockDashboard = renderInsideBlockViewTitle(data.block);
@@ -88,6 +85,7 @@ function handleBlockUpdate() {
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView-Title').show('slow');
         $('.storyBlockView').show('slow');
+        $('.storyCreateInterface').show('slow');
         componentHandler.upgradeDom();
     })
 }
@@ -98,9 +96,13 @@ function renderDeleteMenu(title, id) {
 
     return `
     <form id="deleteBlock" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
-    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>? Doing so will also delete all of the stories within!</p>
-    <button id="deleteBlockSubmit" class="deleteButton userButton" type="submit">Yes</button>
-    <button id="cancelBlockDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+        <fieldset id="storyBankForm">
+            <legend>Delete Block</legend>
+            <p>Are you sure you want to delete
+                <span class="deleteBlockTitle">${title}</span>? Doing so will also delete all of the stories within!</p>
+            <button id="deleteBlockSubmit" class="deleteButton userButton" type="submit">Yes</button>
+            <button id="cancelBlockDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+        </fieldset>
     </form>
     `
 }
@@ -141,11 +143,13 @@ function handleBlockDeletion() {
 
     deleting.done(function (data) {
         console.log(`${data.message}`);
-        const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
-        $('.storyBlockView-Title').empty();
+        // $('.storyBlockView-Title').empty();
+        $('.storyBlockView-Title').hide('slow', function(){ $('.storyBlockView-Title').empty(); });
         $('.storyBlockView').empty();
-        $('.storyBlock').remove(`#${data.block.id}`)
+        // $('.storyBlock').remove(`#${data.block.id}`)
+        $(`#${data.block.id}`).hide('slow', function(){ $(`#${data.block.id}`).remove(); });
     });
 }
 
