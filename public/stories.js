@@ -11,30 +11,32 @@ function renderCreateStoryInterface(title, id) {
 
     const createURL = API_URLS.createStory
 
-    return `		<h3>Add a story to ${title}</h3>
+    return `
     <form id="createStory" action="${createURL}/${id}" method="POST">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input id="title" class="mdl-textfield__input" name="title">
-            <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
-        </div>
-            
-        <input type ="file" 
-            onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' 
-            id="image" class="mdl-textfield__input" name="image">
+        <fieldset id="storyBankForm">
+            <legend>Add a story to ${title}</legend>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input id="title" class="mdl-textfield__input" name="title">
+                <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
+            </div>
 
-        <div class="imageThumbBox">
-            <img id="storyImagePreview" class="imageThumb" src="">
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
-            <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
-        </div>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
-            <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
-            <span class="mdl-switch__label">publicStatus?</span>
-        </label>
-        <button type="submit" class="userButton">Add to block</button>
-        <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
+            <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="mdl-textfield__input"
+                name="image">
+
+            <div class="imageThumbBox">
+                <img id="storyImagePreview" class="imageThumb" src="">
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
+                <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
+            </div>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+                <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
+                <span class="mdl-switch__label">publicStatus?</span>
+            </label>
+            <button type="submit" class="userButton">Add to block</button>
+            <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
+        </fieldset>
     </form>`
 }
 

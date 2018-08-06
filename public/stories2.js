@@ -82,9 +82,17 @@ function handleStoryUpdate() {
     const publicStatus = ckBox.is(':checked')
     const url = $form.attr('action');
 
+    let imageSrc;
+
+    if (lastUpload === null) {
+        imageSrc = $form.find('image[id="storyCurrentImagePreview"]').attr('src');
+    } else {
+        imageSrc = lastUpload;
+    }
+
     const formData = {
         title: title,
-        image: lastUpload,
+        image: imageSrc,
         content: content,
         publicStatus: publicStatus
     }
@@ -103,7 +111,7 @@ function handleStoryUpdate() {
     posting.done(function (data) {
         console.log(data);
         console.log(data.story.image);
-        const message = `<p>${data.message}</p><button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>`;
+        const message = renderMessages(data.message);
         $('.storyCreateInterface').empty();
         const newStory = renderStory(data);
         $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
@@ -120,9 +128,13 @@ function renderStoryDeleteMenu(title, id) {
 
     return `
     <form id="deleteStory" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
-    <p>Are you sure you want to delete <span class="deleteBlockTitle">${title}</span>?</p>
-    <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
-    <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+        <fieldset id="storyBankForm">
+            <legend>Delete Story</legend>
+            <p>Are you sure you want to delete
+                <span class="deleteBlockTitle">${title}</span>?</p>
+            <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
+            <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+        </fieldset>
     </form>
     `
 }
@@ -160,7 +172,7 @@ function handleStoryDeletion() {
 
     deleting.done(function (data) {
         console.log(`${data.message}, kiwi`);
-        const message = `<p>${data.message}</p><button id="cancelStoryDeletion" class="userButton" type="button">Ok</button>`;
+        const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView').empty();
         const blockId = $('.storyBlockView-Title').find('.blockId').text();
