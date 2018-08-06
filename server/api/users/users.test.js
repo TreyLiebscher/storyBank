@@ -55,6 +55,19 @@ describe('Users API routes', function () {
             expect(user.email).to.equal(email);
             expect(user.id).to.be.a('string');
         })
+
+        it('should return a 400 status for missing fields', async () => {
+            const email = 'test3@test.com';
+
+            const res = await chai
+                .request(app)
+                .post('/users/user/createUser')
+                .send({
+                    email
+                });
+
+            expect(res).to.have.status(400);
+        }) 
     })
 
 })
