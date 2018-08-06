@@ -3,7 +3,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 
-
 const {
     closeServer,
     runServer,
@@ -83,7 +82,7 @@ describe('block API routes', function () {
     describe('CRUD /storyBlock/block', () => {
 
         let createdBlock, deletedBlock
-
+        //PUT
         it('should update a block by id (PUT)', async () => {
             const title = 'Some useless block';
             const newTitle = 'A useful block';
@@ -119,28 +118,7 @@ describe('block API routes', function () {
             expect(block.unusable).to.not.exist;
         })
 
-        it('should return a 404 for a non-existent post', async () => {
-
-            const authToken = await testUserLoginToken();
-            //Deletes the newly created block ^^ in order
-            //to test for its non-existence
-            const res = await chai
-                .request(app)
-                .delete(`/storyblock/block/delete/${createdBlock.id}`)
-                .set('Authorization', `Bearer ${authToken}`);
-
-            const nxID = createdBlock.id
-            const noRes = await chai
-                .request(app)
-                .put(`/storyblock/block/update/${nxID}`)
-                .set('Authorization', `Bearer ${authToken}`);
-
-            expect(noRes).to.have.status(404);
-            expect(noRes.body.message).to.equal('NOT_FOUND');
-            expect(noRes).to.be.json;
-        })
-
-
+        //POST
         it('should create a new block (POST)', async () => {
 
             const newBlock = await BlockModel.create({
@@ -162,7 +140,7 @@ describe('block API routes', function () {
 
             //Create a story associated with the new block
             //for testing later on
-            const newStory = await StoriesModel.create( {
+            const newStory = await StoriesModel.create({
                 title: 'new story',
                 content: 'just some new stuff',
                 image: 'upload img',
@@ -183,7 +161,7 @@ describe('block API routes', function () {
             expect(createdAt).to.be.a('date')
             expect(createdAt.getTime()).to.not.equal(NaN)
         })
-
+        //GET by id
         //NOTE this depends on the previous it() being sucessful
         it('should retrieve a block by id (GET)', async () => {
 
@@ -201,7 +179,7 @@ describe('block API routes', function () {
             } = res.body
             expect(retrievedBlock).to.deep.equal(createdBlock);
         })
-
+        //GET w stories
         it('should retrieve a block and associated stories by id (GET)', async () => {
 
             const authToken = await testUserLoginToken();
@@ -210,8 +188,6 @@ describe('block API routes', function () {
                 .request(app)
                 .get(`/storyblock/blocks/stories/${createdBlock.id}`)
                 .set('Authorization', `Bearer ${authToken}`);
-
-            
 
             expect(res).to.have.status(200)
             expect(res).to.be.json;
@@ -222,7 +198,7 @@ describe('block API routes', function () {
                 stories: retrievedStories
             } = res.body
             //Compare res with the story that was created on
-            //line 164
+            //line 144
             expect(retrievedStories).to.be.an('array');
             expect(retrievedStories[0].block).to.equal(retrievedBlock.id);
             expect(retrievedStories[0].title).to.equal('new story');
@@ -231,7 +207,7 @@ describe('block API routes', function () {
             expect(retrievedStories[0].publicStatus).to.equal(true);
             expect(retrievedBlock).to.deep.equal(createdBlock);
         })
-
+        //DELETE
         //NOTE this depends on the previous it() being sucessful
         it('should delete a block by id (DELETE)', async () => {
 
@@ -250,7 +226,7 @@ describe('block API routes', function () {
             deletedBlock = block
             expect(block).to.deep.equal(createdBlock)
         })
-
+        //GET w stories 404
         //NOTE this depends on the previous it() being sucessful
         it('should return a 404 for non-existent post (GET)', async () => {
 
@@ -266,7 +242,7 @@ describe('block API routes', function () {
             expect(res.body.message).to.equal('NOT_FOUND')
             expect(res).to.be.json;
         })
-
+        //GET by id 404
         it('should return a 404 for non-existent post (GET)', async () => {
 
             const authToken = await testUserLoginToken();
@@ -281,7 +257,7 @@ describe('block API routes', function () {
             expect(res.body.message).to.equal('NOT_FOUND')
             expect(res).to.be.json;
         })
-
+        //DELETE 404
         it('should return a 404 for non-existent post (DELETE)', async () => {
 
             const authToken = await testUserLoginToken();
@@ -296,10 +272,24 @@ describe('block API routes', function () {
             expect(res.body.message).to.equal('NOT_FOUND')
             expect(res).to.be.json;
         })
+        //PUT 404
+        it('should return a 404 for a non-existent post', async () => {
+
+            const authToken = await testUserLoginToken();
+
+            const nxID = createdBlock.id
+            const res = await chai
+                .request(app)
+                .put(`/storyblock/block/update/${nxID}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
+            expect(res).to.have.status(404);
+            expect(res).to.be.json;
+        })
 
 
     })
-
+    //GET no records
     describe('GET /storyblock/blocks (no records)', () => {
         it('should respond with JSON', async () => {
             await deleteCollections(['blockmodels'])
@@ -309,14 +299,15 @@ describe('block API routes', function () {
             const res = await chai
                 .request(app)
                 .get('/storyblock/myblocks')
-                .set('Authorization', `Bearer ${authToken}`)
+                .set('Authorization', `Bearer ${authToken}`);
+
             expect(res).to.have.status(200)
             expect(res).to.be.json;
 
             //perform a deep comparison 'deep.equal' because arrays are not equal by reference
             expect(res.body.blocks).to.deep.equal([])
         })
-
+        //Offset OOB
         it('should fail when the offset param is out of bounds', async () => {
 
             const authToken = await testUserLoginToken();
@@ -332,7 +323,7 @@ describe('block API routes', function () {
 
 
     })
-
+    //GET some records
     describe('GET /storyblock/blocks (some records)', () => {
         it('should respond with JSON', async () => {
 
@@ -356,7 +347,7 @@ describe('block API routes', function () {
             expect(res.body.blocks).to.have.lengthOf(SEED_DATA_LENGTH)
             expect(res.body.total).to.equal(SEED_DATA_LENGTH)
         })
-
+        //Offset
         it('should account for the offset param', async () => {
 
             const authToken = await testUserLoginToken();
