@@ -156,7 +156,7 @@ async function deleteBlock(req, res) {
     res.json({
         block: record.serialize(),
         // stories: storiesRecord.map(record => record.serialize()), //TODO make this work
-        message: 'Block has been deleted'
+        message: `"${record.title}" has been deleted`
     });
 }
 

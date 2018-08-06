@@ -132,7 +132,7 @@ async function deleteStory(req, res) {
     }
     res.json({
         story: record.serialize(),
-        message: 'Story has been deleted'
+        message: `"${record.title}" has been deleted`
     })
 }
 
