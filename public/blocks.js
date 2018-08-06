@@ -151,6 +151,7 @@ function handleGetAllBlocksWithStories() {
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         console.log(blockId);
         $('.storyCreateInterface').empty();
+        $('.storyBlockView-Title').show('slow');
         getBlocksWithStories(blockId);
     });
 }
@@ -174,6 +175,7 @@ function viewAllStoriesInBlock() {
         event.preventDefault();
         $('.storyCreateInterface').empty();
         $('.storyBlockView').show('slow');
+        $('.storyBlockView-Title').show('slow');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         getBlocksWithStories(blockId);
     })

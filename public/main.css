@@ -266,6 +266,10 @@ legend {
     filter: brightness(130%);
 }
 
+.storyDetailView {
+    width: 100%;
+}
+
 .publicStatusInfo {
     display: block;
     float: right;

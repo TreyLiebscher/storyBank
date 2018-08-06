@@ -146,7 +146,7 @@ function handleBlockDeletion() {
         const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
         // $('.storyBlockView-Title').empty();
-        $('.storyBlockView-Title').hide('slow', function(){ $('.storyBlockView-Title').empty(); });
+        $('.storyBlockView-Title').hide('slow', function() {$('.storyBlockView-Title').empty()});
         $('.storyBlockView').empty();
         // $('.storyBlock').remove(`#${data.block.id}`)
         $(`#${data.block.id}`).hide('slow', function(){ $(`#${data.block.id}`).remove(); });
