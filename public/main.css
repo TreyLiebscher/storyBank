@@ -44,6 +44,7 @@
 .userButton:focus {
     color: #133947;
     background: white;
+    cursor: pointer;
 }
 
 .js-create-block-view {
@@ -163,6 +164,10 @@
 .storyImage {
     max-width: 75vw;
     max-height: 50vh;
+}
+
+.storyContent {
+    white-space: pre-wrap;
 }
 
 .imageThumb,

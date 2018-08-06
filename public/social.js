@@ -1,7 +1,7 @@
 'use strict';
 
 function getRandomPublicStories() {
-    
+
     const retrieving = $.ajax({
         type: "GET",
         url: `${API_URLS.getPublicStories}`,
@@ -33,6 +33,7 @@ function renderStoryPublicQuickView(result) {
 function displayPublicStories(arr) {
     const results = arr.stories.map((item) => renderStoryPublicQuickView(item));
     $('.discoverView').html(results);
+    $('.discoverView').show('slow');
     componentHandler.upgradeDom();
 }
 
@@ -41,6 +42,50 @@ function handleGetALlPublicStories() {
         event.preventDefault();
         getRandomPublicStories();
     });
+}
+
+function handleGoBack() {
+    $('.discoverView').on('click', 'button#goBack', function(event) {
+        event.preventDefault();
+        getRandomPublicStories();
+    })
+}
+
+function renderPublicStory(result) {
+    //if user chooses not to provide an image
+    let image;
+    if (!(result.story.image)) {
+        image = `<br>`;
+    } else {
+        image = `<img class="storyImage" src="${result.story.image}">`;
+    }
+
+    let publicStatus;
+
+    if (result.story.publicStatus === true) {
+        publicStatus = `Public`;
+    } else {
+        publicStatus = `Not Public`;
+    }
+
+    return `
+        <div class="storyDetailView" id="${result.story.id}">
+            <h3 class="storyTitle">${result.story.title}</h3>
+            <p class="storyId">${result.story.id }</p>
+            <p class="publicStatus">${result.story.publicStatus}</p>
+            <div class="imageBox">
+                ${image}
+            </div>
+            <p class="storyContent">${result.story.content}</p>
+            <p class="publicStatusInfo">${publicStatus}</p>
+            <button type="button" class="userButton" id="goBack">Back</button>  
+        </div>
+    `
+}
+
+function displayPublicStory(result) {
+    const story = renderPublicStory(result);
+    $('.discoverView').html(story);
 }
 
 function handleViewPublicStory() {
@@ -55,11 +100,11 @@ function handleViewPublicStory() {
         })
 
         resultPromise.then(resultResponse => {
-            return displayStory(resultResponse);
+            return displayPublicStory(resultResponse);
         })
     })
 }
 
 $(handleViewPublicStory);
-
+$(handleGoBack);
 $(handleGetALlPublicStories);

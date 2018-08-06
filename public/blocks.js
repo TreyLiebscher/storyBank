@@ -54,6 +54,7 @@ function viewCreateBlockInterface() {
         event.preventDefault();
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
+        $('.discoverView').hide('slow');
 
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
@@ -73,6 +74,7 @@ function viewCreateBlockInterface() {
 function hideCreateBlockInterface() {
     $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
         $('.storyBlockCreateHolder').empty();
+        $('.discoverView').show('slow');
     });
 }
 
