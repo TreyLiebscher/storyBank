@@ -15,12 +15,12 @@ function renderBlockUpdateMenu(title, color, id) {
             <button id="colorPicker" value="" class="colorButton userButton" type="button" name="selectedColor" style="${color}">Change Color</button>
             <input type="hidden" id="color" />
             <button type="submit" id="js-blockCreateButton" class="userButton">Update</button>
-            <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
+            <button type="button" id="cancelBlockUpdate" class="userButton">Cancel</button>
         </fieldset>
     </form>
     `
 }
-//TODO create a hide blockupdate menu (will not return to regular view if user clicks cancel)
+
 function displayBlockUpdateMenu() {
     $('.storyBlockView-Title').on('click', 'button#editBlock', function (event) {
         event.preventDefault();
@@ -46,6 +46,16 @@ function displayBlockUpdateMenu() {
             color: "#f00"
         });
         componentHandler.upgradeDom();
+    });
+}
+
+function hideBlockUpdateMenu() {
+    $('.storyBlockCreateHolder').on('click', 'button#cancelBlockUpdate', function(event) {
+        event.preventDefault();
+        $('.storyBlockView-Title').show('slow');
+        $('.storyBlockView').show('slow');
+        $('.storyCreateInterface').show('slow');
+        $('.storyBlockCreateHolder').empty();
     });
 }
 
@@ -145,10 +155,8 @@ function handleBlockDeletion() {
         console.log(`${data.message}`);
         const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
-        // $('.storyBlockView-Title').empty();
         $('.storyBlockView-Title').hide('slow', function() {$('.storyBlockView-Title').empty()});
         $('.storyBlockView').empty();
-        // $('.storyBlock').remove(`#${data.block.id}`)
         $(`#${data.block.id}`).hide('slow', function(){ $(`#${data.block.id}`).remove(); });
     });
 }
@@ -156,6 +164,7 @@ function handleBlockDeletion() {
 
 function storyBlock2() {
     $(displayBlockUpdateMenu);
+    $(hideBlockUpdateMenu);
     $(displayDeleteMenu);
     $(hideDeleteMenu);
 }

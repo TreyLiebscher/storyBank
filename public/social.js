@@ -20,13 +20,12 @@ function getRandomPublicStories() {
 function renderStoryPublicQuickView(result) {
 
     return `
-    <div type="button" class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9),
+    <button type="button" class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9),
     rgba(0, 0, 0, 0.6) ), url(${result.image});
     background-repeat: no-repeat;
-    background-position: center;">
-    <h3 class="quickViewTitle">${result.title}</h3>
+    background-position: center;">${result.title}
     <p class="storyId">${ result.id }</p>
-    </div>
+    </button>
     `
 }
 
@@ -40,6 +39,7 @@ function displayPublicStories(arr) {
 function handleGetALlPublicStories() {
     $('#discover').on('click', function (event) {
         event.preventDefault();
+        $('.discoverView').removeClass('discoverViewStoryFocus');
         getRandomPublicStories();
     });
 }
@@ -47,6 +47,7 @@ function handleGetALlPublicStories() {
 function handleGoBack() {
     $('.discoverView').on('click', 'button#goBack', function(event) {
         event.preventDefault();
+        $('.discoverView').removeClass('discoverViewStoryFocus');
         getRandomPublicStories();
     })
 }
@@ -89,8 +90,9 @@ function displayPublicStory(result) {
 }
 
 function handleViewPublicStory() {
-    $('.discoverView').on('click', 'div.storyQuickView', function (event) {
+    $('.discoverView').on('click', 'button.storyQuickView', function (event) {
         event.preventDefault();
+        $('.discoverView').addClass('discoverViewStoryFocus');
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
         const resultPromise = getStoryById(storyId);
