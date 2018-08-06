@@ -97,6 +97,8 @@ describe('story API routes', function () {
             // const newContent = 'New content';
             const newPublicStatus = true;
 
+            const authToken = await testUserLoginToken();
+            
             const record = await StoriesModel.create({
                 user_id: testUser._id,
                 title,
@@ -108,6 +110,7 @@ describe('story API routes', function () {
             const res = await chai
                 .request(app)
                 .put(`/stories/story/update/${record._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send({
                     title: newTitle,
                     image: newImage,

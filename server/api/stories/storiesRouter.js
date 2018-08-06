@@ -119,7 +119,7 @@ async function updateStory(req, res) {
     })
 }
 
-router.put('/story/update/:id', tryCatch(updateStory));
+router.put('/story/update/:id', jwtAuth, tryCatch(updateStory));
 
 // // // // DELETE
 async function deleteStory(req, res) {
