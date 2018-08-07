@@ -21,28 +21,33 @@ function renderSignUpForm() {
 
 	const createURL = API_URLS.createNewUser;
 
-	return `<form class="js-signUp-form" id="signUpForm" action="${createURL}" method="POST">
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="userName" class="mdl-textfield__input" name="userEmail">
-		<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="password" class="mdl-textfield__input" type="password" name="password">
-		<label id="passwordLabel" class="mdl-textfield__label" for="password">Password</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
-		<label id= "passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
-	</div>
-	<button type="submit" class="userButton">Create Account</button>
-    </form>`
+	return `
+	<form class="js-signUp-form" id="signUpForm" action="${createURL}" method="POST">
+		<fieldset id="storyBankForm">
+			<legend>Sign Up</legend>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="userName" class="mdl-textfield__input" name="userEmail">
+				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<label id="passwordLabel" class="mdl-textfield__label" for="password">Password</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
+				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
+			</div>
+			<button type="submit" class="userButton">Create Account</button>
+		</fieldset>
+	</form>
+	`
 }
 
 function handleSignUpClick() {
 	$('#signUp').on('click', function (event) {
 		event.preventDefault();
 		const signUp = renderSignUpForm();
-		$('#formsHolder').html(signUp);
+		$('.formsHolder').html(signUp);
 		componentHandler.upgradeDom();
 	});
 }
@@ -71,7 +76,7 @@ function handleCreateNewUser() {
 	const logInURL = API_URLS.userLogIn;
 
 	userRecord.done(function (data) {
-		$('#formsHolder').empty();
+		$('.formsHolder').empty();
 		const userLoginRequest = $.post(logInURL, {
 			email: email,
 			password: password
@@ -99,17 +104,21 @@ function renderLogInForm() {
 
 	const logInURL = API_URLS.userLogIn;
 
-	return `<form class="js-logIn-form" id="logInForm" action="${logInURL}">
-	<div id="mdlFloat" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="userName" class="mdl-textfield__input" name="userEmail">
-		<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
-	</div>
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		<input id="password" class="mdl-textfield__input" type="password" name="password">
-		<label id ="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
-	</div>
-	<button type="submit" class="userButton">Log In</button>
-    </form>
+	return `
+	<form class="js-logIn-form" id="logInForm" action="${logInURL}">
+		<fieldset id="storyBankForm">
+			<legend>Log In</legend>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="userName" class="mdl-textfield__input" name="userEmail">
+				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<label id="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
+			</div>
+			<button type="submit" class="userButton">Log In</button>
+		</fieldset>
+	</form>
     `
 }
 
@@ -117,7 +126,7 @@ function handleLogInClick() {
 	$('#logIn').on('click', function (event) {
 		event.preventDefault();
 		const logIn = renderLogInForm();
-		$('#formsHolder').html(logIn);
+		$('.formsHolder').html(logIn);
 		componentHandler.upgradeDom();
 	});
 }
@@ -129,13 +138,14 @@ function navigateToStories(data, saveResponse = false) {
 	if (saveResponse) {
 		saveLoginResponse(data)
 	}
-	$('#formsHolder').empty();
+	$('.formsHolder').empty();
 	const logOutButton = renderLogOutButton();
 	$('.storyBankHeader').append(logOutButton);
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
 	$('.js-block-result').removeClass('hide');
 	$('.js-create-block-view').show('slow');
+	$('.profileContainer').removeClass('hide');
 	$('.userProfileName').html(data.email);
 
 	const record = $.ajax({
@@ -182,7 +192,8 @@ function handleLogOutUser() {
 		$('.storyBankHeader').find('.userSignUp').show('slow');
 		$('.storyBankHeader').find('.userLogIn').show('slow');
 		$('.js-create-block-view').hide('slow');
-		$('.userProfileName').empty();
+		// $('.userProfileName').empty();
+		$('.profileContainer').addClass('hide');
 		$('.js-block-result').empty();
 		$('.js-block-result').addClass('hide');
 		$('.storyBlockView-Title').empty();
