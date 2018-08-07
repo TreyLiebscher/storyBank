@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; 
 require('dotenv').config()
 
 exports.DATABASE_URL = process.env.DATABASE_URL || 'mongodb://localhost/storybank2';
