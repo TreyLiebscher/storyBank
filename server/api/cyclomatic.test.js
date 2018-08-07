@@ -2,6 +2,7 @@
 
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const expect = chai.expect;
 
 const {
     closeServer,
@@ -20,6 +21,8 @@ const {
 
 describe('Weird things', function () {
     it('should close an inexistent server', async () => {
-        await closeServer()
+        const result = await closeServer()
+        expect(result).to.equal(false)
+
     })
 })
