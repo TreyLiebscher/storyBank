@@ -56,7 +56,7 @@ async function runServer(databaseUrl, port) {
         return false;
     }
 }
-
+//cyclomatic complexity
 async function closeServer() {
     try {
         await mongoose.disconnect();
