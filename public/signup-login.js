@@ -1,21 +1,20 @@
 'use strict';
 
 let AUTH_TOKEN
-
+const COOKIE_NAME = 'APP_LOGIN_TOKEN'
 
 function saveLoginResponse(data) {
-	Cookies.set('APP_LOGIN_TOKEN', JSON.stringify(data));
+	Cookies.set(COOKIE_NAME, JSON.stringify(data));
 }
 
 function restoreLoginResponse() {
-	const dataStr = Cookies.get('APP_LOGIN_TOKEN');
+	const dataStr = Cookies.get(COOKIE_NAME);
 	if (dataStr) {
 		const data = JSON.parse(dataStr)
 		console.log('Saved login data', data)
 		navigateToStories(data, false)
 	}
 }
-
 
 
 function renderSignUpForm() {
@@ -176,6 +175,7 @@ function handleLogOutUser() {
 		event.preventDefault();
 		console.log('logout button was clicked');
 		AUTH_TOKEN = null;
+		Cookies.remove(COOKIE_NAME);
 		$('.storyBankHeader').find('.userLogOut').remove();
 		$('.storyBankHeader').find('.userSignUp').show('slow');
 		$('.storyBankHeader').find('.userLogIn').show('slow');
