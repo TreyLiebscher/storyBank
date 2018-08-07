@@ -40,6 +40,7 @@ function handleGetALlPublicStories() {
     $('#discover').on('click', function (event) {
         event.preventDefault();
         $('.discoverView').removeClass('discoverViewStoryFocus');
+        $('.discoverView').removeClass('hide');
         getRandomPublicStories();
     });
 }

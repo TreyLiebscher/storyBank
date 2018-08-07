@@ -85,6 +85,7 @@ function handleCreateNewUser() {
 			$('.storyBankHeader').find('.userSignUp').hide('slow');
 			$('.storyBankHeader').find('.userLogIn').hide('slow');
 			$('.js-create-block-view').show('slow');
+			$('.js-block-result').removeClass('hide');
 			$('.userProfileName').html(data.email);
 			AUTH_TOKEN = data.authToken;
 			saveLoginResponse(data)
@@ -133,6 +134,7 @@ function navigateToStories(data, saveResponse = false) {
 	$('.storyBankHeader').append(logOutButton);
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
+	$('.js-block-result').removeClass('hide');
 	$('.js-create-block-view').show('slow');
 	$('.userProfileName').html(data.email);
 
@@ -182,6 +184,7 @@ function handleLogOutUser() {
 		$('.js-create-block-view').hide('slow');
 		$('.userProfileName').empty();
 		$('.js-block-result').empty();
+		$('.js-block-result').addClass('hide');
 		$('.storyBlockView-Title').empty();
 		$('.storyBlockView').empty();
 		$('.storyCreateInterface').empty();
