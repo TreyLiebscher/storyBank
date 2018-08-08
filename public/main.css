@@ -2,13 +2,22 @@
     box-sizing: border-box;
 }
 
-.storyBankBody {
-    color: white;
+/* A fix for background scrolling with content on iOS Safari */
+
+.storyBankBody:before {
+    content: "";
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/xT5hzmO/nighttime-campfire_e1vx-fat__F0000.png') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/xT5hzmO/nighttime-campfire_e1vx-fat__F0000.png') no-repeat center center fixed;
 }
 
 #storyBankForm {
@@ -50,17 +59,22 @@ legend {
 .profileContainer {
     position: relative;
     display: inline-block;
+    width: 100%;
 }
 
 .userProfileName {
     background: none;
     color: white;
     border: 2px solid white;
+    height: 10vh;
+    float: right;
 }
 
 .profileOptions {
     display: none;
     position: absolute;
+    right: 0;
+    top: 10vh;
     background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid black;
     min-width: 160px;
@@ -78,8 +92,6 @@ legend {
     border-bottom: 1px solid black;
 }
 
-
-
 .profileContainer:hover .userProfileName {
     background-color: white;
     color: black;
@@ -87,10 +99,10 @@ legend {
 }
 
 /* for keyboard nav */
+
 .profileVisibleOptions {
     display: block;
 }
-
 
 /*  */
 
@@ -98,6 +110,7 @@ legend {
     width: 100vw;
     margin-top: 110px;
     margin-bottom: 30px;
+    color: white;
 }
 
 .storyBankHeader {
@@ -108,6 +121,7 @@ legend {
     top: 0;
     height: 100px;
     background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
 }
 
 .storyBankTitle {
@@ -115,14 +129,18 @@ legend {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 30px;
+    color: white;
 }
 
 /* done */
+
 .userButton {
     color: white;
     background: none;
     border: 3px solid white;
-    height: 6vh;
+    height: 10vh;
+    width: 100%;
+    margin-top: 2%;
 }
 
 .userButton:hover,
@@ -136,21 +154,13 @@ legend {
     display: none;
 }
 
-.blockHolder {
-    margin: auto;
-    border: 2px solid black;
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .js-block-result {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     margin: auto;
-    width: 90%;
+    width: 100%;
     overflow-y: scroll;
-    border: 1px solid white;
 }
 
 .storyBlock {
@@ -158,8 +168,8 @@ legend {
     margin: 10px 0 0 10px;
     flex-grow: 1;
     word-wrap: break-word;
-    height: 15vh;
-    width: 20%;
+    height: 20vh;
+    width: 20vw;
     max-width: 24%;
     border: 3px solid white;
     border-radius: 5px;
@@ -190,6 +200,7 @@ legend {
     box-shadow: none;
     border: 2px solid white;
     padding: 1%;
+    margin: 10px 0 10px 0;
 }
 
 .storyBlockView-Title .blockTitle {
@@ -321,8 +332,7 @@ legend {
     align-content: flex-start;
     height: 100%;
     margin: auto;
-    width: 90%;
-    border: 1px solid green;
+    width: 100%;
 }
 
 .discoverView {
@@ -331,10 +341,9 @@ legend {
     flex-direction: row-reverse;
     align-content: flex-start;
     margin: auto;
-    width: 90%;
+    width: 100%;
     height: 30%;
     overflow-y: scroll;
-    border: 1px solid red;
     margin-top: 2%;
     margin-bottom: 2%;
 }
@@ -372,11 +381,10 @@ legend {
 
 .storyQuickView {
     display: inline-block;
-    margin: 10px 0 0 10px;
     flex-grow: 1;
     height: 15vh;
-    width: 20%;
-    border: 2px solid white;
+    width: 33.3333%;
+    border: 0.5px solid white;
     border-radius: 5px;
     overflow-y: scroll;
     color: white;
@@ -489,31 +497,68 @@ legend {
         margin-top: 110px;
         margin-bottom: 30px;
     }
-
+    .storyBankHeader {
+        display: block;
+    }
     /* User Forms */
     .js-signUp-form,
     .js-logIn-form {
         width: 30%;
         margin: auto;
     }
-
     #storyBankFormInput {
         width: 50%;
         margin: auto;
     }
-    
     .userButton {
         height: auto;
+        width: auto;
+        margin-top: auto;
     }
     .formsHolder .userButton {
         margin: 0 auto 2% auto;
         height: auto;
     }
-
     /* User Profile Box */
-
+    .profileContainer {
+        width: auto;
+    }
     .profileContainer:hover .profileOptions {
         display: block;
     }
-    
+    .profileOptions {
+        right: auto;
+        top: auto;
+    }
+    .userProfileName {
+        height: auto;
+        float: none;
+    }
+    /* Block Container */
+    .js-block-result {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        margin: auto;
+        width: 90%;
+        overflow-y: scroll;
+        border: 1px solid white;
+    }
+    .storyBlock {
+        height: 15vh;
+        width: 20%;
+    }
+    /* Story Container */
+    .storyBlockView {
+        width: 90%;
+    }
+    .storyQuickView {
+        margin: 10px 0 0 10px;
+        width: 20%;
+        border: 2px solid white;
+    }
+    /* Discover Container */
+    .discoverView {
+        width: 90%;
+    }
 }
