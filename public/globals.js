@@ -14,7 +14,8 @@ const API_URLS = {
     getPublicStories: '/stories/storiesall',
     //Users
     createNewUser: '/users/user/createUser',
-    userLogIn: '/users/login'
+    userLogIn: '/users/login',
+    changePassword: '/users/changepassword'
 }
 
 //In case of Errors
@@ -80,7 +81,10 @@ function handleFormsSubmit() {
 		}
 		if (formID === 'logInForm') {
 			handleUserLogIn();
-		}
+        }
+        if (formID === 'changePassword') {
+            handleChangePassword();
+        }
     });
 }
 

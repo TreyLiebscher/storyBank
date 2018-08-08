@@ -180,11 +180,77 @@ function handleLogOutUser() {
 	});
 }
 
+function renderChangePasswordForm () {
+	const updateUrl = API_URLS.changePassword;
+
+	return `
+	<form id="changePassword" action="${updateUrl}" method="POST">
+		<fieldset id="storyBankForm">
+			<legend>Change Password</legend>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="userName" class="mdl-textfield__input" name="userEmail">
+				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<label id="passwordLabel" class="mdl-textfield__label" for="password">New Password</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
+				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
+				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Retype New Password</label>
+			</div>
+			<button type="submit" class="userButton">Update</button>
+		</fieldset>
+	</form>
+	`
+}
+
+function displayChangePasswordForm() {
+	$('#changePasswordButton').on('click', function(event) {
+		event.preventDefault();
+		const changePasswordForm = renderChangePasswordForm();
+		$('.formsHolder').html(changePasswordForm);
+		componentHandler.upgradeDom();
+	});
+}
+
+function handleChangePassword () {
+	const $form = $('#changePassword'),
+		email = $form.find('input[name="userEmail"]').val(),
+		password = $form.find('input[name="password"]').val(),
+		retyped = $form.find('input[name="passwordConfirm"]').val(),
+		url = $form.attr('action');
+
+	const changePasswordRequest = $.ajax({
+		type: "POST",
+		url: url,
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${AUTH_TOKEN}`
+		},
+		dataType: 'json',
+		data: JSON.stringify({
+			email: email,
+			newPassword: password,
+			retypeNewPassword: retyped
+		})
+	});
+
+	changePasswordRequest.done(function (data) {
+		console.log('kiwi password change returns', data);
+		$('.formsHolder').empty();
+		const message = renderMessages(data.message);
+		$('.deleteMenuHolder').removeClass('hide');
+        $('.deleteMenuHolder').html(message);
+	});
+}
+
 function userLogInSignUp() {
 	$(handleSignUpClick);
 	$(handleLogInClick);
 	$(handleLogOutUser);
 	$(restoreLoginResponse);
+	$(displayChangePasswordForm);
 }
 
 $(userLogInSignUp);

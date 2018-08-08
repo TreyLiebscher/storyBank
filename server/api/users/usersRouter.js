@@ -192,7 +192,8 @@ async function changePassword(req, res) {
     });
 
     res.json({
-        user: userRecord.serialize()
+        user: userRecord.serialize(),
+        message: 'Password Updated'
     })
 }
 
