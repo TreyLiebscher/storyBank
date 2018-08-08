@@ -562,3 +562,115 @@ legend {
         width: 90%;
     }
 }
+
+/* iOS vh/vw fixes */
+
+/* iPhone SE, 5, 5c, 5s, Touch */
+@media all and (device-width: 320px) and (device-height: 568px) and (orientation:portrait) {
+    .userProfileName {
+        height: 56.8px
+    }
+    .storyBlock {
+        height: 113.6px;
+        width: 64px;
+    }
+    .discoverView .storyQuickView {
+        height: 85.2px;
+    }
+}
+
+@media all and (device-width: 320px) and (device-height: 568px) and (orientation:landscape) {
+    .userProfileName {
+        height: 32px
+    }
+    .storyBlock {
+        height: 64px;
+        width: 113.6px;
+    }
+    .discoverView .storyQuickView {
+        height: 48px;
+    }
+}
+
+/* iPhone 6s, 6, 7, 8 */
+@media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
+    .userProfileName {
+        height: 66.7px
+    }
+    .storyBlock {
+        height: 133.4px;
+        width: 75px;
+    }
+    .discoverView .storyQuickView {
+        height: 100.5px;
+    }
+}
+
+@media all and (device-width: 375px) and (device-height: 667px) and (orientation:landscape) {
+    .userProfileName {
+        height: 37.5px
+    }
+    .storyBlock {
+        height: 75px;
+        width: 133.4px;
+    }
+    .discoverView .storyQuickView {
+        height: 56.25px;
+    }
+}
+
+/* iPhone 8+ */
+@media all and (device-width: 414px) and (device-height: 736px) and (orientation:portrait) {
+    .userProfileName {
+        height: 73.6px
+    }
+    .storyBlock {
+        height: 147.2px;
+        width: 82.8px;
+    }
+    .discoverView .storyQuickView {
+        height: 110.4px;
+    }
+}
+
+@media all and (device-width: 414px) and (device-height: 736px) and (orientation:landscape) {
+    .userProfileName {
+        height: 41.4px
+    }
+    .storyBlock {
+        height: 82.8px;
+        width: 147.2px;
+    }
+    .discoverView .storyQuickView {
+        height: 62.1px;
+    }
+}
+
+/* iPhone X */
+@media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
+    .userProfileName {
+        height: 81.2px
+    }
+    .storyBlock {
+        height: 162.4px;
+        width: 75px;
+    }
+    .discoverView .storyQuickView {
+        height: 121.8px;
+    }
+}
+
+@media all and (device-width: 375px) and (device-height: 812px) and (orientation:landscape) {
+    .userProfileName {
+        height: 37.5px
+    }
+    .storyBlock {
+        height: 75px;
+        width: 162.4px;
+    }
+    .discoverView .storyQuickView {
+        height: 56.25px;
+    }
+}
+
+/* TODO add ipad dimensions */
