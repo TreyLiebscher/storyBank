@@ -22,12 +22,12 @@
 
 .js-signUp-form,
 .js-logIn-form {
-    width: 30%;
+    width: 100%;
     margin: auto;
 }
 
 #storyBankFormInput {
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 
@@ -44,7 +44,6 @@ legend {
     display: flex;
     flex-direction: column;
 }
-
 
 /* User menu */
 
@@ -79,9 +78,7 @@ legend {
     border-bottom: 1px solid black;
 }
 
-.profileContainer:hover .profileOptions {
-    display: block;
-}
+
 
 .profileContainer:hover .userProfileName {
     background-color: white;
@@ -89,11 +86,16 @@ legend {
     border: 2px solid black;
 }
 
+/* for keyboard nav */
+.profileVisibleOptions {
+    display: block;
+}
+
+
 /*  */
 
 .storyBankMainContent {
-    width: 90vw;
-    margin: auto;
+    width: 100vw;
     margin-top: 110px;
     margin-bottom: 30px;
 }
@@ -115,14 +117,12 @@ legend {
     font-size: 30px;
 }
 
-.userLogOut {
-    float: right;
-}
-
+/* done */
 .userButton {
     color: white;
     background: none;
     border: 3px solid white;
+    height: 6vh;
 }
 
 .userButton:hover,
@@ -256,8 +256,14 @@ legend {
     color: black;
 }
 
+.buttonHolder {
+    display: flex;
+}
+
 .formsHolder .userButton {
     margin: 0 auto 2% auto;
+    width: 48%;
+    height: 10vh;
 }
 
 .deleteBlockTitle {
@@ -455,7 +461,6 @@ legend {
     background-color: turquoise;
 }
 
-
 .loadingHolder {
     text-align: center;
     width: 100vw;
@@ -477,6 +482,38 @@ legend {
 
 /* Non-Mobile Defaults */
 
-@media only screen and (min-width: 640px) {
+@media only screen and (min-width: 650px) {
+    .storyBankMainContent {
+        width: 90vw;
+        margin: auto;
+        margin-top: 110px;
+        margin-bottom: 30px;
+    }
 
+    /* User Forms */
+    .js-signUp-form,
+    .js-logIn-form {
+        width: 30%;
+        margin: auto;
+    }
+
+    #storyBankFormInput {
+        width: 50%;
+        margin: auto;
+    }
+    
+    .userButton {
+        height: auto;
+    }
+    .formsHolder .userButton {
+        margin: 0 auto 2% auto;
+        height: auto;
+    }
+
+    /* User Profile Box */
+
+    .profileContainer:hover .profileOptions {
+        display: block;
+    }
+    
 }

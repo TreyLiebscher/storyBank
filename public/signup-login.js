@@ -37,8 +37,10 @@ function renderSignUpForm() {
 				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 			</div>
-			<button type="submit" class="userButton">Create Account</button>
-			<button type="button" class="userButton" id="cancel">Cancel</button>
+			<div class="buttonHolder">
+				<button type="submit" class="userButton">Create Account</button>
+				<button type="button" class="userButton" id="cancel">Cancel</button>
+			</div>
 		</fieldset>
 	</form>
 	`
@@ -103,8 +105,10 @@ function renderLogInForm() {
 				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
 				<label id="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
 			</div>
-			<button type="submit" class="userButton">Log In</button>
-			<button type="button" class="userButton" id="cancel">Cancel</button>
+			<div class="buttonHolder">
+				<button type="submit" class="userButton">Log In</button>
+				<button type="button" class="userButton" id="cancel">Cancel</button>
+			</div>
 		</fieldset>
 	</form>
     `
@@ -170,6 +174,7 @@ function handleLogOutUser() {
 		console.log('logout button was clicked');
 		AUTH_TOKEN = null;
 		Cookies.remove(COOKIE_NAME);
+		$('.profileOptions').removeClass('profileVisibleOptions');
 		$('.storyBankHeader').find('.userLogOut').remove();
 		$('.storyBankHeader').find('.userSignUp').show('slow');
 		$('.storyBankHeader').find('.userLogIn').show('slow');
@@ -214,6 +219,7 @@ function displayChangePasswordForm() {
 	$('#changePasswordButton').on('click', function(event) {
 		event.preventDefault();
 		const changePasswordForm = renderChangePasswordForm();
+		$('.profileOptions').removeClass('profileVisibleOptions');
 		$('.formsHolder').html(changePasswordForm);
 		$('.formsHolder').removeClass('hide');
 		componentHandler.upgradeDom();
@@ -258,6 +264,13 @@ function handleChangePassword () {
 	});
 }
 
+function viewProfileOptions() {
+	$('.profileContainer').on('click', 'button.userProfileName', function(event) {
+		event.preventDefault();
+		$('.profileOptions').toggleClass('profileVisibleOptions');
+	});
+}
+
 function userLogInSignUp() {
 	$(handleSignUpClick);
 	$(handleLogInClick);
@@ -265,6 +278,7 @@ function userLogInSignUp() {
 	$(restoreLoginResponse);
 	$(displayChangePasswordForm);
 	$(hideUserForms);
+	$(viewProfileOptions);
 }
 
 $(userLogInSignUp);
