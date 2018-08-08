@@ -81,22 +81,7 @@ function handleCreateNewUser() {
 			email: email,
 			password: password
 		});
-		//User has been created and will
-		//now be signed in automatically
-		userLoginRequest.done(function (data) {
-			console.log(data);
-			const logOutButton = renderLogOutButton();
-			$('.storyBankHeader').append(logOutButton);
-			$('.storyBankHeader').find('.userSignUp').hide('slow');
-			$('.storyBankHeader').find('.userLogIn').hide('slow');
-			$('.js-create-block-view').show('slow');
-			$('.js-block-result').removeClass('hide');
-			$('.userProfileName').html(data.email);
-			AUTH_TOKEN = data.authToken;
-			saveLoginResponse(data)
-
-		});
-
+			userLoginRequest.done(data => navigateToStories(data, true));
 	});
 }
 
@@ -139,8 +124,6 @@ function navigateToStories(data, saveResponse = false) {
 		saveLoginResponse(data)
 	}
 	$('.formsHolder').empty();
-	const logOutButton = renderLogOutButton();
-	$('.storyBankHeader').append(logOutButton);
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
 	$('.js-block-result').removeClass('hide');
@@ -175,11 +158,6 @@ function handleUserLogIn() {
 	});
 
 	userLoginRequest.done(data => navigateToStories(data, true));
-}
-
-function renderLogOutButton() {
-	return `
-	<button type="button" class="userButton userLogOut">Log Out</button>`
 }
 
 function handleLogOutUser() {

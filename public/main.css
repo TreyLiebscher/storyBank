@@ -320,14 +320,7 @@ legend {
 }
 
 .discoverView .storyQuickView {
-    display: inline-block;
-    margin: 10px 0 0 10px;
-    flex-grow: 1;
     height: 40%;
-    width: 20%;
-    border: 3px solid white;
-    overflow-y: scroll;
-    color: white;
     font-weight: 800;
 }
 
@@ -356,7 +349,7 @@ legend {
     border: 2px solid white;
     background-color: rgba(0, 0, 0, .5);
 }
-/* TODO only need height here */
+
 .storyQuickView {
     display: inline-block;
     margin: 10px 0 0 10px;
@@ -365,6 +358,7 @@ legend {
     width: 20%;
     border: 3px solid white;
     overflow-y: scroll;
+    color: white;
 }
 
 .storyQuickView::-webkit-scrollbar {

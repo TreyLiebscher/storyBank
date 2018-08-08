@@ -118,16 +118,16 @@ function renderStoryQuickView(result) {
     }
 
     return `
-    <div type="button" class="storyQuickView" style=${backgroundStyle}>
+    <button type="button" class="storyQuickView" style=${backgroundStyle}>
     <h3 class="quickViewTitle">${result.title}</h3>
     <p class="publicStatusInfo">${publicStatus}</p>
     <p class="storyId">${ result.id }</p>
-    </div>
+    </button>
     `
 }
 
 function handleViewStory() {
-    $('.storyBlockView').on('click', 'div.storyQuickView', function (event) {
+    $('.storyBlockView').on('click', 'button.storyQuickView', function (event) {
         event.preventDefault();
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
