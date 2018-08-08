@@ -19,8 +19,8 @@ const {
     getConfig
 } = require('../api/api')
 
-describe('Weird things', function () {
-    it('should close an inexistent server', async () => {
+describe('Unexpected Events', function () {
+    it('should return false when trying to close a closed server', async () => {
         const result = await closeServer()
         expect(result).to.equal(false)
 

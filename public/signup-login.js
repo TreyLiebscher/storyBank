@@ -183,7 +183,7 @@ function renderLogOutButton() {
 }
 
 function handleLogOutUser() {
-	$('.storyBankHeader').on('click', 'button.userLogOut', function (event) {
+	$('#logOutButton').on('click', function (event) {
 		event.preventDefault();
 		console.log('logout button was clicked');
 		AUTH_TOKEN = null;
@@ -192,7 +192,6 @@ function handleLogOutUser() {
 		$('.storyBankHeader').find('.userSignUp').show('slow');
 		$('.storyBankHeader').find('.userLogIn').show('slow');
 		$('.js-create-block-view').hide('slow');
-		// $('.userProfileName').empty();
 		$('.profileContainer').addClass('hide');
 		$('.js-block-result').empty();
 		$('.js-block-result').addClass('hide');
