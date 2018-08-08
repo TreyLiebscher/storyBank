@@ -155,7 +155,7 @@ function navigateToStories(data, saveResponse = false) {
 
 function handleUserLogIn() {
 	const $form = $('#logInForm'),
-		email = $form.find('input[name="userEmail"]').val(),
+		email = $form.find('input[name="userEmail"]').val().toLowerCase(),
 		password = $form.find('input[name="password"]').val();
 
 	const url = $form.attr('action');
@@ -235,7 +235,7 @@ function hideUserForms() {
 
 function handleChangePassword () {
 	const $form = $('#changePassword'),
-		email = $form.find('input[name="userEmail"]').val(),
+		email = $form.find('input[name="userEmail"]').val().toLowerCase(),
 		password = $form.find('input[name="password"]').val(),
 		retyped = $form.find('input[name="passwordConfirm"]').val(),
 		url = $form.attr('action');
