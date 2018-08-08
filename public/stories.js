@@ -19,14 +19,13 @@ function renderCreateStoryInterface(title, id) {
                 <input id="title" class="mdl-textfield__input" name="title">
                 <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
             </div>
-
-            <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="mdl-textfield__input"
+            <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="imageUploadButton"
                 name="image">
-
+    
             <div class="imageThumbBox">
                 <img id="storyImagePreview" class="imageThumb" src="">
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
                 <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
             </div>
@@ -119,7 +118,7 @@ function renderStoryQuickView(result) {
 
     return `
     <button type="button" class="storyQuickView" style=${backgroundStyle}>
-    <h3 class="quickViewTitle">${result.title}</h3>
+    <p class="quickViewTitle">${result.title}</p>
     <p class="publicStatusInfo">${publicStatus}</p>
     <p class="storyId">${ result.id }</p>
     </button>

@@ -26,18 +26,19 @@ function renderSignUpForm() {
 		<fieldset id="storyBankForm">
 			<legend>Sign Up</legend>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="userName" class="mdl-textfield__input" name="userEmail">
+				<input id="userName" class="mdl-textfield__input" name="userEmail" required>
 				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
 				<label id="passwordLabel" class="mdl-textfield__label" for="password">Password</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
+				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 			</div>
 			<button type="submit" class="userButton">Create Account</button>
+			<button type="button" class="userButton" id="cancel">Cancel</button>
 		</fieldset>
 	</form>
 	`
@@ -48,6 +49,7 @@ function handleSignUpClick() {
 		event.preventDefault();
 		const signUp = renderSignUpForm();
 		$('.formsHolder').html(signUp);
+		$('.formsHolder').removeClass('hide');
 		componentHandler.upgradeDom();
 	});
 }
@@ -60,7 +62,7 @@ function renderProfileHeader(result) {
 
 function handleCreateNewUser() {
 	const $form = $('#signUpForm'),
-		email = $form.find('input[name="userEmail"]').val(),
+		email = $form.find('input[name="userEmail"]').val().toLowerCase(),
 		password = $form.find('input[name="password"]').val(),
 		confirmPassword = $form.find('input[name="passwordConfirm"]');
 
@@ -94,14 +96,15 @@ function renderLogInForm() {
 		<fieldset id="storyBankForm">
 			<legend>Log In</legend>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="userName" class="mdl-textfield__input" name="userEmail">
+				<input id="userName" class="mdl-textfield__input" name="userEmail" required>
 				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
 				<label id="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
 			</div>
 			<button type="submit" class="userButton">Log In</button>
+			<button type="button" class="userButton" id="cancel">Cancel</button>
 		</fieldset>
 	</form>
     `
@@ -112,6 +115,7 @@ function handleLogInClick() {
 		event.preventDefault();
 		const logIn = renderLogInForm();
 		$('.formsHolder').html(logIn);
+		$('.formsHolder').removeClass('hide');
 		componentHandler.upgradeDom();
 	});
 }
@@ -200,6 +204,7 @@ function renderChangePasswordForm () {
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Retype New Password</label>
 			</div>
 			<button type="submit" class="userButton">Update</button>
+			<button type="button" class="userButton" id="cancel">Cancel</button>
 		</fieldset>
 	</form>
 	`
@@ -210,7 +215,15 @@ function displayChangePasswordForm() {
 		event.preventDefault();
 		const changePasswordForm = renderChangePasswordForm();
 		$('.formsHolder').html(changePasswordForm);
+		$('.formsHolder').removeClass('hide');
 		componentHandler.upgradeDom();
+	});
+}
+
+function hideUserForms() {
+	$('.formsHolder').on('click', 'button#cancel', function(event) {
+		event.preventDefault();
+		$('.formsHolder').addClass('hide');
 	});
 }
 
@@ -251,6 +264,7 @@ function userLogInSignUp() {
 	$(handleLogOutUser);
 	$(restoreLoginResponse);
 	$(displayChangePasswordForm);
+	$(hideUserForms);
 }
 
 $(userLogInSignUp);

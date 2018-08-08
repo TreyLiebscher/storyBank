@@ -32,7 +32,7 @@ function renderStoryPublicQuickView(result) {
 function displayPublicStories(arr) {
     const results = arr.stories.map((item) => renderStoryPublicQuickView(item));
     $('.discoverView').html(results);
-    $('.discoverView').show('slow');
+    // $('.discoverView').show('slow');
     componentHandler.upgradeDom();
 }
 
