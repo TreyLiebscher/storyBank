@@ -332,8 +332,13 @@ legend {
 .storyCreateInterface {
     display: flex;
     flex-direction: column;
-    width: 70vw;
+    width: 100%;
     margin: auto;
+}
+
+#publicSwitch {
+    margin-top: 2%;
+    margin-bottom: 8%;
 }
 
 .storyBlockView {
@@ -568,6 +573,12 @@ legend {
         margin: 10px 0 0 10px;
         width: 20%;
         border: 2px solid white;
+    }
+    .storyCreateInterface {
+        width: 85%;
+    }
+    #publicSwitch {
+        margin-bottom: 2%;
     }
     /* Discover Container */
     .discoverView {

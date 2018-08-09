@@ -34,17 +34,15 @@ function renderCreateStoryInterface(title, id) {
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
                 <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
             </div>
-            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" id="publicSwitch">
                 <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
-                <span class="mdl-switch__label">publicStatus?</span>
+                <span class="mdl-switch__label">Public?</span>
             </label>
             <button type="submit" class="userButton">Add to block</button>
             <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
         </fieldset>
     </form>`
 }
-
-{ /* <img id="storyImagePreview" class="imageThumb" src=""> */ }
 
 function viewCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
