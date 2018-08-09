@@ -313,6 +313,16 @@ legend {
     max-height: 20vh;
 }
 
+/* .canvasHolder {
+    width: 30vw;
+    height: 20vh;
+} */
+
+#canvas {
+    max-width: 75vw;
+    max-height: 50vh;
+}
+
 .blockId,
 .storyId,
 .publicStatus {
