@@ -140,7 +140,7 @@ legend {
     border: 3px solid white;
     height: 10vh;
     width: 100%;
-    margin-top: 2%;
+    /* margin-top: 2%; */
 }
 
 .userButton:hover,
@@ -160,7 +160,7 @@ legend {
     align-content: flex-start;
     margin: auto;
     width: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .storyBlock {
@@ -170,9 +170,9 @@ legend {
     word-wrap: break-word;
     height: 20vh;
     width: 20vw;
-    max-width: 24%;
-    border: 3px solid white;
-    border-radius: 5px;
+    max-width: 23%;
+    border: 2px solid white;
+    border-radius: 2px;
     -webkit-transition: transform 1s, box-shadow 0.3s;
     -moz-transition: transform 1s, box-shadow 0.3s;
     -o-transition: transform 1s, box-shadow 0.3s;
@@ -208,8 +208,9 @@ legend {
     margin-bottom: auto;
 }
 
-.storyBlock>button {
+.storyBlock button {
     margin-left: 2%;
+    margin-top: 0;
     border-top: none;
     border-bottom: none;
     border-left: 2px solid white;
@@ -217,7 +218,7 @@ legend {
     -webkit-transition: transform 1s, background-color 0.5s;
     -moz-transition: transform 1s, background-color 0.5s;
     -o-transition: transform 1s, background-color 0.5s;
-    transition: transform 1s, background-color 0.5s, color 0.8s, border-top 0.5s, border-bottom 0.5s, border-radius 1s, box-shadow 0.5s;
+    transition: transform 1s, background-color 0.5s, color 0.6s, border-top 0.5s, border-bottom 0.5s, border-radius 1s, box-shadow 0.5s;
 }
 
 .storyBlock>button:hover,
@@ -227,7 +228,7 @@ legend {
     color: black;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 .is-focused {
@@ -438,6 +439,8 @@ legend {
 #content {
     height: 50vh;
     width: 100%;
+    border-top: 1px solid white;
+    transition: transform 1s, border-top 1s;
 }
 
 #contentHolder {
@@ -458,6 +461,10 @@ legend {
 .mdl-textfield--floating-label.is-focused #titleLabel,
 .mdl-textfield--floating-label.is-focused #contentLabel {
     color: turquoise;
+}
+
+.mdl-textfield--floating-label.is-focused #content {
+    border-top: 1px solid turquoise;
 }
 
 #userNameLabel::after,
@@ -540,8 +547,7 @@ legend {
         align-content: flex-start;
         margin: auto;
         width: 90%;
-        overflow-y: scroll;
-        border: 1px solid white;
+        /* overflow-y: scroll; */
     }
     .storyBlock {
         height: 15vh;
@@ -673,3 +679,6 @@ legend {
 }
 
 /* TODO add ipad dimensions */
+/* TODO js-block-result should either be no margin between blocks or
+something else b/c currently, it is not aligned with discover-view and
+it looks odd */
