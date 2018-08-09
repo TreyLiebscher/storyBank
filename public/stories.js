@@ -23,6 +23,9 @@ function renderCreateStoryInterface(title, id) {
                 name="image">
     
             <div class="imageThumbBox">
+                <canvas id="canvas" />
+                <button id="rotate-cw">Rotate CW</button>
+
                 <img id="storyImagePreview" class="imageThumb" src="">
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">
@@ -58,6 +61,10 @@ function hideStoryCreateInterface() {
     });
 }
 
+function processImage(ev) {
+    console.log('PROCESS IMAGE', ev)
+}
+
 function renderStory(result) {
     //if user chooses not to provide an image
     let image;
@@ -78,7 +85,7 @@ function renderStory(result) {
     return `
         <div class="storyDetailView" id="${result.story.id}">
         <h3 class="storyTitle">${result.story.title}</h3>
-        <p class="storyId">${result.story.id }</p>
+        <p class="storyId">${result.story.id}</p>
         <p class="publicStatus">${result.story.publicStatus}</p>
         <div class="imageBox">
         ${image}
@@ -120,7 +127,7 @@ function renderStoryQuickView(result) {
     <button type="button" class="storyQuickView" style=${backgroundStyle}>
     <p class="quickViewTitle">${result.title}</p>
     <p class="publicStatusInfo">${publicStatus}</p>
-    <p class="storyId">${ result.id }</p>
+    <p class="storyId">${ result.id}</p>
     </button>
     `
 }
@@ -142,11 +149,41 @@ function handleViewStory() {
     })
 }
 
+
+function rotate(image, ctx, degrees) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(degrees * Math.PI / 180);
+    ctx.drawImage(image, -image.width / 2, -image.width / 2);
+    ctx.restore();
+}
+
 //For image uploading purposes
+var angle=0
 function onFileLoad(elementId, event) {
     const data = event.target.result;
     console.log('Got file data', data);
     $('#storyImagePreview').attr('src', data);
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var image = document.createElement("img");
+    image.onload = function () {
+        ctx.drawImage(image, canvas.width / 2 - image.width / 2, canvas.height / 2 - image.width / 2);
+        console.log('Canvas is dirty')
+
+        $('#rotate-cw').off('click')
+        $('#rotate-cw').on('click', ev => {
+            ev.preventDefault()
+            angle = (angle+90)%360
+            rotate(image, ctx, angle)
+        })
+
+    }
+    image.src = data;
+
     lastUpload = data;
 }
 
