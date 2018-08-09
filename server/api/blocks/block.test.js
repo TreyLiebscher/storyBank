@@ -314,7 +314,7 @@ describe('block API routes', function () {
 
             const res = await chai
                 .request(app)
-                .get('/storyblock/myblocks/10')
+                .get('/storyblock/myblocks/1001')
                 .set('Authorization', `Bearer ${authToken}`);
 
             expect(res).to.be.json;

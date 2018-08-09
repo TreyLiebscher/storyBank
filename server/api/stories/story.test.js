@@ -261,7 +261,7 @@ describe('story API routes', function () {
         it('should fail when the offset parameter is out of bounds', async () => {
             const res = await chai
                 .request(app)
-                .get('/stories/storiesall/10')
+                .get('/stories/storiesall/1001')
             expect(res).to.be.json;
             expect(res).to.have.status(500)
         });

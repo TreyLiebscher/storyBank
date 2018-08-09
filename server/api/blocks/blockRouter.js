@@ -19,7 +19,7 @@ const jwtAuth = passport.authenticate('jwt', {
 
 const router = express.Router();
 
-const LIMIT = 10;
+const LIMIT = 1000;
 
 const BLOCK_MODEL_FIELDS = ['title', 'color'] //an array of updatable field names
 

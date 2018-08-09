@@ -32,7 +32,7 @@ function renderStoryPublicQuickView(result) {
 function displayPublicStories(arr) {
     const results = arr.stories.map((item) => renderStoryPublicQuickView(item));
     $('.discoverView').html(results);
-    // $('.discoverView').show('slow');
+    $('.discoverView').removeClass('hide');
     componentHandler.upgradeDom();
 }
 
@@ -40,7 +40,6 @@ function handleGetALlPublicStories() {
     $('#discover').on('click', function (event) {
         event.preventDefault();
         $('.discoverView').removeClass('discoverViewStoryFocus');
-        $('.discoverView').removeClass('hide');
         getRandomPublicStories();
     });
 }
