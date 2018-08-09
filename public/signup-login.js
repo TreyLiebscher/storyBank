@@ -197,10 +197,6 @@ function renderChangePasswordForm () {
 		<fieldset id="storyBankForm">
 			<legend>Change Password</legend>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="userName" class="mdl-textfield__input" name="userEmail">
-				<label id="userNameLabel" class="mdl-textfield__label" for="userName">Email</label>
-			</div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
 				<input id="password" class="mdl-textfield__input" type="password" name="password">
 				<label id="passwordLabel" class="mdl-textfield__label" for="password">New Password</label>
 			</div>
@@ -235,7 +231,7 @@ function hideUserForms() {
 
 function handleChangePassword () {
 	const $form = $('#changePassword'),
-		email = $form.find('input[name="userEmail"]').val().toLowerCase(),
+		// email = $form.find('input[name="userEmail"]').val().toLowerCase(),
 		password = $form.find('input[name="password"]').val(),
 		retyped = $form.find('input[name="passwordConfirm"]').val(),
 		url = $form.attr('action');
@@ -249,7 +245,7 @@ function handleChangePassword () {
 		},
 		dataType: 'json',
 		data: JSON.stringify({
-			email: email,
+			// email: email,
 			newPassword: password,
 			retypeNewPassword: retyped
 		})

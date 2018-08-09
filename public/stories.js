@@ -26,7 +26,7 @@ function renderCreateStoryInterface(title, id) {
             <div class="canvasHolder">
                 <canvas id="canvas" />
             </div>
-                <button id="rotate-cw">Rotate CW</button>
+                <button id="rotate-cw" class="userButton hide">Rotate CW</button>
 
 
             </div>
@@ -174,6 +174,7 @@ function onFileLoad(elementId, event) {
     image.src = data;
     lastUpload = data;
     // For rotating images
+    $('#rotate-cw').removeClass('hide');
     $('#rotate-cw').click(function (event) {
         event.preventDefault();
         degrees += 90

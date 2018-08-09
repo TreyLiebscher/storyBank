@@ -26,8 +26,10 @@ $(document).ajaxError(function (err) {
 
 function renderErrorMessage() {
     return `
+        <div class="userMessages">
         <p class="errorMessage">Something went wrong, please try again</p>
         <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
+        </div>
     `
 }
 
