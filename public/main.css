@@ -143,6 +143,12 @@ legend {
     /* margin-top: 2%; */
 }
 
+.profileDivider {
+    border-top: 1px solid white;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
 .userButton:hover,
 .userButton:focus {
     color: #133947;
@@ -240,12 +246,12 @@ legend {
     flex-direction: column;
     z-index: 3;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     bottom: 0;
     right: 0;
-    width: 50vw;
-    height: 30vh;
+    width: 70%;
+    height: 50%;
     margin: auto;
     padding: 4%;
 }
@@ -287,8 +293,7 @@ legend {
 }
 
 .deleteMenuHolder p {
-    font-size: 2.5vw;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center;
 }
 
@@ -348,9 +353,7 @@ legend {
     align-content: flex-start;
     margin: auto;
     width: 100%;
-    height: 30%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    /* height: 30%; */
 }
 
 .discoverView .storyQuickView {

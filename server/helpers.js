@@ -30,7 +30,6 @@ function getFieldsFromRequest(fieldNamesArr, req) {
                 acc[fieldName] = value
             } 
         }
-        console.log('kiwi acc returns', acc);
         return acc
     }, {})
 }

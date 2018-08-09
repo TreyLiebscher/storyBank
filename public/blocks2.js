@@ -30,8 +30,6 @@ function displayBlockUpdateMenu() {
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
-        console.log('kiwi', blockId);
-        console.log('kiwi', currentColor);
         const blockEditMenu = renderBlockUpdateMenu(currentTitle, currentColor, blockId);
         $('.storyBlockCreateHolder').html(blockEditMenu);
 

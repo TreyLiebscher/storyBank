@@ -58,7 +58,6 @@ function displayStoryUpdateMenu() {
         const currentContent = currentStorySelect.find('.storyContent').text();
         const currentPublicStatus = currentStorySelect.find('.publicStatusInfo').text();
         const currentPublicBoolean = currentStorySelect.find('.publicStatus').text();
-        console.log('kiwi', currentPublicBoolean);
         const currentId = currentStorySelect.find('.storyId').text();
         const storyUpdateMenu = renderStoryUpdateMenu(
             currentTitle,
@@ -173,7 +172,6 @@ function handleStoryDeletion() {
     })
 
     deleting.done(function (data) {
-        console.log(`${data.message}, kiwi`);
         const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView').empty();

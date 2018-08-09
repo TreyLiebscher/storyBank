@@ -169,7 +169,6 @@ function onFileLoad(elementId, event) {
         canvas.width = image.width;
         canvas.height = image.height;
         ctx.drawImage(image, 0, 0);
-        console.log('kiwi data is', data);
     }
     image.src = data;
     lastUpload = data;
@@ -195,9 +194,7 @@ function onFileLoad(elementId, event) {
         
         ctx.restore();
         updatedData = canvas.toDataURL('image/jpeg', 0.5);
-        console.log('kiwi updatedData is', updatedData)
         lastUpload = updatedData;
-
     })
 }
 

@@ -13,7 +13,6 @@ function getRandomPublicStories() {
 
     retrieving.done(function (data) {
         return displayPublicStories(data);
-        console.log('Kiwi getRPS returns', data);
     })
 }
 
@@ -33,6 +32,7 @@ function displayPublicStories(arr) {
     const results = arr.stories.map((item) => renderStoryPublicQuickView(item));
     $('.discoverView').html(results);
     $('.discoverView').removeClass('hide');
+    $('#hideDiscover').removeClass('hide');
     componentHandler.upgradeDom();
 }
 
@@ -44,8 +44,17 @@ function handleGetALlPublicStories() {
     });
 }
 
+function hidePublicStories() {
+    $('#hideDiscover').on('click', function (event) {
+        event.preventDefault();
+        $('.discoverView').addClass('hide');
+        $('.discoverView').empty();
+        $('#hideDiscover').addClass('hide');
+    });
+}
+
 function handleGoBack() {
-    $('.discoverView').on('click', 'button#goBack', function(event) {
+    $('.discoverView').on('click', 'button#goBack', function (event) {
         event.preventDefault();
         $('.discoverView').removeClass('discoverViewStoryFocus');
         getRandomPublicStories();
@@ -107,6 +116,12 @@ function handleViewPublicStory() {
     })
 }
 
-$(handleViewPublicStory);
-$(handleGoBack);
-$(handleGetALlPublicStories);
+
+function social() {
+    $(handleViewPublicStory);
+    $(handleGoBack);
+    $(handleGetALlPublicStories);
+    $(hidePublicStories);
+}
+
+$(social);

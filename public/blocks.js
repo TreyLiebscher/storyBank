@@ -13,7 +13,6 @@ function getBlocksWithStories(blockId) {
 
     posting.done(function (data) {
         return displayBlockWithStories(data);
-        console.log('kiwi getBwS returns',data);
     })
 }
 
@@ -54,10 +53,9 @@ function renderCreateBlockInterface() {
 function viewCreateBlockInterface() {
     $('.js-create-block-view').on('click', function (event) {
         event.preventDefault();
+        $('.js-create-block-view').hide('slow');
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
-        $('.discoverView').hide('slow');
-
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
             change: function (color) {
@@ -76,7 +74,7 @@ function viewCreateBlockInterface() {
 function hideCreateBlockInterface() {
     $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
         $('.storyBlockCreateHolder').empty();
-        $('.discoverView').show('slow');
+        $('.js-create-block-view').show('slow');
     });
 }
 
@@ -104,6 +102,7 @@ function handleCreateBlockSubmit() {
     posting.done(function (data) {
         const content = renderBlock(data.block);
         $('.storyBlockCreateHolder').empty();
+        $('.js-create-block-view').show('slow');
         $('.js-block-result').append(content);
     });
 

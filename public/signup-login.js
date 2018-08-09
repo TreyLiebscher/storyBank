@@ -132,6 +132,7 @@ function navigateToStories(data, saveResponse = false) {
 		saveLoginResponse(data)
 	}
 	$('.formsHolder').empty();
+	$('.discoverView').removeClass('hide');
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
 	$('.js-block-result').removeClass('hide');
@@ -180,6 +181,7 @@ function handleLogOutUser() {
 		$('.storyBankHeader').find('.userLogIn').show('slow');
 		$('.js-create-block-view').hide('slow');
 		$('.profileContainer').addClass('hide');
+		$('.discoverView').addClass('hide');
 		$('.js-block-result').empty();
 		$('.js-block-result').addClass('hide');
 		$('.storyBlockView-Title').empty();
@@ -252,7 +254,6 @@ function handleChangePassword () {
 	});
 
 	changePasswordRequest.done(function (data) {
-		console.log('kiwi password change returns', data);
 		$('.formsHolder').empty();
 		const message = renderMessages(data.message);
 		$('.deleteMenuHolder').removeClass('hide');
