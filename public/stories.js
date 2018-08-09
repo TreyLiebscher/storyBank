@@ -23,10 +23,12 @@ function renderCreateStoryInterface(title, id) {
                 name="image">
     
             <div class="imageThumbBox">
+            <div class="canvasHolder">
                 <canvas id="canvas" />
+            </div>
                 <button id="rotate-cw">Rotate CW</button>
 
-                <img id="storyImagePreview" class="imageThumb" src="">
+
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
@@ -41,6 +43,8 @@ function renderCreateStoryInterface(title, id) {
         </fieldset>
     </form>`
 }
+
+{ /* <img id="storyImagePreview" class="imageThumb" src=""> */ }
 
 function viewCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
@@ -149,42 +153,51 @@ function handleViewStory() {
     })
 }
 
+let angle = 0;
 
-function rotate(image, ctx, degrees) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(degrees * Math.PI / 180);
-    ctx.drawImage(image, -image.width / 2, -image.width / 2);
-    ctx.restore();
-}
-
-//For image uploading purposes
-var angle=0
 function onFileLoad(elementId, event) {
-    const data = event.target.result;
-    console.log('Got file data', data);
-    $('#storyImagePreview').attr('src', data);
-
+    let data = event.target.result;
+    let updatedData;
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
+    let degrees = 0;
+
     var image = document.createElement("img");
+
     image.onload = function () {
-        ctx.drawImage(image, canvas.width / 2 - image.width / 2, canvas.height / 2 - image.width / 2);
-        console.log('Canvas is dirty')
-
-        $('#rotate-cw').off('click')
-        $('#rotate-cw').on('click', ev => {
-            ev.preventDefault()
-            angle = (angle+90)%360
-            rotate(image, ctx, angle)
-        })
-
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+        console.log('kiwi data is', data);
     }
     image.src = data;
-
     lastUpload = data;
+    // For rotating images
+    $('#rotate-cw').click(function (event) {
+        event.preventDefault();
+        degrees += 90
+        if (degrees >= 360) degrees = 0;
+
+        if (degrees === 0 || degrees === 180) {
+            canvas.width = image.width;
+            canvas.height = image.height;
+        } else {
+            canvas.width = image.height;
+            canvas.height = image.width;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(degrees * Math.PI / 180);
+        ctx.drawImage(image, -image.width * 0.5, -image.height * 0.5);
+        
+        ctx.restore();
+        updatedData = canvas.toDataURL('image/jpeg', 0.5);
+        console.log('kiwi updatedData is', updatedData)
+        lastUpload = updatedData;
+
+    })
 }
 
 function onChooseFile(event, onLoadFileHandler) {
