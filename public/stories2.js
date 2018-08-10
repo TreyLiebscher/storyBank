@@ -27,10 +27,13 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
             <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="mdl-textfield__input"
                 name="image">
             <div class="imageThumbBox">
-                <img id="storyImagePreview" class="imageThumb">
+                <div class="canvasHolder">
+                    <canvas id="canvas" />
+                </div>
+                <button id="rotate-cw" class="userButton hide">Rotate</button>
                 <img id="storyCurrentImagePreview" class="currentImageThumb" src="${image}">
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content">${content}</textarea>
                 <label id="contentLabel" class="mdl-textfield__label" for="content">Edit your story</label>
             </div>

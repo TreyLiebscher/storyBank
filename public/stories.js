@@ -26,8 +26,7 @@ function renderCreateStoryInterface(title, id) {
             <div class="canvasHolder">
                 <canvas id="canvas" />
             </div>
-                <button id="rotate-cw" class="userButton hide">Rotate CW</button>
-
+                <button id="rotate-cw" class="userButton hide">Rotate</button>
 
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">

@@ -38,7 +38,6 @@
     /*  */
     margin-top: 0;
     margin-bottom: 2px;
-    ;
     font-size: 28px;
     text-align: center;
     color: white;
@@ -173,8 +172,6 @@ legend {
     display: block;
 }
 
-/*  */
-
 .storyBankMainContent {
     width: 100vw;
     margin-top: 110px;
@@ -184,6 +181,7 @@ legend {
 
 .storyBankHeader {
     width: 100%;
+    z-index: 2;
     border-bottom: 1px solid white;
     margin: auto auto 2% auto;
     position: fixed;
@@ -192,8 +190,6 @@ legend {
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
 }
-
-/* done */
 
 .userButton {
     color: white;
@@ -340,7 +336,6 @@ legend {
 .formsHolder .userButton {
     margin: 0 auto 2% auto;
     width: 48%;
-    height: 10vh;
 }
 
 .deleteBlockTitle {
@@ -362,11 +357,6 @@ legend {
     position: relative;
 }
 
-.storyImage {
-    max-width: 75vw;
-    max-height: 50vh;
-}
-
 .storyContent {
     white-space: pre-wrap;
 }
@@ -377,9 +367,11 @@ legend {
     max-height: 20vh;
 }
 
-#canvas {
+#canvas,
+.storyImage {
     max-width: 75vw;
     max-height: 50vh;
+    border: 2px solid white;
 }
 
 .blockId,
@@ -417,7 +409,6 @@ legend {
     align-content: flex-start;
     margin: auto;
     width: 100%;
-    /* height: 30%; */
 }
 
 .discoverView .storyQuickView {
@@ -546,25 +537,6 @@ legend {
     background-color: turquoise;
 }
 
-.loadingHolder {
-    text-align: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(0, 0, 0, 0.55);
-    position: absolute;
-    z-index: 1;
-    display: none;
-}
-
-#loading {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
-
 /* Non-Mobile Defaults */
 
 @media only screen and (min-width: 650px) {
@@ -590,7 +562,7 @@ legend {
             width: 200%;
         }
     }
-    /* User Forms */
+    /* ~~~~~~~~ User Forms ~~~~~~~~ */
     .js-signUp-form,
     .js-logIn-form {
         width: 30%;
@@ -609,7 +581,7 @@ legend {
         margin: 0 auto 2% auto;
         height: auto;
     }
-    /* User Profile Box */
+    /* ~~~~~~~~ User Profile Box Element ~~~~~~~~ */
     .profileContainer {
         width: auto;
     }
@@ -624,20 +596,19 @@ legend {
         height: auto;
         float: none;
     }
-    /* Block Container */
+    /* ~~~~~~~~ Block Container ~~~~~~~~ */
     .js-block-result {
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
         margin: auto;
         width: 90%;
-        /* overflow-y: scroll; */
     }
     .storyBlock {
         height: 15vh;
         width: 20%;
     }
-    /* Story Container */
+    /* ~~~~~~~~ Stories Container ~~~~~~~~ */
     .storyBlockView {
         width: 90%;
     }
@@ -663,8 +634,12 @@ legend {
 /* iPhone SE, 5, 5c, 5s, Touch */
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:portrait) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 56.8px
+    }
+    .profileOptions {
+        top: 56.8px;
     }
     .storyBlock {
         height: 113.6px;
@@ -673,15 +648,25 @@ legend {
     .storyQuickView {
         height: 85.2px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 240px;
         max-height: 284px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 96px;
+        max-height: 113.6px;
     }
 }
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:landscape) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 32px
+    }
+    .profileOptions {
+        top: 32px;
     }
     .storyBlock {
         height: 64px;
@@ -690,17 +675,27 @@ legend {
     .storyQuickView {
         height: 48px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 284px;
         max-height: 240px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 113.6px;
+        max-height: 96px;
     }
 }
 
 /* iPhone 6s, 6, 7, 8 */
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 66.7px
+    }
+    .profileOptions {
+        top: 66.7px;
     }
     .storyBlock {
         height: 133.4px;
@@ -709,15 +704,25 @@ legend {
     .storyQuickView {
         height: 100.5px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 281.25px;
         max-height: 333.5px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 112.5px;
+        max-height: 133.4px;
     }
 }
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:landscape) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 37.5px
+    }
+    .profileOptions {
+        top: 37.5px;
     }
     .storyBlock {
         height: 75px;
@@ -726,17 +731,27 @@ legend {
     .storyQuickView {
         height: 56.25px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 333.5px;
         max-height: 281.25px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 133.4px;
+        max-height: 112.5px;
     }
 }
 
 /* iPhone 8+ */
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:portrait) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 73.6px
+    }
+    .profileOptions {
+        top: 73.6px;
     }
     .storyBlock {
         height: 147.2px;
@@ -745,15 +760,25 @@ legend {
     .storyQuickView {
         height: 110.4px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 310.5px;
         max-height: 368px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 124.2px;
+        max-height: 147.2px;
     }
 }
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:landscape) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 41.4px
+    }
+    .profileOptions {
+        top: 41.4px;
     }
     .storyBlock {
         height: 82.8px;
@@ -762,17 +787,27 @@ legend {
     .storyQuickView {
         height: 62.1px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 368px;
         max-height: 310.5px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 147.2px;
+        max-height: 124.2px;
     }
 }
 
 /* iPhone X */
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 81.2px
+    }
+    .profileOptions {
+        top: 81.2px;
     }
     .storyBlock {
         height: 162.4px;
@@ -781,15 +816,25 @@ legend {
     .storyQuickView {
         height: 121.8px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 281.25px;
         max-height: 406px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 112.5px;
+        max-height: 162.4px;
     }
 }
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:landscape) {
-    .userProfileName {
+    .userProfileName,
+    .userButton {
         height: 37.5px
+    }
+    .profileOptions {
+        top: 37.5px;
     }
     .storyBlock {
         height: 75px;
@@ -798,9 +843,15 @@ legend {
     .storyQuickView {
         height: 56.25px;
     }
-    #canvas {
+    #canvas,
+    .storyImage {
         max-width: 406px;
         max-height: 281.25px;
+    }
+    .imageThumb,
+    .currentImageThumb {
+        max-width: 162.4px;
+        max-height: 112.5px;
     }
 }
 
