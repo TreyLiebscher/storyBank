@@ -1,7 +1,7 @@
 'use strict';
 
 function getRandomPublicStories() {
-
+    
     const retrieving = $.ajax({
         type: "GET",
         url: `${API_URLS.getPublicStories}`,
@@ -33,7 +33,6 @@ function displayPublicStories(arr) {
     $('.discoverView').html(results);
     $('.discoverView').removeClass('hide');
     $('#hideDiscover').removeClass('hide');
-    componentHandler.upgradeDom();
 }
 
 function handleGetALlPublicStories() {

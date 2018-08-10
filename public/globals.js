@@ -39,14 +39,14 @@ function displayErrorMessage() {
     $('.deleteMenuHolder').html(message);
 }
 
-//Loading Icon
+// Loading Icon
 $(document)
     .ajaxStart(function () {
-        $('.loadingHolder').show();
+        $('.storyBankTitle').addClass('blockLoader')
     })
     .ajaxStop(function () {
-        $('.loadingHolder').hide();
-});
+        $('.storyBankTitle').removeClass('blockLoader')
+    });
 
 //Handles any form submission on page
 function handleFormsSubmit() {
@@ -79,10 +79,10 @@ function handleFormsSubmit() {
         }
         //Users
         if (formID === 'signUpForm') {
-			handleCreateNewUser();
-		}
-		if (formID === 'logInForm') {
-			handleUserLogIn();
+            handleCreateNewUser();
+        }
+        if (formID === 'logInForm') {
+            handleUserLogIn();
         }
         if (formID === 'changePassword') {
             handleChangePassword();
