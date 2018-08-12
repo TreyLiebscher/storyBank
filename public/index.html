@@ -21,14 +21,8 @@
 </head>
 
 <body class="storyBankBody">
-	<!-- <div class="loadingHolder">
-		<img src="https://i.imgur.com/G68qVkC.gif" title="source: imgur.com" id="loading" />
-	</div> -->
-
 	<header class="storyBankHeader">
-		<div class="titleBox">
-
-		</div>
+		<div class="titleBox"></div>
 		<h1 class="storyBankTitle">StoryBank</h1>
 		<div class="profileContainer hide">
 			<button class="userProfileName"></button>
@@ -50,6 +44,12 @@
 		<button type="button" id="discover" class="userButton">Discover</button>
 		<button type="button" id="hideDiscover" class="userButton hide">Close</button>
 		<div class="discoverView hide"></div>
+		<div class="publicStoryViewer hide">
+			<div class="publicStoryContent"></div>
+			<footer class="publicStoryFooter">
+				<button type="button" class="userButton" id="goBack">Back</button>
+			</footer>
+		</div>
 		<div class="profileDivider"></div>
 		<button type="button" class="js-create-block-view userButton">Create a new Story Block</button>
 		<div class="storyBlockCreateHolder"></div>

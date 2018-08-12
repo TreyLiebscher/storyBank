@@ -41,6 +41,15 @@
     word-wrap: break-word;
 }
 
+/* .loadMessage {
+    color: white;
+    position: absolute;
+    left: 22%;
+    top: 6%;
+    opacity: 0;
+    animation: 0.8s infinite alternate glow;
+} */
+
 .storyBankTitleFontColor {
     color: white;
     ;
@@ -107,12 +116,10 @@
     from {
         background-color: black;
         color: white;
-        /* transform: scale(1, 1); */
     }
     to {
         background-color: white;
         color: black;
-        /* transform: scale(2, 1); */
         transform-origin: bottom left;
     }
 }
@@ -120,12 +127,9 @@
 @keyframes glow {
     from {
         opacity: 0;
-        /* transform: scale(1, 1); */
     }
     to {
         opacity: 1;
-        /* transform: scale(1.6, 1); */
-        transform-origin: bottom left;
     }
 }
 
@@ -271,9 +275,8 @@ legend {
     word-wrap: break-word;
     height: 20vh;
     width: 20vw;
-    max-width: 23%;
     border: 2px solid white;
-    border-radius: 2px;
+    border-radius: 5px;
     -webkit-transition: transform 1s, box-shadow 0.3s;
     -moz-transition: transform 1s, box-shadow 0.3s;
     -o-transition: transform 1s, box-shadow 0.3s;
@@ -349,6 +352,39 @@ legend {
     height: 50%;
     margin: auto;
     padding: 4%;
+}
+
+.publicStoryViewer {
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 90%;
+    border: 2px solid white;
+    margin: auto;
+    background-color: #000000e8;
+}
+
+.publicStoryContent {
+    overflow-y: scroll;
+    padding: 4%;
+}
+
+.publicStoryFooter {
+    border: 2px solid white;
+    height: 10%;
+    background-color: black;
+}
+
+.publicStoryFooter .userButton {
+    height: 100%;
+    border: none;
+    width: 50%;
+    border-right: 2px solid white;
 }
 
 .hide {
@@ -455,7 +491,6 @@ legend {
 .storyBlockView {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row-reverse;
     align-content: flex-start;
     height: 100%;
     margin: auto;
@@ -465,7 +500,6 @@ legend {
 .discoverView {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row-reverse;
     align-content: flex-start;
     margin: auto;
     width: 100%;
@@ -480,22 +514,26 @@ legend {
 }
 
 .discoverView::-webkit-scrollbar,
-.js-block-result::-webkit-scrollbar {
+.js-block-result::-webkit-scrollbar,
+.publicStoryContent::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
 .discoverView::-webkit-scrollbar:vertical,
-.js-block-result::-webkit-scrollbar:vertical {
+.js-block-result::-webkit-scrollbar:vertical,
+.publicStoryContent::-webkit-scrollbar:vertical {
     width: 10px;
 }
 
 .discoverView::-webkit-scrollbar:horizontal,
-.js-block-result::-webkit-scrollbar:horizontal {
+.js-block-result::-webkit-scrollbar:horizontal,
+.publicStoryContent::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
 .discoverView::-webkit-scrollbar-thumb,
-.js-block-result::-webkit-scrollbar-thumb {
+.js-block-result::-webkit-scrollbar-thumb,
+.publicStoryContent::-webkit-scrollbar-thumb {
     border-radius: 8px;
     border: 2px solid white;
     background-color: rgba(0, 0, 0, .5);
@@ -510,6 +548,7 @@ legend {
     border-radius: 5px;
     overflow-y: scroll;
     color: white;
+    transition: transform 0.1s;
 }
 
 .storyQuickView::-webkit-scrollbar {
@@ -538,6 +577,8 @@ legend {
 .storyQuickView:focus {
     cursor: pointer;
     filter: brightness(130%);
+    transform: scale(1.075, 1.075);
+    border: 1px solid white;
 }
 
 .storyDetailView {

@@ -53,11 +53,9 @@ function hidePublicStories() {
 }
 
 function handleGoBack() {
-    $('.discoverView').on('click', 'button#goBack', function (event) {
-        event.preventDefault();
-        $('.discoverView').removeClass('discoverViewStoryFocus');
-        getRandomPublicStories();
-    })
+    $('.publicStoryFooter').on('click', 'button#goBack', function (event) {
+        $('.publicStoryViewer').addClass('hide');
+    });
 }
 
 function renderPublicStory(result) {
@@ -86,21 +84,20 @@ function renderPublicStory(result) {
                 ${image}
             </div>
             <p class="storyContent">${result.story.content}</p>
-            <p class="publicStatusInfo">${publicStatus}</p>
-            <button type="button" class="userButton" id="goBack">Back</button>  
+            <p class="publicStatusInfo">${publicStatus}</p>  
         </div>
     `
 }
 
 function displayPublicStory(result) {
     const story = renderPublicStory(result);
-    $('.discoverView').html(story);
+    $('.publicStoryContent').html(story);
+    $('.publicStoryViewer').removeClass('hide');
 }
 
 function handleViewPublicStory() {
     $('.discoverView').on('click', 'button.storyQuickView', function (event) {
         event.preventDefault();
-        $('.discoverView').addClass('discoverViewStoryFocus');
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
         const resultPromise = getStoryById(storyId);
