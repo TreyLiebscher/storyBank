@@ -42,7 +42,8 @@
 }
 
 .storyBankTitleFontColor {
-    color: white;;
+    color: white;
+    ;
     animation: 0.8s infinite alternate fontColor;
 }
 
@@ -66,7 +67,6 @@
     border: 1px solid white;
     border-radius: 5px;
     word-wrap: break-word;
-
 }
 
 .blockLoader {
@@ -135,6 +135,10 @@
 .js-logIn-form {
     width: 100%;
     margin: auto;
+}
+
+.buttonHolderHeader {
+    height: 100%;
 }
 
 #storyBankFormInput {
@@ -231,19 +235,21 @@ legend {
     border: 3px solid white;
     height: 10vh;
     width: 100%;
+    transition: all 0.3s;
+}
+
+.userButton:hover,
+.userButton:focus {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 10px 1px white;
 }
 
 .profileDivider {
     border-top: 1px solid white;
     margin-top: 2%;
     margin-bottom: 2%;
-}
-
-.userButton:hover,
-.userButton:focus {
-    color: #133947;
-    background: white;
-    cursor: pointer;
 }
 
 .js-create-block-view {
@@ -370,6 +376,21 @@ legend {
 .userSignUp,
 .userLogIn {
     height: 50%;
+    color: white;
+    background: none;
+    border: 3px solid white;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.userSignUp:hover,
+.userSignUp:focus,
+.userLogIn:hover,
+.userLogIn:focus {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 10px 1px white;
 }
 
 .formsHolder .userButton {
@@ -513,7 +534,8 @@ legend {
     font-size: 15px;
 }
 
-.storyQuickView:hover {
+.storyQuickView:hover,
+.storyQuickView:focus {
     cursor: pointer;
     filter: brightness(130%);
 }
@@ -606,6 +628,13 @@ legend {
             opacity: 1;
             width: 200%;
         }
+    }
+    .buttonHolderHeader {
+        height: auto;
+    }
+    .userSignUp,
+    .userLogIn {
+        width: auto;
     }
     /* ~~~~~~~~ User Forms ~~~~~~~~ */
     .js-signUp-form,
