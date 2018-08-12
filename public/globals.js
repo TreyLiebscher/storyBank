@@ -42,10 +42,12 @@ function displayErrorMessage() {
 // Loading Icon
 $(document)
     .ajaxStart(function () {
-        $('.storyBankTitle').addClass('blockLoader')
+        $('.titleBox').addClass('blockLoader')
+        $('.storyBankTitle').addClass('storyBankTitleFontColor')
     })
     .ajaxStop(function () {
-        $('.storyBankTitle').removeClass('blockLoader')
+        $('.titleBox').removeClass('blockLoader')
+        $('.storyBankTitle').removeClass('storyBankTitleFontColor')
     });
 
 //Handles any form submission on page

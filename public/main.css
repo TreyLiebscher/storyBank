@@ -32,18 +32,41 @@
 /* Loading Icon */
 
 .storyBankTitle {
-    margin-right: 2%;
-    /* non mobile */
-    width: 20%;
-    /*  */
-    margin-top: 0;
-    margin-bottom: 2px;
     font-size: 28px;
+    margin-bottom: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    color: white;
+    word-wrap: break-word;
+}
+
+.storyBankTitleFontColor {
+    color: white;;
+    animation: 0.8s infinite alternate fontColor;
+}
+
+@keyframes fontColor {
+    from {
+        color: white;
+    }
+    to {
+        color: black;
+    }
+}
+
+.titleBox {
+    margin-right: 2%;
+    width: 100%;
+    margin-top: 0;
+    height: 40%;
+    margin-bottom: 2px;
     text-align: center;
     color: white;
     border: 1px solid white;
     border-radius: 5px;
     word-wrap: break-word;
+
 }
 
 .blockLoader {
@@ -53,7 +76,12 @@
     border-radius: 5px;
     background-color: black;
     color: white;
+    width: 100%;
     animation: 0.8s infinite alternate toggle;
+    -webkit-transition: transform 0.8s;
+    -moz-transition: transform 0.8s;
+    -o-transition: transform 0.8s;
+    transition: transform 0.8s;
 }
 
 .blockLoader::after {
@@ -69,29 +97,35 @@
     box-shadow: 0 0 20px 1px white;
     opacity: 0;
     animation: 0.8s infinite alternate glow;
+    -webkit-transition: transform 0.8s;
+    -moz-transition: transform 0.8s;
+    -o-transition: transform 0.8s;
+    transition: transform 0.8s;
 }
 
 @keyframes toggle {
     from {
         background-color: black;
         color: white;
-        width: 20%;
+        /* transform: scale(1, 1); */
     }
     to {
         background-color: white;
         color: black;
-        width: 40%;
+        /* transform: scale(2, 1); */
+        transform-origin: bottom left;
     }
 }
 
 @keyframes glow {
     from {
         opacity: 0;
-        width: 100%;
+        /* transform: scale(1, 1); */
     }
     to {
         opacity: 1;
-        width: 160%;
+        /* transform: scale(1.6, 1); */
+        transform-origin: bottom left;
     }
 }
 
@@ -333,6 +367,11 @@ legend {
     display: flex;
 }
 
+.userSignUp,
+.userLogIn {
+    height: 50%;
+}
+
 .formsHolder .userButton {
     margin: 0 auto 2% auto;
     width: 48%;
@@ -551,6 +590,12 @@ legend {
     }
     .storyBankTitle {
         word-wrap: normal;
+    }
+    .titleBox {
+        width: 20%;
+    }
+    .blockLoader {
+        width: 20%;
     }
     @keyframes glow {
         from {
