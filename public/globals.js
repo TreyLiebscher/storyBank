@@ -96,7 +96,7 @@ function renderMessages(message) {
     return `
     <div class="userMessages">
         <p>${message}</p>
-        <button id="cancelBlockDeletion" class="userButton" type="button">Ok</button>
+        <button id="acceptMessage" class="userButton" type="button">Ok</button>
     </div>
     `;
 }

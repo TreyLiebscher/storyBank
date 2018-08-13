@@ -42,15 +42,6 @@
     word-wrap: break-word;
 }
 
-/* .loadMessage {
-    color: white;
-    position: absolute;
-    left: 22%;
-    top: 6%;
-    opacity: 0;
-    animation: 0.8s infinite alternate glow;
-} */
-
 .storyBankTitleFontColor {
     color: white;
     ;
@@ -74,7 +65,7 @@
     margin-bottom: 2px;
     text-align: center;
     color: white;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     /* border-radius: 5px; */
     word-wrap: break-word;
 }
@@ -96,13 +87,13 @@
 
 .blockLoader::after {
     content: "";
-    border-radius: 5px;
+    /* border-radius: 5px; */
     position: absolute;
     z-index: -1;
-    top: 2px;
+    /* top: 2px; */
     left: 0;
     width: 100%;
-    height: 80%;
+    height: 100%;
     /* border: 1px solid white; */
     box-shadow: 0 0 20px 1px white;
     opacity: 0;
@@ -171,13 +162,14 @@ legend {
     position: relative;
     display: inline-block;
     width: 100%;
+    transition: all 2s;
 }
 
 .userProfileName {
     background: none;
     color: white;
     border: 2px solid white;
-    height: 10vh;
+    height: 100%;
     float: right;
 }
 
@@ -185,28 +177,30 @@ legend {
     display: none;
     position: absolute;
     right: 0;
-    top: 10vh;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 2px solid black;
+    top: 100%;;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid white;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 .profileOptions button {
-    color: black;
+    color: white;
     display: block;
     margin-top: 4%;
     margin-bottom: 4%;
     width: 100%;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-right: none;
+    border-left: none;
 }
 
 .profileContainer:hover .userProfileName {
     background-color: white;
     color: black;
-    border: 2px solid black;
+    box-shadow: 0 0 10px 1px white;
 }
 
 /* for keyboard nav */
@@ -238,7 +232,7 @@ legend {
     color: white;
     background: none;
     border: 3px solid white;
-    height: 10vh;
+    height: 50px;
     width: 100%;
     transition: all 0.3s;
 }
@@ -258,7 +252,7 @@ legend {
 }
 
 .js-create-block-view {
-    display: none;
+    margin-bottom: 2%;
 }
 
 .js-block-result {
@@ -279,7 +273,7 @@ legend {
     -webkit-transition: transform 1s, box-shadow 0.3s;
     -moz-transition: transform 1s, box-shadow 0.3s;
     -o-transition: transform 1s, box-shadow 0.3s;
-    transition: transform 1s, box-shadow 0.3s;
+    transition: all 0.1s;
 }
 
 .blockTitle {
@@ -291,6 +285,7 @@ legend {
     cursor: pointer;
     box-shadow: 0 0 20px 1px white;
     border: 2px solid white;
+    transform: scale(1.1, 1.1);
 }
 
 .storyBlockView-Title>.storyBlock {
@@ -301,6 +296,7 @@ legend {
     flex-direction: row;
     border-radius: 0;
     box-shadow: none;
+    transform: none;
     border: 2px solid white;
     padding: 1%;
     margin: 10px 0 10px 0;
@@ -334,13 +330,20 @@ legend {
     border-radius: 2px;
 }
 
+.storyViewing {
+    width: 100%;
+    height: 600px;
+    margin: auto;
+    position: relative;
+}
+
 .is-focused {
     color: white;
 }
 
-#discover,
 #hideDiscover {
-    margin-bottom: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .deleteMenuHolder {
@@ -358,7 +361,23 @@ legend {
     padding: 4%;
 }
 
-.publicStoryViewer {
+.deleteStoryHolder {
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    padding: 4%;
+}
+
+.publicStoryViewer,
+.storyViewer {
     display: flex;
     flex-direction: column;
     z-index: 3;
@@ -373,18 +392,33 @@ legend {
     background-color: #000000e8;
 }
 
-.publicStoryContent {
+.publicStoryViewer {
+    position: absolute;
+    top: 10%;
+}
+
+.storyViewer {
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.publicStoryContent,
+.storyBody {
     overflow-y: scroll;
     padding: 4%;
 }
 
-.publicStoryFooter {
+.publicStoryFooter,
+.storyFooter {
     border: 2px solid white;
     height: 10%;
     background-color: black;
+    display: flex;
 }
 
-.publicStoryFooter .userButton {
+.publicStoryFooter .userButton,
+.storyFooter .userButton {
     height: 100%;
     border: none;
     width: 50%;
@@ -519,25 +553,29 @@ legend {
 
 .discoverView::-webkit-scrollbar,
 .js-block-result::-webkit-scrollbar,
-.publicStoryContent::-webkit-scrollbar {
+.publicStoryContent::-webkit-scrollbar,
+.storyBody::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
 .discoverView::-webkit-scrollbar:vertical,
 .js-block-result::-webkit-scrollbar:vertical,
-.publicStoryContent::-webkit-scrollbar:vertical {
+.publicStoryContent::-webkit-scrollbar:vertical,
+.storyBody::-webkit-scrollbar:vertical {
     width: 10px;
 }
 
 .discoverView::-webkit-scrollbar:horizontal,
 .js-block-result::-webkit-scrollbar:horizontal,
-.publicStoryContent::-webkit-scrollbar:horizontal {
+.publicStoryContent::-webkit-scrollbar:horizontal,
+.storyBody::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
 .discoverView::-webkit-scrollbar-thumb,
 .js-block-result::-webkit-scrollbar-thumb,
-.publicStoryContent::-webkit-scrollbar-thumb {
+.publicStoryContent::-webkit-scrollbar-thumb,
+.storyBody::-webkit-scrollbar-thumb {
     border-radius: 8px;
     border: 2px solid white;
     background-color: rgba(0, 0, 0, .5);
@@ -549,7 +587,6 @@ legend {
     height: 15vh;
     width: 33.3333%;
     border: none;
-    /* border-radius: 5px; */
     overflow-y: scroll;
     color: white;
     transition: transform 0.1s;
@@ -703,6 +740,7 @@ legend {
     /* ~~~~~~~~ User Profile Box Element ~~~~~~~~ */
     .profileContainer {
         width: auto;
+        height: 50%;
     }
     .profileContainer:hover .profileOptions {
         display: block;
@@ -712,7 +750,7 @@ legend {
         top: auto;
     }
     .userProfileName {
-        height: auto;
+        height: 100%;
         float: none;
     }
     /* ~~~~~~~~ Block Container ~~~~~~~~ */
@@ -728,13 +766,11 @@ legend {
         width: 25%;
     }
     /* ~~~~~~~~ Stories Container ~~~~~~~~ */
-    .storyBlockView {
+    .storyViewing {
         width: 90%;
     }
     .storyQuickView {
-        /* margin: 10px 0 0 10px; */
         width: 20%;
-        /* border: 2px solid white; */
     }
     .storyCreateInterface {
         width: 85%;
@@ -753,16 +789,11 @@ legend {
 /* iPhone SE, 5, 5c, 5s, Touch */
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:portrait) {
-    .userProfileName,
-    .userButton {
-        height: 56.8px
-    }
-    .profileOptions {
-        top: 56.8px;
+    .storyBankMainContent {
+        width: 320px;
     }
     .storyBlock {
         height: 113.6px;
-        width: 64px;
     }
     .storyQuickView {
         height: 85.2px;
@@ -780,16 +811,11 @@ legend {
 }
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:landscape) {
-    .userProfileName,
-    .userButton {
-        height: 32px
-    }
-    .profileOptions {
-        top: 32px;
+    .storyBankMainContent {
+        width: 568px;
     }
     .storyBlock {
         height: 64px;
-        width: 113.6px;
     }
     .storyQuickView {
         height: 48px;
@@ -809,16 +835,11 @@ legend {
 /* iPhone 6s, 6, 7, 8 */
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
-    .userProfileName,
-    .userButton {
-        height: 66.7px
-    }
-    .profileOptions {
-        top: 66.7px;
+    .storyBankMainContent {
+        width: 375px;
     }
     .storyBlock {
         height: 133.4px;
-        width: 75px;
     }
     .storyQuickView {
         height: 100.5px;
@@ -836,16 +857,11 @@ legend {
 }
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:landscape) {
-    .userProfileName,
-    .userButton {
-        height: 37.5px
-    }
-    .profileOptions {
-        top: 37.5px;
+    .storyBankMainContent {
+        width: 667px;
     }
     .storyBlock {
         height: 75px;
-        width: 133.4px;
     }
     .storyQuickView {
         height: 56.25px;
@@ -865,16 +881,14 @@ legend {
 /* iPhone 8+ */
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:portrait) {
-    .userProfileName,
-    .userButton {
-        height: 73.6px
+    .storyBankMainContent {
+        width: 414px;
     }
-    .profileOptions {
-        top: 73.6px;
+    .storyBankMainContent {
+        width: 414px;
     }
     .storyBlock {
         height: 147.2px;
-        width: 82.8px;
     }
     .storyQuickView {
         height: 110.4px;
@@ -892,16 +906,14 @@ legend {
 }
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:landscape) {
-    .userProfileName,
-    .userButton {
-        height: 41.4px
+    .storyBankMainContent {
+        width: 736px;
     }
-    .profileOptions {
-        top: 41.4px;
+    .storyBankMainContent {
+        width: 736px;
     }
     .storyBlock {
         height: 82.8px;
-        width: 147.2px;
     }
     .storyQuickView {
         height: 62.1px;
@@ -921,16 +933,11 @@ legend {
 /* iPhone X */
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
-    .userProfileName,
-    .userButton {
-        height: 81.2px
-    }
-    .profileOptions {
-        top: 81.2px;
+    .storyBankMainContent {
+        width: 375px;
     }
     .storyBlock {
         height: 162.4px;
-        width: 75px;
     }
     .storyQuickView {
         height: 121.8px;
@@ -948,16 +955,11 @@ legend {
 }
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:landscape) {
-    .userProfileName,
-    .userButton {
-        height: 37.5px
-    }
-    .profileOptions {
-        top: 37.5px;
+    .storyBankMainContent {
+        width: 812px;
     }
     .storyBlock {
         height: 75px;
-        width: 162.4px;
     }
     .storyQuickView {
         height: 56.25px;
@@ -975,7 +977,3 @@ legend {
 }
 
 /* TODO add ipad dimensions */
-
-/* TODO js-block-result should either be no margin between blocks or
-something else b/c currently, it is not aligned with discover-view and
-it looks odd */

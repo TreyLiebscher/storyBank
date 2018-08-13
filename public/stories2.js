@@ -15,6 +15,16 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
         isPublic = `is-checked`;
         console.log('kiwi', 'should be checked')
     }
+    // TODO this should give a helpful message letting user
+    // know that there is no image, but instead, they get
+    // an ugly image placeholder
+    let currentImage;
+
+    if (image === null) {
+        currentImage = `<p>This story currently has no image</p>`
+    } else {
+        currentImage = `<img id="storyCurrentImagePreview" class="currentImageThumb" src="${image}">`
+    }
 
     return `
     <form id="editStory" action="${updateUrl}/${id}" method="PUT">
@@ -31,7 +41,7 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
                     <canvas id="canvas" />
                 </div>
                 <button id="rotate-cw" class="userButton hide">Rotate</button>
-                <img id="storyCurrentImagePreview" class="currentImageThumb" src="${image}">
+                ${currentImage}
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contentHolder">
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content">${content}</textarea>
@@ -43,21 +53,19 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
                 <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
                 <span class="mdl-switch__label">publicStatus?</span>
             </label>
-            <button type="submit" class="userButton">Update</button>
-            <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
         </fieldset>
     </form>
     `
 }
 
 function displayStoryUpdateMenu() {
-    $('.storyBlockView').on('click', 'button#displayStoryEditMenu', function (event) {
+    $('.storyFooter').on('click', 'button#editStoryButton', function (event) {
         event.preventDefault();
-        //TODO try refactoring this by making a GET story by ID req
-        //and use the res object as ref rather than searching DOM
-        const currentStorySelect = $(event.target).closest('.storyDetailView');
+
+        const currentStorySelect = $('.storyViewer');
         const currentTitle = currentStorySelect.find('.storyTitle').text();
         const currentImage = currentStorySelect.find('.storyImage').attr('src');
+        console.log('kiwi currentImg src is', currentImage);
         const currentContent = currentStorySelect.find('.storyContent').text();
         const currentPublicStatus = currentStorySelect.find('.publicStatusInfo').text();
         const currentPublicBoolean = currentStorySelect.find('.publicStatus').text();
@@ -71,10 +79,20 @@ function displayStoryUpdateMenu() {
             currentId
         );
 
-        $('.storyBlockView').hide('slow');
-        $('.storyCreateInterface').html(storyUpdateMenu);
+        // $('.storyBlockView').hide('slow');
+        // $('.storyCreateInterface').html(storyUpdateMenu);
+        $('.storyBody').html(storyUpdateMenu);
+        $('#updateStory').removeClass('hide');
+        $('#editStoryButton').addClass('hide');
+        $('#deleteStoryButton').addClass('hide');
         componentHandler.upgradeDom();
     });
+}
+
+function handleStoryUpdateSubmit() {
+    $('#updateStory').click(function() {
+        $('#editStory').submit();
+    })
 }
 
 function handleStoryUpdate() {
@@ -119,9 +137,13 @@ function handleStoryUpdate() {
         $('.storyCreateInterface').empty();
         const newStory = renderStory(data);
         $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
-        $('.storyBlockView').show('slow');
-        $('.deleteMenuHolder').removeClass('hide');
-        $('.deleteMenuHolder').html(message);
+        // $('.storyViewer').addClass('hide');
+        getBlocksWithStories(data.story.block);
+        $('#updateStory').addClass('hide');
+        $('#editStoryButton').removeClass('hide');
+        $('#deleteStoryButton').removeClass('hide');
+        $('.deleteStoryHolder').removeClass('hide');
+        $('.deleteStoryHolder').html(message);
     })
 
 }
@@ -144,20 +166,20 @@ function renderStoryDeleteMenu(title, id) {
 }
 
 function displayDeleteStoryMenu() {
-    $('.storyBlockView').on('click', 'button#displayStoryDeleteMenu', function (event) {
+    $('.storyFooter').on('click', 'button#deleteStoryButton', function (event) {
         event.preventDefault();
-        $('.deleteMenuHolder').removeClass('hide');
-        const storyId = $(event.target).closest('.storyDetailView').find('.storyId').text();
-        const storyTitle = $(event.target).closest('.storyDetailView').find('.storyTitle').text();
+        $('.deleteStoryHolder').removeClass('hide');
+        const storyId = $('.storyBody').find('.storyId').text();
+        const storyTitle = $('.storyBody').find('.storyTitle').text();
         const deleteMenu = renderStoryDeleteMenu(storyTitle, storyId);
-        $('.deleteMenuHolder').html(deleteMenu);
+        $('.deleteStoryHolder').html(deleteMenu);
     });
 }
 
 function hideStoryDeleteMenu() {
-    $('.deleteMenuHolder').on('click', 'button#cancelStoryDeletion', function (event) {
+    $('.deleteStoryHolder').on('click', 'button#cancelStoryDeletion', function (event) {
         event.preventDefault();
-        $('.deleteMenuHolder').addClass('hide');
+        $('.deleteStoryHolder').addClass('hide');
     });
 }
 
@@ -176,11 +198,17 @@ function handleStoryDeletion() {
 
     deleting.done(function (data) {
         const message = renderMessages(data.message);
-        $('.deleteMenuHolder').html(message);
-        $('.storyBlockView').empty();
-        const blockId = $('.storyBlockView-Title').find('.blockId').text();
-        console.log(blockId);
-        getBlocksWithStories(blockId);
+        $('.deleteStoryHolder').html(message);
+        // $('.storyViewer').addClass('hide');
+        // $('.storyBlockView').empty();
+        getBlocksWithStories(data.story.block);
+    })
+}
+
+function acceptMessages() {
+    $('.deleteStoryHolder').on('click', 'button#acceptMessage', function() {
+        $('.deleteStoryHolder').addClass('hide');
+        $('.storyViewer').addClass('hide');
     })
 }
 
@@ -189,6 +217,8 @@ function stories2() {
     $(displayDeleteStoryMenu);
     $(hideStoryDeleteMenu);
     $(displayStoryUpdateMenu);
+    $(handleStoryUpdateSubmit);
+    $(acceptMessages);
 }
 
 $(stories2);

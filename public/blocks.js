@@ -53,7 +53,7 @@ function renderCreateBlockInterface() {
 function viewCreateBlockInterface() {
     $('.js-create-block-view').on('click', function (event) {
         event.preventDefault();
-        $('.js-create-block-view').hide('slow');
+        $('.js-create-block-view').addClass('hide');
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').html(blockInterface);
         $("#colorPicker").spectrum("destroy");
@@ -74,7 +74,7 @@ function viewCreateBlockInterface() {
 function hideCreateBlockInterface() {
     $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
         $('.storyBlockCreateHolder').empty();
-        $('.js-create-block-view').show('slow');
+        $('.js-create-block-view').removeClass('hide');
     });
 }
 
@@ -102,7 +102,7 @@ function handleCreateBlockSubmit() {
     posting.done(function (data) {
         const content = renderBlock(data.block);
         $('.storyBlockCreateHolder').empty();
-        $('.js-create-block-view').show('slow');
+        $('.js-create-block-view').removeClass('hide');
         $('.js-block-result').append(content);
     });
 

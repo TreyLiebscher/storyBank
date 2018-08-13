@@ -70,7 +70,7 @@ function renderStory(result) {
     //if user chooses not to provide an image
     let image;
     if (!(result.story.image)) {
-        image = `<br>`;
+        image = `<img class="storyImage hide" src="null">`;
     } else {
         image = `<img class="storyImage" src="${result.story.image}">`;
     }
@@ -93,27 +93,29 @@ function renderStory(result) {
         </div>
         <p class="storyContent">${result.story.content}</p>
         <p class="publicStatusInfo">${publicStatus}</p>
-        <button type="button" id="displayStoryDeleteMenu" class="userButton">Delete</button>
-        <button type="button" id="displayStoryEditMenu" class="userButton">Edit</button>
         </div>
     `
 }
 
 function displayStory(result) {
     const story = renderStory(result);
-    $('.storyBlockView').html(story);
+    // $('.storyBlockView').html(story);
+    $('.storyBody').html(story);
+    $('.storyViewer').removeClass('hide');
 }
 
 function renderStoryQuickView(result) {
-    const blockColor = $('.js-block-result').find(`.storyBlock[id="${result.block}"]`).attr('style');
 
-    let backgroundStyle;
+    let storyStyle;
+
     if (!(result.image)) {
-        backgroundStyle = `"${blockColor}"`
+        storyStyle = `background-color: rgba(0, 0, 0, 0.8);`;
     } else {
-        backgroundStyle = `"background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6) ), url(${result.image});
+        storyStyle = `background: linear-gradient( rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6) ), url(${result.image});
         background-repeat: no-repeat;
-        background-position: center;"`
+        background-position: center;
+        background-size: cover;`
     }
 
     //For converting boolean value into plain english for user
@@ -125,10 +127,10 @@ function renderStoryQuickView(result) {
     }
 
     return `
-    <button type="button" class="storyQuickView" style=${backgroundStyle}>
+    <button type="button" class="storyQuickView" style="${storyStyle}">
     <p class="quickViewTitle">${result.title}</p>
     <p class="publicStatusInfo">${publicStatus}</p>
-    <p class="storyId">${ result.id}</p>
+    <p class="storyId">${result.id}</p>
     </button>
     `
 }
@@ -139,7 +141,6 @@ function handleViewStory() {
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
         const resultPromise = getStoryById(storyId);
-        $('.storyBlockView').empty();
         resultPromise.catch(err => {
             console.error('Error', err);
         })
@@ -147,6 +148,15 @@ function handleViewStory() {
         resultPromise.then(resultResponse => {
             return displayStory(resultResponse);
         })
+    })
+}
+
+function handleCloseStory() {
+    $('.storyFooter').on('click', 'button#closeStory', function() {
+        $('.storyViewer').addClass('hide');
+        $('#updateStory').addClass('hide');
+        $('#editStoryButton').removeClass('hide');
+        $('#deleteStoryButton').removeClass('hide');
     })
 }
 
@@ -188,7 +198,7 @@ function onFileLoad(elementId, event) {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.rotate(degrees * Math.PI / 180);
         ctx.drawImage(image, -image.width * 0.5, -image.height * 0.5);
-        
+
         ctx.restore();
         updatedData = canvas.toDataURL('image/jpeg', 0.5);
         lastUpload = updatedData;
@@ -253,6 +263,7 @@ function handleCreateStory() {
 function stories() {
     $(viewAllStoriesInBlock);
     $(handleViewStory);
+    $(handleCloseStory);
     $(viewCreateStoryInterface);
     $(hideStoryCreateInterface);
 }
