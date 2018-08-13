@@ -1,7 +1,7 @@
 'use strict';
 
 function getRandomPublicStories() {
-    
+
     const retrieving = $.ajax({
         type: "GET",
         url: `${API_URLS.getPublicStories}`,
@@ -18,11 +18,20 @@ function getRandomPublicStories() {
 
 function renderStoryPublicQuickView(result) {
 
+    let storyStyle;
+
+    if (result.image === null || undefined) {
+        storyStyle = `background-color: rgba(0, 0, 0, 0.8);`; 
+    } else {
+        storyStyle = `background: linear-gradient( rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6) ), url(${result.image});
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;`
+    }
+
     return `
-    <button type="button" class="storyQuickView" style="background: linear-gradient( rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.6) ), url(${result.image});
-    background-repeat: no-repeat;
-    background-position: center;">${result.title}
+    <button type="button" class="storyQuickView" style="${storyStyle}">${result.title}
     <p class="storyId">${ result.id }</p>
     </button>
     `
