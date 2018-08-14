@@ -101,4 +101,11 @@ function renderMessages(message) {
     `;
 }
 
+function acceptMessages() {
+    $('.deleteMenuHolder').on('click', 'button#acceptMessage', function() {
+        $('.deleteMenuHolder').addClass('hide');
+    })
+}
+
+$(acceptMessages);
 $(handleFormsSubmit);

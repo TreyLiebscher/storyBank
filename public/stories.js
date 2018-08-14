@@ -140,6 +140,8 @@ function handleViewStory() {
         event.preventDefault();
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
+        $('.storyBankBody').addClass('noScroll');
+        $('.storyBody').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
             console.error('Error', err);
@@ -157,6 +159,7 @@ function handleCloseStory() {
         $('#updateStory').addClass('hide');
         $('#editStoryButton').removeClass('hide');
         $('#deleteStoryButton').removeClass('hide');
+        $('.storyBankBody').removeClass('noScroll');
     })
 }
 

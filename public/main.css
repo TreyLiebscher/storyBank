@@ -14,11 +14,15 @@
     height: 100%;
     z-index: -10;
     /* background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/xT5hzmO/nighttime-campfire_e1vx-fat__F0000.png') no-repeat center center; */
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.backpacker.com/.image/t_share/MTUyNTYwOTQxMTUyNjEwMDY2/15683193341_7a3594dd53_k.jpg') no-repeat center center;
+    background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://www.backpacker.com/.image/t_share/MTUyNTYwOTQxMTUyNjEwMDY2/15683193341_7a3594dd53_k.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.noScroll {
+    overflow: hidden;
 }
 
 #storyBankForm {
@@ -223,7 +227,7 @@ legend {
     margin: auto auto 2% auto;
     position: fixed;
     top: 0;
-    height: 100px;
+    height: 15vh;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
 }
@@ -330,12 +334,6 @@ legend {
     border-radius: 2px;
 }
 
-.storyViewing {
-    width: 100%;
-    height: 600px;
-    margin: auto;
-    position: relative;
-}
 
 .is-focused {
     color: white;
@@ -376,54 +374,7 @@ legend {
     padding: 4%;
 }
 
-.publicStoryViewer,
-.storyViewer {
-    display: flex;
-    flex-direction: column;
-    z-index: 3;
-    position: absolute;
-    top: 10%;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 90%;
-    border: 2px solid white;
-    margin: auto;
-    background-color: #000000e8;
-}
 
-.publicStoryViewer {
-    position: absolute;
-    top: 10%;
-}
-
-.storyViewer {
-    position: absolute;
-    top: 0;
-    height: 100%;
-}
-
-.publicStoryContent,
-.storyBody {
-    overflow-y: scroll;
-    padding: 4%;
-}
-
-.publicStoryFooter,
-.storyFooter {
-    border: 2px solid white;
-    height: 10%;
-    background-color: black;
-    display: flex;
-}
-
-.publicStoryFooter .userButton,
-.storyFooter .userButton {
-    height: 100%;
-    border: none;
-    width: 50%;
-    border-right: 2px solid white;
-}
 
 .hide {
     position: absolute !important;
@@ -526,6 +477,14 @@ legend {
     margin-bottom: 8%;
 }
 
+.discoverViewing,
+.storyViewing {
+    width: 100%;
+    margin: auto;
+    position: relative;
+}
+
+.discoverView,
 .storyBlockView {
     display: flex;
     flex-wrap: wrap;
@@ -535,20 +494,61 @@ legend {
     width: 100%;
 }
 
-.discoverView {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    margin: auto;
-    width: 100%;
-}
-
 .discoverView .storyQuickView {
     font-weight: 800;
 }
 
-.discoverViewStoryFocus {
-    height: auto;
+.publicStoryViewer,
+.storyViewer {
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    position: fixed;
+    top: 15vh;
+    height: 85vh;
+    left: 0;
+    right: 0;
+    width: 90%;
+    border-right: 2px solid white;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    margin: auto;
+    background-color: #000000e8;
+}
+
+.publicStoryContent,
+.storyBody {
+    overflow-y: scroll;
+    padding: 4%;
+}
+
+.publicStoryFooter,
+.storyFooter {
+    height: 20%;
+    background-color: black;
+    display: flex;
+    margin-top: auto;
+}
+
+.publicStoryFooter .userButton {
+    height: 100%;
+    width: 100%;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    border-top: 2px solid white;
+}
+
+.storyFooter .userButton {
+    height: 100%;
+    border: none;
+    width: 50%;
+    border-right: 2px solid white;
+    border-top: 2px solid white;
+}
+
+.storyFooter > :last-child {
+    border-right: none !important;
 }
 
 .discoverView::-webkit-scrollbar,
