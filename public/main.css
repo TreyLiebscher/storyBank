@@ -235,7 +235,7 @@ legend {
 }
 
 .storyBankMainContent {
-    width: 100vw;
+    width: 100%;
     margin-top: 110px;
     margin-bottom: 30px;
     color: white;
@@ -248,7 +248,7 @@ legend {
     margin: auto auto 2% auto;
     position: fixed;
     top: 0;
-    height: 15vh;
+    height: 15%;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
 }
@@ -537,8 +537,8 @@ legend {
     flex-direction: column;
     z-index: 1;
     position: fixed;
-    top: 15vh;
-    height: 85vh;
+    top: 15%;
+    height: 85%;
     left: 0;
     right: 0;
     width: 90%;
@@ -718,7 +718,7 @@ legend {
 
 @media only screen and (min-width: 650px) {
     .storyBankMainContent {
-        width: 90vw;
+        width: 90%;
         margin: auto;
         margin-top: 110px;
         margin-bottom: 30px;
@@ -832,20 +832,11 @@ legend {
 /* iPhone SE, 5, 5c, 5s, Touch */
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:portrait) {
-    .storyBankMainContent {
-        width: 320px;
-    }
     .storyBlock {
         height: 113.6px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 85.2px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 85.2px;
-        height: 482.8px;
     }
     #canvas,
     .storyImage {
@@ -863,20 +854,11 @@ legend {
 }
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:landscape) {
-    .storyBankMainContent {
-        width: 568px;
-    }
     .storyBlock {
         height: 64px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 48px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 48px;
-        height: 272px;
     }
     #canvas,
     .storyImage {
@@ -896,20 +878,11 @@ legend {
 /* iPhone 6s, 6, 7, 8 */
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
-    .storyBankMainContent {
-        width: 375px;
-    }
     .storyBlock {
         height: 133.4px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 100.5px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 100.5px;
-        height: 566.95px;
     }
     #canvas,
     .storyImage {
@@ -927,20 +900,11 @@ legend {
 }
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:landscape) {
-    .storyBankMainContent {
-        width: 667px;
-    }
     .storyBlock {
         height: 75px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 56.25px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 56.25px;
-        height: 318.75px;
     }
     #canvas,
     .storyImage {
@@ -963,20 +927,11 @@ legend {
     .storyBankMainContent {
         width: 414px;
     }
-    .storyBankMainContent {
-        width: 414px;
-    }
     .storyBlock {
         height: 147.2px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 110.4px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 110.4px;
-        height: 625.6px;
     }
     #canvas,
     .storyImage {
@@ -994,23 +949,11 @@ legend {
 }
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:landscape) {
-    .storyBankMainContent {
-        width: 736px;
-    }
-    .storyBankMainContent {
-        width: 736px;
-    }
     .storyBlock {
         height: 82.8px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 62.1px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 62.1px;
-        height: 351.9px;
     }
     #canvas,
     .storyImage {
@@ -1030,20 +973,11 @@ legend {
 /* iPhone X */
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
-    .storyBankMainContent {
-        width: 375px;
-    }
     .storyBlock {
         height: 162.4px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 121.8px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 121.8px;
-        height: 690.2px;
     }
     #canvas,
     .storyImage {
@@ -1061,20 +995,11 @@ legend {
 }
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:landscape) {
-    .storyBankMainContent {
-        width: 812px;
-    }
     .storyBlock {
         height: 75px;
     }
-    .storyQuickView,
-    .storyBankHeader {
+    .storyQuickView {
         height: 56.25px;
-    }
-    .publicStoryViewer,
-    .storyViewer {
-        top: 56.25px;
-        height: 318.75px;
     }
     #canvas,
     .storyImage {
