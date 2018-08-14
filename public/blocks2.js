@@ -108,8 +108,10 @@ function renderDeleteMenu(title, id) {
             <legend>Delete Block</legend>
             <p>Are you sure you want to delete
                 <span class="deleteBlockTitle">${title}</span>? Doing so will also delete all of the stories within!</p>
-            <button id="deleteBlockSubmit" class="deleteButton userButton" type="submit">Yes</button>
-            <button id="cancelBlockDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+            <div class="menuButtonHolder">
+                <button id="deleteBlockSubmit" class="deleteButton userButton" type="submit">Yes</button>
+                <button id="cancelBlockDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+            </div>
         </fieldset>
     </form>
     `
@@ -118,8 +120,6 @@ function renderDeleteMenu(title, id) {
 function displayDeleteMenu() {
     $('.storyBlockView-Title').on('click', 'button#displayDeleteMenu', function (event) {
         event.preventDefault();
-        $('.storyCreateInterface').empty();
-        $('.storyBlockCreateHolder').empty();
         $('.deleteMenuHolder').removeClass('hide');
         const blockTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();

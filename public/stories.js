@@ -37,8 +37,6 @@ function renderCreateStoryInterface(title, id) {
                 <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
                 <span class="mdl-switch__label">Public?</span>
             </label>
-            <button type="submit" class="userButton">Add to block</button>
-            <button type="button" class="userButton" id="cancelStoryCreate">Cancel</button>
         </fieldset>
     </form>`
 }
@@ -49,22 +47,32 @@ function viewCreateStoryInterface() {
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
-        $('.storyBlockView').hide('slow');
-        $('.storyCreateInterface').html(createStoryInterface);
+        // $('.storyBlockView').hide('slow');
+        // $('.storyCreateInterface').html(createStoryInterface);
+        $('.storyBody').html(createStoryInterface);
+        $('.storyBody').animate({scrollTop: '0px'}, 0);
+        $('.storyBankBody').addClass('noScroll');
+        $('html').addClass('noScroll');
+        $('#editStoryButton').addClass('hide');
+        $('#deleteStoryButton').addClass('hide');
+        $('#createStoryButton').removeClass('hide');
+        $('.storyViewer').removeClass('hide');
         componentHandler.upgradeDom();
     });
 }
 
-function hideStoryCreateInterface() {
-    $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function (event) {
-        $('.storyCreateInterface').empty();
-        $('.storyBlockView').show('slow');
+function handleStoryCreateSubmit() {
+    $('#createStoryButton').click(function() {
+        $('#createStory').submit();
     });
 }
 
-function processImage(ev) {
-    console.log('PROCESS IMAGE', ev)
-}
+// function hideStoryCreateInterface() {
+//     $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function (event) {
+//         $('.storyCreateInterface').empty();
+//         $('.storyBlockView').show('slow');
+//     });
+// }
 
 function renderStory(result) {
     //if user chooses not to provide an image
@@ -99,7 +107,6 @@ function renderStory(result) {
 
 function displayStory(result) {
     const story = renderStory(result);
-    // $('.storyBlockView').html(story);
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
 }
@@ -141,6 +148,7 @@ function handleViewStory() {
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
+        $('html').addClass('noScroll');
         $('.storyBody').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
@@ -157,9 +165,11 @@ function handleCloseStory() {
     $('.storyFooter').on('click', 'button#closeStory', function() {
         $('.storyViewer').addClass('hide');
         $('#updateStory').addClass('hide');
+        $('#createStoryButton').addClass('hide');
         $('#editStoryButton').removeClass('hide');
         $('#deleteStoryButton').removeClass('hide');
         $('.storyBankBody').removeClass('noScroll');
+        $('html').removeClass('noScroll');
     })
 }
 
@@ -255,9 +265,14 @@ function handleCreateStory() {
         lastUpload = null
         const content = renderStoryQuickView(data.story);
         console.log('story id is', data.story.id);
-        $('.storyBlockView').show('slow');
+        // $('.storyBlockView').show('slow');
+        $('#editStoryButton').removeClass('hide');
+        $('#deleteStoryButton').removeClass('hide');
+        $('#createStoryButton').addClass('hide');
+        $('.storyViewer').addClass('hide');
+        $('.storyBankBody').removeClass('noScroll');
+        $('html').removeClass('noScroll');
         $('.storyBlockView').append(content);
-        $('.storyCreateInterface').empty();
         componentHandler.upgradeDom();
     });
 }
@@ -268,7 +283,8 @@ function stories() {
     $(handleViewStory);
     $(handleCloseStory);
     $(viewCreateStoryInterface);
-    $(hideStoryCreateInterface);
+    // $(hideStoryCreateInterface);
+    $(handleStoryCreateSubmit);
 }
 
 $(stories);

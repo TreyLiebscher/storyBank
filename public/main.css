@@ -13,7 +13,6 @@
     width: 100%;
     height: 100%;
     z-index: -10;
-    /* background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/xT5hzmO/nighttime-campfire_e1vx-fat__F0000.png') no-repeat center center; */
     background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://www.backpacker.com/.image/t_share/MTUyNTYwOTQxMTUyNjEwMDY2/15683193341_7a3594dd53_k.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -23,6 +22,11 @@
 
 .noScroll {
     overflow: hidden;
+    position: relative;
+    /* TODO: this should fix iOS scroll issues, but
+    setting height to 100% forces page to scroll
+    to top */
+    /* height: 100%; */
 }
 
 #storyBankForm {
@@ -33,6 +37,29 @@
     display: flex;
     flex-direction: column;
 }
+
+.menuButtonHolder {
+    display: flex;
+    height: 50px;
+    margin: auto;
+}
+
+#storyBankForm .userButton {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+}
+
+#storyBankForm .colorButton {
+    border: 1px solid white;
+}
+
+.createBlockSpace {
+    margin-bottom: 10%;
+    margin-top:5%;
+}
+
 
 /* Loading Icon */
 
@@ -69,16 +96,12 @@
     margin-bottom: 2px;
     text-align: center;
     color: white;
-    /* border: 1px solid white; */
-    /* border-radius: 5px; */
     word-wrap: break-word;
 }
 
 .blockLoader {
     position: relative;
     border: 2px solid white;
-    /* border-radius: 5px;
-    border-radius: 5px; */
     background-color: black;
     color: white;
     width: 100%;
@@ -91,14 +114,11 @@
 
 .blockLoader::after {
     content: "";
-    /* border-radius: 5px; */
     position: absolute;
     z-index: -1;
-    /* top: 2px; */
     left: 0;
     width: 100%;
     height: 100%;
-    /* border: 1px solid white; */
     box-shadow: 0 0 20px 1px white;
     opacity: 0;
     animation: 0.8s infinite alternate glow;
@@ -181,12 +201,13 @@ legend {
     display: none;
     position: absolute;
     right: 0;
-    top: 100%;;
+    top: 100%;
+    ;
     background-color: rgba(0, 0, 0, 0.9);
     border: 2px solid white;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 2;
 }
 
 .profileOptions button {
@@ -334,7 +355,6 @@ legend {
     border-radius: 2px;
 }
 
-
 .is-focused {
     color: white;
 }
@@ -373,8 +393,6 @@ legend {
     margin: auto;
     padding: 4%;
 }
-
-
 
 .hide {
     position: absolute !important;
@@ -429,6 +447,21 @@ legend {
 
 .deleteButton {
     background-color: darkred;
+}
+
+.cancelDeleteButton,
+.cancelBlockCreateButton {
+    background-color: #4a4949;
+}
+
+.createBlockButton {
+    background-color: green;
+}
+
+.colorButton {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
 }
 
 .deleteMenuHolder p {
@@ -502,7 +535,7 @@ legend {
 .storyViewer {
     display: flex;
     flex-direction: column;
-    z-index: 3;
+    z-index: 1;
     position: fixed;
     top: 15vh;
     height: 85vh;
@@ -547,7 +580,7 @@ legend {
     border-top: 2px solid white;
 }
 
-.storyFooter > :last-child {
+.storyFooter> :last-child {
     border-right: none !important;
 }
 
@@ -644,7 +677,8 @@ legend {
 #content {
     height: 50vh;
     width: 100%;
-    border-top: 1px solid white;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
     transition: transform 1s, border-top 1s;
 }
 
@@ -669,7 +703,7 @@ legend {
 }
 
 .mdl-textfield--floating-label.is-focused #content {
-    border-top: 1px solid turquoise;
+    border-top: 2px solid turquoise;
 }
 
 #userNameLabel::after,
@@ -737,6 +771,14 @@ legend {
         margin: 0 auto 2% auto;
         height: auto;
     }
+    .menuButtonHolder {
+        width: 80%;
+        margin-bottom: 2%;
+        height: 30px;
+    }
+    #storyBankForm .userButton {
+        width: 30%;
+    }
     /* ~~~~~~~~ User Profile Box Element ~~~~~~~~ */
     .profileContainer {
         width: auto;
@@ -795,8 +837,14 @@ legend {
     .storyBlock {
         height: 113.6px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 85.2px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 85.2px;
+        height: 482.8px;
     }
     #canvas,
     .storyImage {
@@ -817,8 +865,14 @@ legend {
     .storyBlock {
         height: 64px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 48px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 48px;
+        height: 272px;
     }
     #canvas,
     .storyImage {
@@ -841,8 +895,14 @@ legend {
     .storyBlock {
         height: 133.4px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 100.5px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 100.5px;
+        height: 566.95px;
     }
     #canvas,
     .storyImage {
@@ -863,8 +923,14 @@ legend {
     .storyBlock {
         height: 75px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 56.25px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 56.25px;
+        height: 318.75px;
     }
     #canvas,
     .storyImage {
@@ -890,8 +956,14 @@ legend {
     .storyBlock {
         height: 147.2px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 110.4px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 110.4px;
+        height: 625.6px;
     }
     #canvas,
     .storyImage {
@@ -915,8 +987,14 @@ legend {
     .storyBlock {
         height: 82.8px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 62.1px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 62.1px;
+        height: 351.9px;
     }
     #canvas,
     .storyImage {
@@ -939,8 +1017,14 @@ legend {
     .storyBlock {
         height: 162.4px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 121.8px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 121.8px;
+        height: 690.2px;
     }
     #canvas,
     .storyImage {
@@ -961,8 +1045,14 @@ legend {
     .storyBlock {
         height: 75px;
     }
-    .storyQuickView {
+    .storyQuickView,
+    .storyBankHeader {
         height: 56.25px;
+    }
+    .publicStoryViewer,
+    .storyViewer {
+        top: 56.25px;
+        height: 318.75px;
     }
     #canvas,
     .storyImage {

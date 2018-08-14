@@ -47,7 +47,7 @@ function displayPublicStories(arr) {
 function handleGetALlPublicStories() {
     $('#discover').on('click', function (event) {
         event.preventDefault();
-        $('.discoverView').removeClass('discoverViewStoryFocus');
+        // $('.discoverView').removeClass('discoverViewStoryFocus');
         getRandomPublicStories();
     });
 }
@@ -65,6 +65,7 @@ function handleGoBack() {
     $('.publicStoryFooter').on('click', 'button#goBack', function (event) {
         $('.publicStoryViewer').addClass('hide');
         $('.storyBankBody').removeClass('noScroll');
+        $('html').removeClass('noScroll');
     });
 }
 
@@ -111,9 +112,9 @@ function handleViewPublicStory() {
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
+        $('html').addClass('noScroll');
         $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
-        $('.storyBlockView').empty();
         resultPromise.catch(err => {
             console.error('Error', err);
         })

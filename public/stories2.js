@@ -79,8 +79,6 @@ function displayStoryUpdateMenu() {
             currentId
         );
 
-        // $('.storyBlockView').hide('slow');
-        // $('.storyCreateInterface').html(storyUpdateMenu);
         $('.storyBody').html(storyUpdateMenu);
         $('.storyBody').animate({scrollTop: '0px'}, 0);
         $('#updateStory').removeClass('hide');
@@ -138,7 +136,6 @@ function handleStoryUpdate() {
         $('.storyCreateInterface').empty();
         const newStory = renderStory(data);
         $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
-        // $('.storyViewer').addClass('hide');
         getBlocksWithStories(data.story.block);
         $('#updateStory').addClass('hide');
         $('#editStoryButton').removeClass('hide');
@@ -159,8 +156,10 @@ function renderStoryDeleteMenu(title, id) {
             <legend>Delete Story</legend>
             <p>Are you sure you want to delete
                 <span class="deleteBlockTitle">${title}</span>?</p>
-            <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
-            <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+            <div class="menuButtonHolder">
+                <button id="deleteStorySubmit" class="deleteButton userButton" type="submit">Yes</button>
+                <button id="cancelStoryDeletion" class="cancelDeleteButton userButton" type="button">Cancel</button>
+            </div>
         </fieldset>
     </form>
     `
@@ -200,8 +199,6 @@ function handleStoryDeletion() {
     deleting.done(function (data) {
         const message = renderMessages(data.message);
         $('.deleteStoryHolder').html(message);
-        // $('.storyViewer').addClass('hide');
-        // $('.storyBlockView').empty();
         getBlocksWithStories(data.story.block);
     })
 }
@@ -211,6 +208,7 @@ function acceptStoryMessages() {
         $('.deleteStoryHolder').addClass('hide');
         $('.storyViewer').addClass('hide');
         $('.storyBankBody').removeClass('noScroll');
+        $('html').removeClass('noScroll');
     })
 }
 
