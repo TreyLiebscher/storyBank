@@ -82,6 +82,7 @@ function displayStoryUpdateMenu() {
         // $('.storyBlockView').hide('slow');
         // $('.storyCreateInterface').html(storyUpdateMenu);
         $('.storyBody').html(storyUpdateMenu);
+        $('.storyBody').animate({scrollTop: '0px'}, 0);
         $('#updateStory').removeClass('hide');
         $('#editStoryButton').addClass('hide');
         $('#deleteStoryButton').addClass('hide');
@@ -205,10 +206,11 @@ function handleStoryDeletion() {
     })
 }
 
-function acceptMessages() {
+function acceptStoryMessages() {
     $('.deleteStoryHolder').on('click', 'button#acceptMessage', function() {
         $('.deleteStoryHolder').addClass('hide');
         $('.storyViewer').addClass('hide');
+        $('.storyBankBody').removeClass('noScroll');
     })
 }
 
@@ -218,7 +220,7 @@ function stories2() {
     $(hideStoryDeleteMenu);
     $(displayStoryUpdateMenu);
     $(handleStoryUpdateSubmit);
-    $(acceptMessages);
+    $(acceptStoryMessages);
 }
 
 $(stories2);

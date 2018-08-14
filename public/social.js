@@ -64,6 +64,7 @@ function hidePublicStories() {
 function handleGoBack() {
     $('.publicStoryFooter').on('click', 'button#goBack', function (event) {
         $('.publicStoryViewer').addClass('hide');
+        $('.storyBankBody').removeClass('noScroll');
     });
 }
 
@@ -109,6 +110,8 @@ function handleViewPublicStory() {
         event.preventDefault();
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
         console.log('The story id is:', storyId);
+        $('.storyBankBody').addClass('noScroll');
+        $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         $('.storyBlockView').empty();
         resultPromise.catch(err => {
