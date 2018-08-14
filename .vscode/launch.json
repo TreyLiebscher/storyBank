@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Mocha Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "runtimeExecutable": "/home/linuxbrew/.linuxbrew/bin/node",
+            "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v8.9.0/bin/node",
             "args": [
                 "-u",
                 "tdd",
@@ -20,28 +20,13 @@
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Mocha Tests",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node",
-            "args": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
-                "${workspaceFolder}/server/**/*.test.js"
-            ],
-            "internalConsoleOptions": "openOnSessionStart"
-        },
+        
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/public/blocks.js",
-            "runtimeExecutable": "/Users/trey/.nvm/versions/node/v8.9.0/bin/node"
+            "program": "${workspaceFolder}/server/server.js",
+            "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v8.9.0/bin/node"
         }
     ]
 }
