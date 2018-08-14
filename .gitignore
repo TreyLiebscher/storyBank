@@ -2,6 +2,7 @@ node_modules
 .idea
 .env 
 .nyc_output
+public/dist
 
 
 

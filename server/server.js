@@ -1,22 +1,28 @@
 'use strict';
-
+const compression = require('compression')
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
 const path = require('path');
+var minify = require('express-minify');
 
 const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
 const { setupRoutes } = require('./api/api.js');
 
 const app = express();
+
+app.use(compression())
+
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 setupRoutes(app);
 
+app.use(minify());
 app.use('/app', express.static(path.join(__dirname, '../public')))
+
 
 app.use('*', function (req, res) {
     res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
@@ -31,7 +37,8 @@ function runHttpServer(port) {
         const server = app.listen(port, () => {
             console.log(`EXPRESS HTTP(S) SERVER STARTED ON PORT ${port}`);
             const hostname = os.hostname() || 'localhost';
-            console.log(`APP URL is: http://${hostname}:${port}`);
+            const now = new Date().toLocaleTimeString()
+            console.log(`[ ${now} ] APP URL is: http://${hostname}:${port}`);
             resolved = true;
             resolve(server);
         }).on('error', err => {
