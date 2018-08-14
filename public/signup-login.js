@@ -37,7 +37,7 @@ function renderSignUpForm() {
 				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 			</div>
-			<div class="buttonHolder">
+			<div class="menuButtonHolder">
 				<button type="submit" class="userButton">Create Account</button>
 				<button type="button" class="userButton" id="cancel">Cancel</button>
 			</div>
@@ -105,7 +105,7 @@ function renderLogInForm() {
 				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
 				<label id="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
 			</div>
-			<div class="buttonHolder">
+			<div class="menuButtonHolder">
 				<button type="submit" class="userButton">Log In</button>
 				<button type="button" class="userButton" id="cancel">Cancel</button>
 			</div>
@@ -206,8 +206,10 @@ function renderChangePasswordForm () {
 				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Retype New Password</label>
 			</div>
-			<button type="submit" class="userButton">Update</button>
-			<button type="button" class="userButton" id="cancel">Cancel</button>
+			<div class="menuButtonHolder">
+				<button type="submit" class="userButton">Update</button>
+				<button type="button" class="userButton" id="cancel">Cancel</button>
+			</div>
 		</fieldset>
 	</form>
 	`

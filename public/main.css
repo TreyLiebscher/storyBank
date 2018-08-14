@@ -46,6 +46,7 @@
 
 #storyBankForm .userButton {
     height: 100%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     border: none;
@@ -755,7 +756,7 @@ legend {
     /* ~~~~~~~~ User Forms ~~~~~~~~ */
     .js-signUp-form,
     .js-logIn-form {
-        width: 30%;
+        width: 80%;
         margin: auto;
     }
     #storyBankFormInput {
