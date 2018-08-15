@@ -9,11 +9,12 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
     //being ignored by default behavior with mdl
     let isPublic;
 
-    if (publicBoolean === false) {
+    if (publicBoolean === 'false') {
         isPublic = null;
+        console.log('kiwi should not check', isPublic)
     } else {
-        isPublic = `is-checked`;
-        console.log('kiwi', 'should be checked')
+        isPublic = `checked`;
+        console.log('kiwi should be checked', isPublic)
     }
     // TODO this should give a helpful message letting user
     // know that there is no image, but instead, they get
@@ -49,10 +50,10 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
             </div>
             <p class="publicStatus">${publicBoolean}</p>
             <p name="currentPublicStatus">Your story is currently ${publicStatus}</p>
-            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect ${isPublic}" for="switch-2">
-                <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
-                <span class="mdl-switch__label">publicStatus?</span>
-            </label>
+            <div>
+                <input type="checkbox" id="publicStatus" name="interest" class="publicStatusInput" ${isPublic}>
+                <label class="publicStatusLabel" for="publicStatus">Public?</label>
+            </div>
         </fieldset>
     </form>
     `
@@ -65,10 +66,10 @@ function displayStoryUpdateMenu() {
         const currentStorySelect = $('.storyViewer');
         const currentTitle = currentStorySelect.find('.storyTitle').text();
         const currentImage = currentStorySelect.find('.storyImage').attr('src');
-        console.log('kiwi currentImg src is', currentImage);
         const currentContent = currentStorySelect.find('.storyContent').text();
         const currentPublicStatus = currentStorySelect.find('.publicStatusInfo').text();
         const currentPublicBoolean = currentStorySelect.find('.publicStatus').text();
+        console.log('kiwi currentPublicBoolean is', currentPublicBoolean)
         const currentId = currentStorySelect.find('.storyId').text();
         const storyUpdateMenu = renderStoryUpdateMenu(
             currentTitle,
@@ -99,7 +100,7 @@ function handleStoryUpdate() {
         title = $form.find('input[name="title"]').val(),
         content = $form.find('textarea[name="content"]').val();
 
-    const ckBox = $form.find('#switch-2')
+    const ckBox = $form.find('#publicStatus')
     const publicStatus = ckBox.is(':checked')
     const url = $form.attr('action');
 

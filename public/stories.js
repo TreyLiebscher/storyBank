@@ -21,11 +21,11 @@ function renderCreateStoryInterface(title, id) {
             </div>
             <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="imageUploadButton"
                 name="image">
-    
+
             <div class="imageThumbBox">
-            <div class="canvasHolder">
-                <canvas id="canvas" />
-            </div>
+                <div class="canvasHolder">
+                    <canvas id="canvas" />
+                </div>
                 <button id="rotate-cw" class="userButton hide">Rotate</button>
 
             </div>
@@ -33,10 +33,11 @@ function renderCreateStoryInterface(title, id) {
                 <textarea class="mdl-textfield__input" type="text" rows="3" id="content" name="content"></textarea>
                 <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
             </div>
-            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" id="publicSwitch">
-                <input type="checkbox" id="switch-2" class="mdl-switch__input" name="publicStatus">
-                <span class="mdl-switch__label">Public?</span>
-            </label>
+
+            <div>
+                <input type="checkbox" id="publicStatus" name="interest" class="publicStatusInput" value="">
+                <label class="publicStatusLabel" for="publicStatus">Public?</label>
+            </div>
         </fieldset>
     </form>`
 }
@@ -239,7 +240,7 @@ function handleCreateStory() {
         title = $form.find('input[name="title"]').val(),
         content = $form.find('textarea[name="content"]').val();
 
-    const ckBox = $form.find("#switch-2")
+    const ckBox = $form.find('#publicStatus')
     const publicStatus = ckBox.is(':checked')
     const url = $form.attr('action');
 
