@@ -88,7 +88,7 @@ async function getStories(req, res) {
     res.json({
         pageSize: LIMIT,
         total,
-        stories: records.map(record => record.serialize())
+        stories: records.map(record => record.serialize(false))
     })
 }
 
@@ -106,7 +106,7 @@ async function getStory(req, res) {
         });
     }
     res.json({
-        story: record.serialize()
+        story: record.serialize(false)
     })
 }
 
