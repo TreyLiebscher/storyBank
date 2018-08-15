@@ -19,9 +19,21 @@ const jwtAuth = passport.authenticate('jwt', {
 const router = express.Router();
 
 const LIMIT = 1000;
+const B64HEADER = ';base64,'
 
 const STORY_MODEL_FIELDS = ['title', 'image', 'content', 'publicStatus'] //an array of updatable field names
 
+
+
+async function serveStoryImage(req, res) {
+    const { id } = req.params
+    const story = await StoriesModel.findById(id)
+    const image = story.image
+    const data = image.split(B64HEADER)[1]
+    const bytes = Buffer.from(data, 'base64')
+    res.status(200).send(bytes)
+}
+router.get('/story/image/:id', tryCatch(serveStoryImage));
 
 async function createStoryInBlock(req, res) {
 
@@ -60,7 +72,7 @@ async function getStories(req, res) {
     }
 
     const records = await StoriesModel
-        .find({publicStatus: true})
+        .find({ publicStatus: true })
         .sort([
             ['date', -1]
         ])
@@ -109,10 +121,10 @@ async function updateStory(req, res) {
     const updatedRecord = await StoriesModel.findByIdAndUpdate({
         '_id': req.params.id
     }, {
-        $set: newFieldValues
-    }, {
-        new: true
-    })
+            $set: newFieldValues
+        }, {
+            new: true
+        })
     res.json({
         story: updatedRecord.serialize(),
         message: 'Story updated successfully'

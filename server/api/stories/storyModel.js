@@ -25,21 +25,26 @@ const StoriesSchema = new mongoose.Schema({
         ref: 'blockmodel'
     }
 }, {
-    timestamps: {
-        createdAt: 'createdAt'
-    }
-});
+        timestamps: {
+            createdAt: 'createdAt'
+        }
+    });
 
-StoriesSchema.methods.serialize = function () {
-    return {
+StoriesSchema.methods.serialize = function (includeImageData = true) {
+    const retObj = {
         id: this._id,
         title: this.title,
-        image: this.image,
+        // image: this.image,
+        imageURL: !this.image ? null : `/stories/story/image/${this.id}`,
         content: this.content,
         publicStatus: this.publicStatus,
         createdAt: this.createdAt,
         block: this.block
     };
+    if (includeImageData) {
+        retObj.image = this.image
+    }
+    return retObj
 }
 
 const StoriesModel = mongoose.model('StoriesModel', StoriesSchema);
