@@ -24,6 +24,7 @@ function renderBlockUpdateMenu(title, color, id) {
 function displayBlockUpdateMenu() {
     $('.storyBlockView-Title').on('click', 'button#editBlock', function (event) {
         event.preventDefault();
+        $('.blockOptions').removeClass('blockVisibleOptions');
         $('.storyBlockView-Title').hide('slow');
         $('.storyBlockView').hide('slow');
         $('.storyCreateInterface').hide('slow');
@@ -121,6 +122,7 @@ function displayDeleteMenu() {
     $('.storyBlockView-Title').on('click', 'button#displayDeleteMenu', function (event) {
         event.preventDefault();
         $('.deleteMenuHolder').removeClass('hide');
+        $('.blockOptions').removeClass('blockVisibleOptions');
         const blockTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         const deleteMenu = renderDeleteMenu(blockTitle, blockId);
