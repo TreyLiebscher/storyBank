@@ -38,7 +38,7 @@ StoriesSchema.methods.serialize = function (includeImageData = true) {
     const retObj = {
         id: this._id,
         title: this.title,
-        imageURL: !this.image ? null : `/stories/story/image/${this.id}/${this.imageHash||'unhashed'}`,
+        imageURL: !this.imageHash ? null : `/stories/story/image/${this.id}/${this.imageHash||'unhashed'}`,
         content: this.content,
         publicStatus: this.publicStatus,
         createdAt: this.createdAt,
