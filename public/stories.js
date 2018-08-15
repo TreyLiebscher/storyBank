@@ -48,8 +48,7 @@ function viewCreateStoryInterface() {
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
-        // $('.storyBlockView').hide('slow');
-        // $('.storyCreateInterface').html(createStoryInterface);
+        $('.blockOptions').removeClass('blockVisibleOptions');
         $('.storyBody').html(createStoryInterface);
         $('.storyBody').animate({scrollTop: '0px'}, 0);
         $('.storyBankBody').addClass('noScroll');
@@ -68,20 +67,13 @@ function handleStoryCreateSubmit() {
     });
 }
 
-// function hideStoryCreateInterface() {
-//     $('.storyCreateInterface').on('click', 'button#cancelStoryCreate', function (event) {
-//         $('.storyCreateInterface').empty();
-//         $('.storyBlockView').show('slow');
-//     });
-// }
-
 function renderStory(result) {
     //if user chooses not to provide an image
     let image;
-    if (!(result.story.imageURL)) {
+    if (!(result.story.image)) {
         image = `<img class="storyImage hide" src="null">`;
     } else {
-        image = `<img class="storyImage" src="${result.story.imageURL}">`;
+        image = `<img class="storyImage" src="${result.story.image}">`;
     }
 
     let publicStatus;
@@ -111,16 +103,16 @@ function displayStory(result) {
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
 }
-
+//TODO fix this
 function renderStoryQuickView(result) {
 
     let storyStyle;
 
-    if (!(result.imageURL)) {
-        storyStyle = `background-color: rgba(0, 0, 0, 0.8);`;
+    if (!(result.image)) {
+        storyStyle = `background-color: rgba(0, 0, 0, 0.3);`;
     } else {
         storyStyle = `background: linear-gradient( rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6) ), url(${result.imageURL});
+        rgba(0, 0, 0, 0.6) ), url(${result.image});
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;`
@@ -264,16 +256,16 @@ function handleCreateStory() {
 
     posting.done(function (data) {
         lastUpload = null
-        const content = renderStoryQuickView(data.story);
+        // const content = renderStoryQuickView(data.story);
+        getBlocksWithStories(data.story.block);
         console.log('story id is', data.story.id);
-        // $('.storyBlockView').show('slow');
         $('#editStoryButton').removeClass('hide');
         $('#deleteStoryButton').removeClass('hide');
         $('#createStoryButton').addClass('hide');
         $('.storyViewer').addClass('hide');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
-        $('.storyBlockView').append(content);
+        // $('.storyBlockView').append(content);
         componentHandler.upgradeDom();
     });
 }
@@ -284,7 +276,6 @@ function stories() {
     $(handleViewStory);
     $(handleCloseStory);
     $(viewCreateStoryInterface);
-    // $(hideStoryCreateInterface);
     $(handleStoryCreateSubmit);
 }
 

@@ -2,6 +2,7 @@ const API_URLS = {
     //Blocks
     createBlock: '/storyblock/block/create',
     getBlocks: '/storyblock/blocks',
+    getBlockId: '/storyblock/block', //NOTE: need to append block id
     getUserBlocks: '/storyblock/myblocks',
     deleteBlock: '/storyblock/block/delete', //NOTE: need to append block id
     updateBlock: '/storyblock/block/update',
