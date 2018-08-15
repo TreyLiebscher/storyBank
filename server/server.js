@@ -13,7 +13,18 @@ const { setupRoutes } = require('./api/api.js');
 
 const app = express();
 
-app.use(compression())
+app.use(compression({filter: shouldCompress}))
+
+function shouldCompress (req, res) {
+    console.log(req.url)
+
+  if (/^\/story\/image/.test(req.path)) {
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
