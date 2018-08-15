@@ -8,26 +8,24 @@ const os = require('os');
 const path = require('path');
 var minify = require('express-minify');
 
-const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
+const { DATABASE_URL, TEST_DATABASE_URL, PORT } = require('../config.js');
 const { setupRoutes } = require('./api/api.js');
 
 const app = express();
 
-app.use(compression({filter: shouldCompress}))
+app.use(compression({ filter: shouldCompress }))
 
-function shouldCompress (req, res) {
-    console.log(req.url)
+function shouldCompress(req, res) {
 
-  if (/^\/story\/image/.test(req.path)) {
-    return false
-  }
-
-  // fallback to standard filter function
-  return compression.filter(req, res)
+    //do not compress images
+    if (/^\/stories\/story\/image/.test(req.baseUrl + req.url)) {
+        return false
+    }
+    return compression.filter(req, res)
 }
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 setupRoutes(app);
 
@@ -36,7 +34,7 @@ app.use('/app', express.static(path.join(__dirname, '../public')))
 
 
 app.use('*', function (req, res) {
-    res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
+    res.status(404).json({ message: 'Route not handled: malformed URL or non-existing static resource' });
 });
 
 
@@ -63,7 +61,7 @@ function runHttpServer(port) {
 
 async function runServer(databaseUrl, port) {
     try {
-        await mongoose.connect(databaseUrl, {useNewUrlParser: false});
+        await mongoose.connect(databaseUrl, { useNewUrlParser: false });
         const dbMode = databaseUrl === TEST_DATABASE_URL ? 'TEST MODE' : 'PRODUCTION MODE';
         console.log(`MONGOOSE CONNECTED [${dbMode}]`);
         server = await runHttpServer(port);
@@ -100,4 +98,4 @@ if (require.main === module) {
     runServer(DATABASE_URL, PORT).catch(err => console.error('CANNOT START SERVER', err));
 }
 
-module.exports = {app, runServer, closeServer};
+module.exports = { app, runServer, closeServer };

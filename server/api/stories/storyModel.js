@@ -12,6 +12,10 @@ const StoriesSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    imageHash: {
+        type: String,
+        required: false
+    },
     content: {
         type: String,
         required: true
@@ -34,8 +38,7 @@ StoriesSchema.methods.serialize = function (includeImageData = true) {
     const retObj = {
         id: this._id,
         title: this.title,
-        // image: this.image,
-        imageURL: !this.image ? null : `/stories/story/image/${this.id}`,
+        imageURL: !this.image ? null : `/stories/story/image/${this.id}/${this.imageHash}`,
         content: this.content,
         publicStatus: this.publicStatus,
         createdAt: this.createdAt,
@@ -47,6 +50,16 @@ StoriesSchema.methods.serialize = function (includeImageData = true) {
     return retObj
 }
 
+
+
+function computeImageHash (imageData) {
+    if (imageData) {
+        return require('crypto').createHash('sha1').update(imageData).digest('hex');
+    }
+    return null
+}
+
 const StoriesModel = mongoose.model('StoriesModel', StoriesSchema);
+StoriesModel.computeImageHash = computeImageHash
 
 module.exports = StoriesModel

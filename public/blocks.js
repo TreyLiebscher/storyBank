@@ -134,7 +134,7 @@ function getUserBlocks() {
 function renderInsideBlockView(result) {
     return `
     <h3>${result.title}</h3>
-    <img class="storyImage" src="${result.image}">
+    <img class="storyImage" src="${result.imageURL}">
     <p>${result.content}</p>
     <p>Public? ${result.publicStatus}</p>
     `

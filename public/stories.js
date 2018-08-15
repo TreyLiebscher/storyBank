@@ -78,10 +78,10 @@ function handleStoryCreateSubmit() {
 function renderStory(result) {
     //if user chooses not to provide an image
     let image;
-    if (!(result.story.image)) {
+    if (!(result.story.imageURL)) {
         image = `<img class="storyImage hide" src="null">`;
     } else {
-        image = `<img class="storyImage" src="${result.story.image}">`;
+        image = `<img class="storyImage" src="${result.story.imageURL}">`;
     }
 
     let publicStatus;
@@ -116,11 +116,11 @@ function renderStoryQuickView(result) {
 
     let storyStyle;
 
-    if (!(result.image)) {
+    if (!(result.imageURL)) {
         storyStyle = `background-color: rgba(0, 0, 0, 0.8);`;
     } else {
         storyStyle = `background: linear-gradient( rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6) ), url(${result.image});
+        rgba(0, 0, 0, 0.6) ), url(${result.imageURL});
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;`
