@@ -39,12 +39,13 @@ function renderCreateBlockInterface() {
             <input id="title" class="mdl-textfield__input" name="title">
             <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
         </div>
-
+        <div class="menuButtonHolder">
         <button id="colorPicker" class="colorButton userButton" type="button" name="selectedColor">Select a color</button>        
         <input type="hidden" id="color" />
          
-        <button type="submit" id="js-blockCreateButton" class="userButton">Create!</button>
-        <button type="button" id="cancelBlockCreate" class="userButton">Cancel</button>
+        <button type="submit" id="js-blockCreateButton" class="userButton createBlockButton">Create!</button>
+        <button type="button" id="cancelBlockCreate" class="userButton cancelBlockCreateButton">Cancel</button>
+        </div>
         </fieldset>
     </form>
     `
@@ -55,6 +56,7 @@ function viewCreateBlockInterface() {
         event.preventDefault();
         $('.js-create-block-view').addClass('hide');
         const blockInterface = renderCreateBlockInterface();
+        $('.storyBlockCreateHolder').addClass('createBlockSpace');
         $('.storyBlockCreateHolder').html(blockInterface);
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
@@ -74,6 +76,7 @@ function viewCreateBlockInterface() {
 function hideCreateBlockInterface() {
     $('.storyBlockCreateHolder').on('click', 'button#cancelBlockCreate', function (event) {
         $('.storyBlockCreateHolder').empty();
+        $('.storyBlockCreateHolder').removeClass('createBlockSpace');
         $('.js-create-block-view').removeClass('hide');
     });
 }
@@ -102,6 +105,7 @@ function handleCreateBlockSubmit() {
     posting.done(function (data) {
         const content = renderBlock(data.block);
         $('.storyBlockCreateHolder').empty();
+        $('.storyBlockCreateHolder').removeClass('createBlockSpace');
         $('.js-create-block-view').removeClass('hide');
         $('.js-block-result').append(content);
     });
