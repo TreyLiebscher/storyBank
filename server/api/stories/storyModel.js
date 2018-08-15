@@ -34,7 +34,7 @@ const StoriesSchema = new mongoose.Schema({
         }
     });
 
-StoriesSchema.methods.serialize = function (includeImageData = true) {
+StoriesSchema.methods.serialize = function (includeImageData = false) {
     const retObj = {
         id: this._id,
         title: this.title,

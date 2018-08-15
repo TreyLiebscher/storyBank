@@ -124,7 +124,7 @@ describe('story API routes', function () {
             } = res.body
             createdStory = story;
             expect(story.title).to.equal(newTitle);
-            expect(story.image).to.equal(newImage);
+            expect(story.imageHash).to.not.equal(null);
             expect(story.content).to.equal(content);
             expect(story.publicStatus).to.equal(newPublicStatus);
         })
