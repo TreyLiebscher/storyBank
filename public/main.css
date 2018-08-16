@@ -295,7 +295,7 @@ legend {
 .blockVisibleOptions {
     opacity: 1;
     top: 120%;
-    z-index: 2;
+    z-index: 1;
 }
 
 .storyBankMainContent {
@@ -992,9 +992,6 @@ legend {
         max-width: 96px;
         max-height: 113.6px;
     }
-    .noScroll {
-        height: 100%;
-    }
 }
 
 @media all and (device-width: 320px) and (device-height: 568px) and (orientation:landscape) {
@@ -1013,9 +1010,6 @@ legend {
     .currentImageThumb {
         max-width: 113.6px;
         max-height: 96px;
-    }
-    .noScroll {
-        height: 100%;
     }
 }
 
@@ -1038,9 +1032,6 @@ legend {
         max-width: 112.5px;
         max-height: 133.4px;
     }
-    .noScroll {
-        height: 100%;
-    }
 }
 
 @media all and (device-width: 375px) and (device-height: 667px) and (orientation:landscape) {
@@ -1059,9 +1050,6 @@ legend {
     .currentImageThumb {
         max-width: 133.4px;
         max-height: 112.5px;
-    }
-    .noScroll {
-        height: 100%;
     }
 }
 
@@ -1087,9 +1075,6 @@ legend {
         max-width: 124.2px;
         max-height: 147.2px;
     }
-    .noScroll {
-        height: 100%;
-    }
 }
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:landscape) {
@@ -1108,9 +1093,6 @@ legend {
     .currentImageThumb {
         max-width: 147.2px;
         max-height: 124.2px;
-    }
-    .noScroll {
-        height: 100%;
     }
 }
 
@@ -1133,9 +1115,6 @@ legend {
         max-width: 112.5px;
         max-height: 162.4px;
     }
-    .noScroll {
-        height: 100%;
-    }
 }
 
 @media all and (device-width: 375px) and (device-height: 812px) and (orientation:landscape) {
@@ -1154,9 +1133,6 @@ legend {
     .currentImageThumb {
         max-width: 162.4px;
         max-height: 112.5px;
-    }
-    .noScroll {
-        height: 100%;
     }
 }
 

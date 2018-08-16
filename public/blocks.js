@@ -178,6 +178,9 @@ function handleGetAllBlocksWithStories() {
         console.log(blockId);
         $('.storyCreateInterface').empty();
         $('.storyBlockView-Title').show('slow');
+        $('html, body').animate({
+            scrollTop: $('.storyBlockView-Title').offset().top -100
+        }, 'slow');
         getBlocksWithStories(blockId);
     });
 }
