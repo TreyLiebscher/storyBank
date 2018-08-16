@@ -1,25 +1,40 @@
 'use strict';
-
+const compression = require('compression')
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const os = require('os');
 const path = require('path');
+var minify = require('express-minify');
 
-const {DATABASE_URL, TEST_DATABASE_URL, PORT} = require('../config.js');
+const { DATABASE_URL, TEST_DATABASE_URL, PORT } = require('../config.js');
 const { setupRoutes } = require('./api/api.js');
 
 const app = express();
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+app.use(compression({ filter: shouldCompress }))
+
+function shouldCompress(req, res) {
+
+    //do not compress images
+    if (/^\/stories\/story\/image/.test(req.baseUrl + req.url)) {
+        return false
+    }
+    return compression.filter(req, res)
+}
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 setupRoutes(app);
 
+app.use(minify());
 app.use('/app', express.static(path.join(__dirname, '../public')))
 
+
 app.use('*', function (req, res) {
-    res.status(404).json({message: 'Route not handled: malformed URL or non-existing static resource'});
+    res.status(404).json({ message: 'Route not handled: malformed URL or non-existing static resource' });
 });
 
 
@@ -31,7 +46,8 @@ function runHttpServer(port) {
         const server = app.listen(port, () => {
             console.log(`EXPRESS HTTP(S) SERVER STARTED ON PORT ${port}`);
             const hostname = os.hostname() || 'localhost';
-            console.log(`APP URL is: http://${hostname}:${port}`);
+            const now = new Date().toLocaleTimeString()
+            console.log(`[ ${now} ] APP URL is: http://${hostname}:${port}`);
             resolved = true;
             resolve(server);
         }).on('error', err => {
@@ -45,7 +61,7 @@ function runHttpServer(port) {
 
 async function runServer(databaseUrl, port) {
     try {
-        await mongoose.connect(databaseUrl, {useNewUrlParser: false});
+        await mongoose.connect(databaseUrl, { useNewUrlParser: false });
         const dbMode = databaseUrl === TEST_DATABASE_URL ? 'TEST MODE' : 'PRODUCTION MODE';
         console.log(`MONGOOSE CONNECTED [${dbMode}]`);
         server = await runHttpServer(port);
@@ -82,4 +98,4 @@ if (require.main === module) {
     runServer(DATABASE_URL, PORT).catch(err => console.error('CANNOT START SERVER', err));
 }
 
-module.exports = {app, runServer, closeServer};
+module.exports = { app, runServer, closeServer };

@@ -19,9 +19,26 @@ const jwtAuth = passport.authenticate('jwt', {
 const router = express.Router();
 
 const LIMIT = 1000;
+const B64HEADER = ';base64,'
 
 const STORY_MODEL_FIELDS = ['title', 'image', 'content', 'publicStatus'] //an array of updatable field names
 
+
+
+async function serveStoryImage(req, res) {
+    const { id } = req.params
+    const story = await StoriesModel.findById(id)
+    const image = story.image
+    let [mime, data] = image.split(B64HEADER)
+
+    //get the MIME type
+    mime = mime.replace('data:', '') // like in data:image/jpeg
+    const bytes = Buffer.from(data, 'base64')
+    res
+        .header('Content-Type', mime)
+        .status(200).send(bytes)
+}
+router.get('/story/image/:id/:imagehash', tryCatch(serveStoryImage));
 
 async function createStoryInBlock(req, res) {
 
@@ -38,6 +55,7 @@ async function createStoryInBlock(req, res) {
         date: new Date(),
         title: req.body.title || 'Untitled Story',
         image: req.body.image,
+        imageHash: StoriesModel.computeImageHash(req.body.image),
         content: req.body.content,
         publicStatus: req.body.publicStatus,
         block: blockRecord._id
@@ -60,7 +78,7 @@ async function getStories(req, res) {
     }
 
     const records = await StoriesModel
-        .find({publicStatus: true})
+        .find({ publicStatus: true })
         .sort([
             ['date', -1]
         ])
@@ -70,7 +88,7 @@ async function getStories(req, res) {
     res.json({
         pageSize: LIMIT,
         total,
-        stories: records.map(record => record.serialize())
+        stories: records.map(record => record.serialize(false))
     })
 }
 
@@ -105,14 +123,17 @@ async function updateStory(req, res) {
         })
     }
     const newFieldValues = getFields(STORY_MODEL_FIELDS, req);
+    if (newFieldValues.image) {
+        newFieldValues.imageHash = StoriesModel.computeImageHash(req.body.image)
+    }
 
     const updatedRecord = await StoriesModel.findByIdAndUpdate({
         '_id': req.params.id
     }, {
-        $set: newFieldValues
-    }, {
-        new: true
-    })
+            $set: newFieldValues
+        }, {
+            new: true
+        })
     res.json({
         story: updatedRecord.serialize(),
         message: 'Story updated successfully'

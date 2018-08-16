@@ -201,8 +201,8 @@ describe('block API routes', function () {
             //line 144
             expect(retrievedStories).to.be.an('array');
             expect(retrievedStories[0].block).to.equal(retrievedBlock.id);
-            expect(retrievedStories[0].title).to.equal('new story');
-            expect(retrievedStories[0].image).to.equal('upload img');
+            expect(retrievedStories[0].title).to.equal('new story');            
+            expect(retrievedStories[0].imageUrl).to.not.equal(null);
             expect(retrievedStories[0].content).to.equal('just some new stuff');
             expect(retrievedStories[0].publicStatus).to.equal(true);
             expect(retrievedBlock).to.deep.equal(createdBlock);

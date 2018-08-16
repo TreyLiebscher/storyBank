@@ -13,7 +13,7 @@
     width: 100%;
     height: 100%;
     z-index: -10;
-    background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://www.backpacker.com/.image/t_share/MTUyNTYwOTQxMTUyNjEwMDY2/15683193341_7a3594dd53_k.jpg') no-repeat center center;
+    background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://www.backpacker.com/.imageURL/t_share/MTUyNTYwOTQxMTUyNjEwMDY2/15683193341_7a3594dd53_k.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -511,7 +511,7 @@ legend {
     white-space: pre-wrap;
 }
 
-.imageThumb,
+.imageURLThumb,
 .currentImageThumb {
     max-width: 30vw;
     max-height: 20vh;
@@ -953,7 +953,7 @@ legend {
         max-width: 240px;
         max-height: 284px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 96px;
         max-height: 113.6px;
@@ -975,7 +975,7 @@ legend {
         max-width: 284px;
         max-height: 240px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 113.6px;
         max-height: 96px;
@@ -999,7 +999,7 @@ legend {
         max-width: 281.25px;
         max-height: 333.5px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 112.5px;
         max-height: 133.4px;
@@ -1021,7 +1021,7 @@ legend {
         max-width: 333.5px;
         max-height: 281.25px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 133.4px;
         max-height: 112.5px;
@@ -1048,7 +1048,7 @@ legend {
         max-width: 310.5px;
         max-height: 368px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 124.2px;
         max-height: 147.2px;
@@ -1070,7 +1070,7 @@ legend {
         max-width: 368px;
         max-height: 310.5px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 147.2px;
         max-height: 124.2px;
@@ -1094,7 +1094,7 @@ legend {
         max-width: 281.25px;
         max-height: 406px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 112.5px;
         max-height: 162.4px;
@@ -1116,7 +1116,7 @@ legend {
         max-width: 406px;
         max-height: 281.25px;
     }
-    .imageThumb,
+    .imageURLThumb,
     .currentImageThumb {
         max-width: 162.4px;
         max-height: 112.5px;
