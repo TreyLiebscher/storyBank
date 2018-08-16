@@ -95,13 +95,10 @@ async function getBlockWithStories(req, res) {
         })
     }
 
-    const storyRecordArr = await StoriesModel.find({
-        block: req.params.id
-    });
-
+    const stories = await record.getStories()
     res.json({
         block: record.serialize(),
-        stories: storyRecordArr.map(record => record.serialize())
+        stories: stories.map(record => record.serialize()),
     });
 }
 
@@ -120,10 +117,10 @@ async function updateBlock(req, res) {
     const updatedRecord = await BlockModel.findByIdAndUpdate({
         '_id': req.params.id
     }, {
-        $set: newFieldValues
-    }, {
-        new: true
-    })
+            $set: newFieldValues
+        }, {
+            new: true
+        })
     res.json({
         block: updatedRecord.serialize(),
         message: 'Block updated successfully'
