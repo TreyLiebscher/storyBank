@@ -41,7 +41,7 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
             </div>
             <p class="publicStatus">${publicBoolean}</p>
             <p name="currentPublicStatus">Your story is currently ${publicStatus}</p>
-            <div>
+            <div class="publicCheckboxContainer">
                 <input type="checkbox" id="publicStatus" name="interest" class="publicStatusInput" ${isPublic}>
                 <label class="publicStatusLabel" for="publicStatus">Public?</label>
             </div>
@@ -54,7 +54,7 @@ function displayStoryUpdateMenu() {
     $('.storyFooter').on('click', 'button#editStoryButton', function (event) {
         event.preventDefault();
         const storyId = $('.storyViewer').find('.storyId').text();
-        
+
         const url = `${API_URLS.getStoryById}/${storyId}`;
 
 
@@ -67,9 +67,15 @@ function displayStoryUpdateMenu() {
             },
         });
 
-        currentStoryInfo.done(function(data) {
+        currentStoryInfo.done(function (data) {
 
-            const {id, title, imageURL, content, publicStatus} = data.story;
+            const {
+                id,
+                title,
+                imageURL,
+                content,
+                publicStatus
+            } = data.story;
 
             const currentTitle = title;
             const currentImage = imageURL;
@@ -87,9 +93,11 @@ function displayStoryUpdateMenu() {
                 currentPublicBoolean,
                 currentId
             );
-
             $('.storyBody').html(storyUpdateMenu);
-            $('.storyBody').animate({scrollTop: '0px'}, 0);
+            $('.storyBody').animate({
+                scrollTop: '0px'
+            }, 0);
+            resizeContentBox();
             $('#updateStory').removeClass('hide');
             $('#editStoryButton').addClass('hide');
             $('#deleteStoryButton').addClass('hide');
@@ -99,7 +107,7 @@ function displayStoryUpdateMenu() {
 }
 
 function handleStoryUpdateSubmit() {
-    $('#updateStory').click(function() {
+    $('#updateStory').click(function () {
         $('#editStory').submit();
     })
 }
@@ -214,12 +222,47 @@ function handleStoryDeletion() {
 }
 
 function acceptStoryMessages() {
-    $('.deleteStoryHolder').on('click', 'button#acceptMessage', function() {
+    $('.deleteStoryHolder').on('click', 'button#acceptMessage', function () {
         $('.deleteStoryHolder').addClass('hide');
         $('.storyViewer').addClass('hide');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
     })
+}
+
+// source https://jsfiddle.net/cferdinandi/mqwwpL6u/
+// for resizing textbox when creating a story
+var autoExpand = function (field) {
+
+    // Reset field height
+    field.style.height = 'inherit';
+
+    // Get the computed styles for the element
+    var computed = window.getComputedStyle(field);
+
+    // Calculate the height
+    var height = parseInt(computed.getPropertyValue('border-top-width'), 10) +
+        parseInt(computed.getPropertyValue('padding-top'), 10) +
+        field.scrollHeight +
+        parseInt(computed.getPropertyValue('padding-bottom'), 10) +
+        parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
+    field.style.height = height + 'px';
+
+};
+
+document.addEventListener('input', function (event) {
+    if (event.target.tagName.toLowerCase() !== 'textarea') return;
+    autoExpand(event.target);
+}, false);
+// // // //
+
+//for resizing content box upon the opening
+//of the editing interface
+function resizeContentBox() {
+    const boxDOM = document.getElementById('content');
+    const box = $('#content').height(0).height(boxDOM.scrollHeight);
+    box.find('#content').change();
 }
 
 

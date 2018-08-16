@@ -34,7 +34,7 @@ function renderCreateStoryInterface(title, id) {
                 <label id="contentLabel" class="mdl-textfield__label" for="content">Write your story</label>
             </div>
 
-            <div>
+            <div class="publicCheckboxContainer">
                 <input type="checkbox" id="publicStatus" name="interest" class="publicStatusInput" value="">
                 <label class="publicStatusLabel" for="publicStatus">Public?</label>
             </div>

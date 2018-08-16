@@ -36,6 +36,11 @@
     flex-direction: column;
 }
 
+.storyBody #storyBankForm {
+    border: none;
+    background: none;
+}
+
 .menuButtonHolder {
     display: flex;
     height: 50px;
@@ -519,6 +524,7 @@ legend {
 
 .storyContent {
     white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .imageURLThumb,
@@ -550,6 +556,17 @@ legend {
 #publicSwitch {
     margin-top: 2%;
     margin-bottom: 8%;
+}
+
+.publicCheckboxContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    background-color: black;
+    width: 25%;
+    text-align: center;
 }
 
 .publicStatusInput {
@@ -762,11 +779,12 @@ legend {
 }
 
 #content {
-    height: 50vh;
+    /* height: 50vh; */
+    overflow: hidden;
     width: 100%;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
-    transition: transform 1s, border-top 1s;
+    transition: all 1s;
 }
 
 #contentHolder {
@@ -791,6 +809,8 @@ legend {
 
 .mdl-textfield--floating-label.is-focused #content {
     border-top: 2px solid turquoise;
+    border-left: 2px solid turquoise;
+    border-right: 2px solid turquoise;
 }
 
 #userNameLabel::after,
