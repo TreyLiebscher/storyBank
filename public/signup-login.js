@@ -136,7 +136,8 @@ function navigateToStories(data, saveResponse = false) {
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
 	$('.js-block-result').removeClass('hide');
-	$('.js-create-block-view').show('slow');
+	// $('.js-create-block-view').show('slow');
+	$('.js-create-block-view').removeClass('hide');
 	$('.profileContainer').removeClass('hide');
 	$('.userProfileName').html(data.email);
 
@@ -176,10 +177,11 @@ function handleLogOutUser() {
 		AUTH_TOKEN = null;
 		Cookies.remove(COOKIE_NAME);
 		$('.profileOptions').removeClass('profileVisibleOptions');
+		$('.storyViewing').css('background-color', '#00000000');
 		$('.storyBankHeader').find('.userLogOut').remove();
 		$('.storyBankHeader').find('.userSignUp').show('slow');
 		$('.storyBankHeader').find('.userLogIn').show('slow');
-		$('.js-create-block-view').hide('slow');
+		$('.js-create-block-view').addClass('hide');
 		$('.profileContainer').addClass('hide');
 		$('.discoverView').addClass('hide');
 		$('.js-block-result').empty();

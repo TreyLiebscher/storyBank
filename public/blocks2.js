@@ -157,6 +157,7 @@ function handleBlockDeletion() {
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView-Title').hide('slow', function() {$('.storyBlockView-Title').empty()});
         $('.storyBlockView').empty();
+        $('.storyViewing').css('background-color', '#00000000');
         $(`#${data.block.id}`).hide('slow', function(){ $(`#${data.block.id}`).remove(); });
     });
 }
