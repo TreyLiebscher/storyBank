@@ -342,7 +342,7 @@ legend {
     flex-grow: 1;
     word-wrap: break-word;
     height: 20vh;
-    width: 25%;
+    width: 50%;
     border: none;
     -webkit-transition: all 0.1s;
     -moz-transition: all 0.1s;
@@ -912,9 +912,8 @@ legend {
     }
     /* ~~~~~~~~ Stories Container ~~~~~~~~ */
     .storyViewing {
-        width: 90%;
-        padding: 4%;
-        /* background-color: none; */
+        padding: 2%;
+        border-radius: 10px;
     }
     .storyQuickView {
         width: 20%;
@@ -932,8 +931,10 @@ legend {
         margin-bottom: 2%;
     }
     /* Discover Container */
-    .discoverView {
-        width: 90%;
+    .discoverViewing {
+        padding: 2%;
+        border-radius: 10px;
+        background-color: rgba(72, 72, 72, 0.43);
     }
 }
 

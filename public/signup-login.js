@@ -183,7 +183,7 @@ function handleLogOutUser() {
 		$('.storyBankHeader').find('.userLogIn').show('slow');
 		$('.js-create-block-view').addClass('hide');
 		$('.profileContainer').addClass('hide');
-		$('.discoverView').addClass('hide');
+		$('.discoverViewing').addClass('hide');
 		$('.js-block-result').empty();
 		$('.js-block-result').addClass('hide');
 		$('.storyBlockView-Title').empty();

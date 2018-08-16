@@ -40,7 +40,7 @@ function renderStoryPublicQuickView(result) {
 function displayPublicStories(arr) {
     const results = arr.stories.map((item) => renderStoryPublicQuickView(item));
     $('.discoverView').html(results);
-    $('.discoverView').removeClass('hide');
+    $('.discoverViewing').removeClass('hide');
     $('#hideDiscover').removeClass('hide');
 }
 
@@ -55,7 +55,7 @@ function handleGetALlPublicStories() {
 function hidePublicStories() {
     $('#hideDiscover').on('click', function (event) {
         event.preventDefault();
-        $('.discoverView').addClass('hide');
+        $('.discoverViewing').addClass('hide');
         $('.discoverView').empty();
         $('#hideDiscover').addClass('hide');
     });

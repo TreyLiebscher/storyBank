@@ -31,7 +31,7 @@ async function createBlock(req, res) {
         user_id: req.user.id,
         date: new Date(),
         title: req.body.title || 'Untitled Block',
-        color: req.body.color
+        color: req.body.color || '#4a4a4a'
     })
     res.json({
         block: record.serialize()
