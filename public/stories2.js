@@ -4,23 +4,14 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
 
     const updateUrl = API_URLS.updateStory;
 
-    //TODO need to make the toggle switch the current public
-    //setting of the story when rendered. The code below is
-    //being ignored by default behavior with mdl
     let isPublic;
-
-    if (publicBoolean === 'false') {
+    if (publicBoolean === false) {
         isPublic = null;
-        console.log('kiwi should not check', isPublic)
     } else {
         isPublic = `checked`;
-        console.log('kiwi should be checked', isPublic)
     }
-    // TODO this should give a helpful message letting user
-    // know that there is no image, but instead, they get
-    // an ugly image placeholder
-    let currentImage;
 
+    let currentImage;
     if (image === null) {
         currentImage = `<p>This story currently has no image</p>`
     } else {
@@ -62,30 +53,48 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
 function displayStoryUpdateMenu() {
     $('.storyFooter').on('click', 'button#editStoryButton', function (event) {
         event.preventDefault();
+        const storyId = $('.storyViewer').find('.storyId').text();
+        
+        const url = `${API_URLS.getStoryById}/${storyId}`;
 
-        const currentStorySelect = $('.storyViewer');
-        const currentTitle = currentStorySelect.find('.storyTitle').text();
-        const currentImage = currentStorySelect.find('.storyImage').attr('src');
-        const currentContent = currentStorySelect.find('.storyContent').text();
-        const currentPublicStatus = currentStorySelect.find('.publicStatusInfo').text();
-        const currentPublicBoolean = currentStorySelect.find('.publicStatus').text();
-        console.log('kiwi currentPublicBoolean is', currentPublicBoolean)
-        const currentId = currentStorySelect.find('.storyId').text();
-        const storyUpdateMenu = renderStoryUpdateMenu(
-            currentTitle,
-            currentImage,
-            currentContent,
-            currentPublicStatus,
-            currentPublicBoolean,
-            currentId
-        );
 
-        $('.storyBody').html(storyUpdateMenu);
-        $('.storyBody').animate({scrollTop: '0px'}, 0);
-        $('#updateStory').removeClass('hide');
-        $('#editStoryButton').addClass('hide');
-        $('#deleteStoryButton').addClass('hide');
-        componentHandler.upgradeDom();
+        const currentStoryInfo = $.ajax({
+            type: "GET",
+            url: url,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AUTH_TOKEN}`
+            },
+        });
+
+        currentStoryInfo.done(function(data) {
+
+            const {id, title, imageURL, content, publicStatus} = data.story;
+
+            const currentTitle = title;
+            const currentImage = imageURL;
+            const currentContent = content;
+            const currentPublicBoolean = publicStatus;
+            const currentPublicStatus = $('.storyViewer').find('.publicStatusInfo').text();
+            console.log(currentPublicStatus);
+            const currentId = id;
+
+            const storyUpdateMenu = renderStoryUpdateMenu(
+                currentTitle,
+                currentImage,
+                currentContent,
+                currentPublicStatus,
+                currentPublicBoolean,
+                currentId
+            );
+
+            $('.storyBody').html(storyUpdateMenu);
+            $('.storyBody').animate({scrollTop: '0px'}, 0);
+            $('#updateStory').removeClass('hide');
+            $('#editStoryButton').addClass('hide');
+            $('#deleteStoryButton').addClass('hide');
+            componentHandler.upgradeDom();
+        })
     });
 }
 

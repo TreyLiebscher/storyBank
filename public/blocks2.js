@@ -25,9 +25,7 @@ function displayBlockUpdateMenu() {
     $('.storyBlockView-Title').on('click', 'button#editBlock', function (event) {
         event.preventDefault();
         $('.blockOptions').removeClass('blockVisibleOptions');
-        $('.storyBlockView-Title').hide('slow');
-        $('.storyBlockView').hide('slow');
-        $('.storyCreateInterface').hide('slow');
+        $('.storyBlockCreateHolder').addClass('createBlockSpace');
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
@@ -49,12 +47,11 @@ function displayBlockUpdateMenu() {
 }
 
 function hideBlockUpdateMenu() {
-    $('.storyBlockCreateHolder').on('click', 'button#cancelBlockUpdate', function(event) {
+    $('.storyBlockCreateHolder').on('click', 'button#cancelBlockUpdate', function (event) {
         event.preventDefault();
-        $('.storyBlockView-Title').show('slow');
-        $('.storyBlockView').show('slow');
-        $('.storyCreateInterface').show('slow');
         $('.storyBlockCreateHolder').empty();
+        $('.js-create-block-view').removeClass('hide');
+        $('.storyBlockCreateHolder').removeClass('createBlockSpace');
     });
 }
 
@@ -81,20 +78,15 @@ function handleBlockUpdate() {
     posting.done(function (data) {
         console.log(data.message);
         const message = renderMessages(data.message);
-        $('.storyBlockCreateHolder').empty();
         const newBlock = renderBlock(data.block);
-        const newBlockDashboard = renderInsideBlockViewTitle(data.block);
         const oldBlock = `.storyBlock[id="${data.block.id}"]`;
+        $('.storyBlockCreateHolder').empty();
+        $('.storyBlockCreateHolder').removeClass('createBlockSpace');
+        $('.js-create-block-view').removeClass('hide');
         $('.js-block-result').find(oldBlock).replaceWith(newBlock);
-        $('.storyBlockView-Title').find(oldBlock).replaceWith(newBlockDashboard);
-        //TODO this will temporarily replace storyQuickView with background images
-        //with the solid color. Must only change for quickviews with NO bg image
-        $('.storyBlockView').find('.storyQuickView').attr('style', `background-color: ${data.block.color}`);
+        getBlocksWithStories(data.block.id);
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
-        $('.storyBlockView-Title').show('slow');
-        $('.storyBlockView').show('slow');
-        $('.storyCreateInterface').show('slow');
         componentHandler.upgradeDom();
     })
 }
@@ -155,10 +147,14 @@ function handleBlockDeletion() {
         console.log(`${data.message}`);
         const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
-        $('.storyBlockView-Title').hide('slow', function() {$('.storyBlockView-Title').empty()});
+        $('.storyBlockView-Title').hide('slow', function () {
+            $('.storyBlockView-Title').empty()
+        });
         $('.storyBlockView').empty();
         $('.storyViewing').css('background-color', '#00000000');
-        $(`#${data.block.id}`).hide('slow', function(){ $(`#${data.block.id}`).remove(); });
+        $(`#${data.block.id}`).hide('slow', function () {
+            $(`#${data.block.id}`).remove();
+        });
     });
 }
 

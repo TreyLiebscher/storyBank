@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+
+    font-family: 'Ubuntu', sans-serif;
 }
 
 /* A fix for background scrolling with content on iOS Safari */
@@ -61,6 +63,7 @@
 
 .storyBankTitle {
     font-size: 28px;
+    font-family: 'Raleway', sans-serif;
     margin-bottom: 0;
     margin-top: 0;
     position: absolute;
@@ -201,6 +204,13 @@ legend {
     float: right;
 }
 
+.userProfileName {
+    border-left: 1px solid white;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+}
+
 .blockOptionsMenu {
     width: 100%;
     transition: all 0.3s;
@@ -305,7 +315,7 @@ legend {
 .userButton {
     color: white;
     background: none;
-    border: 3px solid white;
+    border: 2px solid white;
     height: 50px;
     width: 100%;
     transition: all 0.3s;
@@ -398,8 +408,8 @@ legend {
 .deleteMenuHolder {
     display: flex;
     flex-direction: column;
-    z-index: 3;
-    position: absolute;
+    z-index: 2;
+    position: relative;
     top: 50%;
     left: 0;
     bottom: 0;
@@ -843,6 +853,7 @@ legend {
         height: auto;
         width: auto;
         margin-top: auto;
+        border-radius: 10px;
     }
     .formsHolder .userButton {
         margin: 0 auto 2% auto;
@@ -877,6 +888,8 @@ legend {
     .userProfileName {
         height: 100%;
         float: none;
+        border: 2px solid white;
+        border-radius: 10px;
     }
     /* ~~~~~~~~ Block Container ~~~~~~~~ */
     .blockOptions {

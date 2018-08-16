@@ -71,7 +71,7 @@ function renderStory(result) {
     //if user chooses not to provide an image
     let image;
     if (!(result.story.imageURL)) {
-        image = `<img class="storyImage hide" src="null">`;
+        image = `<br>`;
     } else {
         image = `<img class="storyImage" src="${result.story.imageURL}">`;
     }
