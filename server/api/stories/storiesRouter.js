@@ -106,7 +106,7 @@ async function getStory(req, res) {
         });
     }
     res.json({
-        story: record.serialize(false)
+        story: record.serialize()
     })
 }
 

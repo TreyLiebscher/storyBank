@@ -101,7 +101,7 @@ async function getBlockWithStories(req, res) {
 
     res.json({
         block: record.serialize(),
-        stories: storyRecordArr.map(record => record.serialize(false))
+        stories: storyRecordArr.map(record => record.serialize())
     });
 }
 
