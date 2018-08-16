@@ -31,7 +31,10 @@ function displayBlockUpdateMenu() {
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         const blockEditMenu = renderBlockUpdateMenu(currentTitle, currentColor, blockId);
         $('.storyBlockCreateHolder').html(blockEditMenu);
-
+        $('html, body').animate({
+            scrollTop: $('.storyBlockCreateHolder').offset().top -100
+        }, 'slow');
+// Spectrum Color Picker //
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
             change: function (color) {
@@ -52,6 +55,9 @@ function hideBlockUpdateMenu() {
         $('.storyBlockCreateHolder').empty();
         $('.js-create-block-view').removeClass('hide');
         $('.storyBlockCreateHolder').removeClass('createBlockSpace');
+        $('html, body').animate({
+            scrollTop: $('.storyBlockView-Title').offset().top -100
+        }, 'slow');
     });
 }
 
@@ -87,6 +93,9 @@ function handleBlockUpdate() {
         getBlocksWithStories(data.block.id);
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
+        $('html, body').animate({
+            scrollTop: $('.storyBlockView-Title').offset().top -100
+        }, 'slow');
         componentHandler.upgradeDom();
     })
 }
