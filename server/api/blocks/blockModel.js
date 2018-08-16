@@ -17,17 +17,25 @@ const BlockSchema = new mongoose.Schema({
         ref: 'storiesmodel'
     }],
     user_id: {
-        required:true,
+        required: true,
         type: Schema.Types.ObjectId,
         ref: 'UserModel'
     }
 
 }, {
-    timestamps: {
-        createdAt: 'createdAt'
-    }
-});
+        timestamps: {
+            createdAt: 'createdAt'
+        }
+    });
 
+BlockSchema.methods.getStories = function () {
+    const StoriesModel = require('../stories/storyModel')
+    return StoriesModel
+        .find({
+            block: this._id
+        })
+        .select('-image')
+}
 
 BlockSchema.methods.serialize = function () {
 

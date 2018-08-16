@@ -79,6 +79,7 @@ async function getStories(req, res) {
 
     const records = await StoriesModel
         .find({ publicStatus: true })
+        .select('-image')
         .sort([
             ['date', -1]
         ])
