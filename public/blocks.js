@@ -179,7 +179,7 @@ function handleGetAllBlocksWithStories() {
         $('.storyCreateInterface').empty();
         $('.storyBlockView-Title').show('slow');
         $('html, body').animate({
-            scrollTop: $('.storyBlockView-Title').offset().top -100
+            scrollTop: $('.storyBlockView-Title').offset().top - 100
         }, 'slow');
         getBlocksWithStories(blockId);
     });
@@ -223,6 +223,15 @@ function viewBlockOptions() {
     });
 }
 
+function addBlockColorShadow() {
+    $('.js-block-result').on('mouseover', 'button.storyBlock', function () {
+        const blockColor = $(this).css("background-color");
+        const blockColorModified = blockColor.split("(")[1].split(")")[0] + ', 0.6';
+        const boxShadowColor = `rgba(${blockColorModified})`
+        document.body.style.setProperty('--block-Background', boxShadowColor);
+    });
+}
+
 
 function storyBlock() {
     $(getUserBlocks);
@@ -230,6 +239,7 @@ function storyBlock() {
     $(viewBlockOptions);
     $(viewCreateBlockInterface);
     $(hideCreateBlockInterface);
+    $(addBlockColorShadow);
 }
 
 $(storyBlock);
