@@ -42,16 +42,34 @@
 
 .menuButtonHolder {
     display: flex;
-    height: 50px;
     margin: auto;
 }
 
 #storyBankForm .userButton {
-    height: 100%;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     border: none;
+    flex: 1;
+}
+
+#submitSignupForm,
+#submitLoginForm,
+#submitPasswordChange,
+#js-blockCreateButton {
+    background-color: #d06503;
+}
+
+#cancel,
+.cancelDeleteButton,
+#cancelBlockCreate,
+#cancelBlockUpdate,
+#cancelBlockDeletion,
+#cancelStoryDeletion {
+    background-color: #6D6D6E;
+}
+
+.deleteButton,
+#deleteBlockSubmit,
+#deleteStorySubmit {
+    background-color: darkred;
 }
 
 #storyBankForm .colorButton {
@@ -76,6 +94,10 @@
     top: 0;
     color: white;
     word-wrap: break-word;
+}
+
+.titleColorSplit {
+    color: #d06503;
 }
 
 .storyBankTitleFontColor {
@@ -198,7 +220,6 @@ legend {
 
 .blockOptionsContainer {
     width: 25%;
-    /* transition: all 1s; */
 }
 
 .userProfileName,
@@ -220,7 +241,6 @@ legend {
 .blockOptionsMenu {
     width: 100%;
     transition: all 0.3s;
-    /* transition: transform 0.5s; */
     border: none;
     border-left: 2px solid white;
 }
@@ -240,7 +260,6 @@ legend {
 
 .blockOptions {
     top: 100%;
-    /* left: 2px; */
     width: 100%;
     height: 16em;
     -webkit-transition: transform 0.5s;
@@ -278,6 +297,10 @@ legend {
     background-color: white;
     color: black;
     box-shadow: 0 0 10px 1px white;
+}
+
+.storyBlockView-Title {
+    margin-top:2%;
 }
 
 .storyBlockView-Title>.storyBlock:hover .blockOptionsMenu {
@@ -319,7 +342,10 @@ legend {
 .userButton {
     color: white;
     background: none;
-    border: 2px solid white;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    border-left: none;
+    border-right: none;
     height: 50px;
     width: 100%;
     transition: all 0.3s;
@@ -330,7 +356,6 @@ legend {
     cursor: pointer;
     background-color: white;
     color: black;
-    box-shadow: 0 0 10px 1px white;
 }
 
 .profileDivider {
@@ -486,26 +511,12 @@ legend {
     box-shadow: 0 0 10px 1px white;
 }
 
-.formsHolder .userButton {
-    margin: 0 auto 2% auto;
-    width: 48%;
+.giveFormSpace {
+    margin-bottom: 5%;
 }
 
 .deleteBlockTitle {
     color: red;
-}
-
-.deleteButton {
-    background-color: darkred;
-}
-
-.cancelDeleteButton,
-.cancelBlockCreateButton {
-    background-color: #4a4949;
-}
-
-.createBlockButton {
-    background-color: green;
 }
 
 .colorButton {
@@ -593,7 +604,7 @@ legend {
 
 .publicStatusInput:checked {
     background-color: black;
-    border: 2px solid turquoise;
+    border: 2px solid #d06503;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
     color: #99a1a7;
 }
@@ -604,7 +615,7 @@ legend {
     position: absolute;
     top: 0px;
     left: 3px;
-    color: turquoise;
+    color: #d06503;
 }
 
 .publicStatusLabel {
@@ -647,9 +658,6 @@ legend {
     left: 0;
     right: 0;
     width: 100%;
-    /* border-right: 2px solid white;
-    border-left: 2px solid white;
-    border-bottom: 2px solid white; */
     margin: auto;
     background-color: #000000e8;
 }
@@ -726,12 +734,10 @@ legend {
 .storyQuickView {
     display: inline-block;
     position: relative;
-    /* padding: 0; */
     flex-grow: 1;
     height: 15vh;
     width: 33.3333%;
     border: none;
-    /* overflow-y: scroll; */
     color: white;
     transition: transform 0.1s;
 }
@@ -796,7 +802,6 @@ legend {
 }
 
 #content {
-    /* height: 50vh; */
     overflow: hidden;
     width: 100%;
     border-top: 2px solid white;
@@ -821,13 +826,13 @@ legend {
 .mdl-textfield--floating-label.is-focused #passwordConfirmLabel,
 .mdl-textfield--floating-label.is-focused #titleLabel,
 .mdl-textfield--floating-label.is-focused #contentLabel {
-    color: turquoise;
+    color: #d06503;
 }
 
 .mdl-textfield--floating-label.is-focused #content {
-    border-top: 2px solid turquoise;
-    border-left: 2px solid turquoise;
-    border-right: 2px solid turquoise;
+    border-top: 2px solid #d06503;
+    border-left: 2px solid #d06503;
+    border-right: 2px solid #d06503;
 }
 
 #userNameLabel::after,
@@ -835,7 +840,7 @@ legend {
 #passwordConfirmLabel::after,
 #titleLabel::after,
 #contentLabel::after {
-    background-color: turquoise;
+    background-color: #d06503;
 }
 
 /* Non-Mobile Defaults */
@@ -887,23 +892,52 @@ legend {
         margin: auto;
     }
     .userButton {
-        height: 3em;
         width: auto;
         margin-top: auto;
         border-radius: 10px;
+        border-left: 2px solid white;
+        border-right: 2px solid white;
     }
-    .formsHolder .userButton {
-        margin: 0 auto 2% auto;
-        height: auto;
+    .userButton:hover,
+    .userButton:focus {
+        box-shadow: 0 0 10px 1px white;
     }
     .menuButtonHolder {
         width: 80%;
-        margin-bottom: 2%;
-        height: 30px;
+        margin: 2% auto 2% auto;
     }
     #storyBankForm .userButton {
-        width: 30%;
+        flex: 1;
         border-radius: 15px;
+        margin: 0.5em;
+    }
+    #storyBankForm .userButton:hover,
+    #storyBankForm .userButton:focus {
+        cursor: pointer;
+        background-color: black;
+        box-shadow: 0 0 10px 1px #d06503;
+        color: white;
+    }
+    #storyBankForm .colorButton:hover,
+    #storyBankForm .colorButton:focus {
+        box-shadow: 0 0 10px 1px white;
+    }
+    #storyBankForm #cancel:hover,
+    #storyBankForm #cancel:focus,
+    #storyBankForm #cancelBlockCreate:hover,
+    #storyBankForm #cancelBlockCreate:focus,
+    #storyBankForm #cancelBlockUpdate:hover,
+    #storyBankForm #cancelBlockUpdate:focus,
+    #storyBankForm #cancelBlockDeletion:hover,
+    #storyBankForm #cancelBlockDeletion:focus,
+    #storyBankForm #cancelStoryDeletion:hover,
+    #storyBankForm #cancelStoryDeletion:focus {
+        box-shadow: 0 0 10px 1px #6D6D6E;
+    }
+    #storyBankForm .deleteButton:hover,
+    #storyBankForm .deleteButton:focus {
+        box-shadow: 0 0 10px 1px darkred;
+        background-color: black;
     }
     .userMessages {
         width: 50%;

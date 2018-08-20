@@ -57,10 +57,9 @@ function renderCreateBlockInterface() {
         </div>
         <div class="menuButtonHolder">
         <button id="colorPicker" class="colorButton userButton" type="button" name="selectedColor">Select a color</button>        
-        <input type="hidden" id="color" />
-         
-        <button type="submit" id="js-blockCreateButton" class="userButton createBlockButton">Create!</button>
+        <input type="hidden" id="color" /> 
         <button type="button" id="cancelBlockCreate" class="userButton cancelBlockCreateButton">Cancel</button>
+        <button type="submit" id="js-blockCreateButton" class="userButton createBlockButton">Create!</button>
         </div>
         </fieldset>
     </form>

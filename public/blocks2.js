@@ -12,10 +12,12 @@ function renderBlockUpdateMenu(title, color, id) {
                 <input id="title" class="mdl-textfield__input" name="title" value="${title}">
                 <label class="mdl-textfield__label" for="title">Title</label>
             </div>
-            <button id="colorPicker" value="" class="colorButton userButton" type="button" name="selectedColor" style="${color}">Change Color</button>
-            <input type="hidden" id="color" />
-            <button type="submit" id="js-blockCreateButton" class="userButton">Update</button>
-            <button type="button" id="cancelBlockUpdate" class="userButton">Cancel</button>
+            <div class="menuButtonHolder">
+                <button id="colorPicker" value="" class="colorButton userButton" type="button" name="selectedColor" style="${color}">Change Color</button>
+                <input type="hidden" id="color" />
+                <button type="button" id="cancelBlockUpdate" class="userButton">Cancel</button>
+                <button type="submit" id="js-blockCreateButton" class="userButton">Update</button>
+            </div>
         </fieldset>
     </form>
     `

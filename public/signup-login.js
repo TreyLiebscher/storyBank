@@ -31,15 +31,15 @@ function renderSignUpForm() {
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
 				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
-				<label id="passwordLabel" class="mdl-textfield__label" for="password">Password</label>
+				<label id="passwordLabel" class="mdl-textfield__label" for="password">Password (10 characters minimum)</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
 				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 			</div>
 			<div class="menuButtonHolder">
-				<button type="submit" class="userButton">Create Account</button>
 				<button type="button" class="userButton" id="cancel">Cancel</button>
+				<button type="submit" class="userButton" id="submitSignupForm">Create Account</button>
 			</div>
 		</fieldset>
 	</form>
@@ -52,6 +52,7 @@ function handleSignUpClick() {
 		const signUp = renderSignUpForm();
 		$('.formsHolder').html(signUp);
 		$('.formsHolder').removeClass('hide');
+		$('.formsHolder').addClass('giveFormSpace');
 		componentHandler.upgradeDom();
 	});
 }
@@ -106,8 +107,8 @@ function renderLogInForm() {
 				<label id="passwordLabel" class="mdl-textfield__label passwordLabel" for="password">Password</label>
 			</div>
 			<div class="menuButtonHolder">
-				<button type="submit" class="userButton">Log In</button>
 				<button type="button" class="userButton" id="cancel">Cancel</button>
+				<button type="submit" class="userButton" id="submitLoginForm">Log In</button>
 			</div>
 		</fieldset>
 	</form>
@@ -120,6 +121,7 @@ function handleLogInClick() {
 		const logIn = renderLogInForm();
 		$('.formsHolder').html(logIn);
 		$('.formsHolder').removeClass('hide');
+		$('.formsHolder').addClass('giveFormSpace');
 		componentHandler.upgradeDom();
 	});
 }
@@ -132,11 +134,11 @@ function navigateToStories(data, saveResponse = false) {
 		saveLoginResponse(data)
 	}
 	$('.formsHolder').empty();
+	$('.formsHolder').removeClass('giveFormSpace');
 	$('.discoverView').removeClass('hide');
 	$('.storyBankHeader').find('.userSignUp').hide('slow');
 	$('.storyBankHeader').find('.userLogIn').hide('slow');
 	$('.js-block-result').removeClass('hide');
-	// $('.js-create-block-view').show('slow');
 	$('.js-create-block-view').removeClass('hide');
 	$('.profileContainer').removeClass('hide');
 	$('.userProfileName').html(data.email);
@@ -209,8 +211,8 @@ function renderChangePasswordForm () {
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Retype New Password</label>
 			</div>
 			<div class="menuButtonHolder">
-				<button type="submit" class="userButton">Update</button>
 				<button type="button" class="userButton" id="cancel">Cancel</button>
+				<button type="submit" class="userButton" id="submitPasswordChange">Update</button>
 			</div>
 		</fieldset>
 	</form>
@@ -224,6 +226,7 @@ function displayChangePasswordForm() {
 		$('.profileOptions').removeClass('profileVisibleOptions');
 		$('.formsHolder').html(changePasswordForm);
 		$('.formsHolder').removeClass('hide');
+		$('.formsHolder').addClass('giveFormSpace');
 		componentHandler.upgradeDom();
 	});
 }
@@ -232,12 +235,12 @@ function hideUserForms() {
 	$('.formsHolder').on('click', 'button#cancel', function(event) {
 		event.preventDefault();
 		$('.formsHolder').addClass('hide');
+		$('.formsHolder').removeClass('giveFormSpace');
 	});
 }
 
 function handleChangePassword () {
 	const $form = $('#changePassword'),
-		// email = $form.find('input[name="userEmail"]').val().toLowerCase(),
 		password = $form.find('input[name="password"]').val(),
 		retyped = $form.find('input[name="passwordConfirm"]').val(),
 		url = $form.attr('action');
@@ -251,7 +254,6 @@ function handleChangePassword () {
 		},
 		dataType: 'json',
 		data: JSON.stringify({
-			// email: email,
 			newPassword: password,
 			retypeNewPassword: retyped
 		})
@@ -259,6 +261,7 @@ function handleChangePassword () {
 
 	changePasswordRequest.done(function (data) {
 		$('.formsHolder').empty();
+		$('.formsHolder').removeClass('giveFormSpace');
 		const message = renderMessages(data.message);
 		$('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
