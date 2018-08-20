@@ -73,6 +73,10 @@ function viewCreateBlockInterface() {
         const blockInterface = renderCreateBlockInterface();
         $('.storyBlockCreateHolder').addClass('createBlockSpace');
         $('.storyBlockCreateHolder').html(blockInterface);
+        $('html, body').animate({
+            scrollTop: $('.storyBlockCreateHolder').offset().top -100
+        }, 'slow');
+        
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
             change: function (color) {

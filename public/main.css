@@ -494,11 +494,12 @@ legend {
 .userSignUp,
 .userLogIn {
     height: 50%;
-    color: white;
-    background: none;
-    border: 3px solid white;
+    color: #fff;
+    background: 0 0;
+    border: 2px solid #fff;
+    border-radius: 10px;
     width: 100%;
-    transition: all 0.3s;
+    transition: all .3s;
 }
 
 .userSignUp:hover,
@@ -556,6 +557,11 @@ legend {
     max-width: 75vw;
     max-height: 50vh;
     border: 2px solid white;
+}
+
+#storyBankForm #rotate-cw {
+    border: 2px solid white;
+    width: 100%;
 }
 
 .blockId,
@@ -1016,6 +1022,9 @@ legend {
     .storyViewing {
         padding: 0.2em;
         border-radius: 5px;
+    }
+    #storyBankForm #rotate-cw {
+        width: 30%;
     }
     .storyQuickView {
         width: 20%;

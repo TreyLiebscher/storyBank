@@ -10,7 +10,7 @@ function renderBlockUpdateMenu(title, color, id) {
             <legend>Edit ${title}</legend>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input id="title" class="mdl-textfield__input" name="title" value="${title}">
-                <label class="mdl-textfield__label" for="title">Title</label>
+                <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
             </div>
             <div class="menuButtonHolder">
                 <button id="colorPicker" value="" class="colorButton userButton" type="button" name="selectedColor" style="${color}">Change Color</button>

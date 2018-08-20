@@ -142,6 +142,9 @@ function navigateToStories(data, saveResponse = false) {
 	$('.js-create-block-view').removeClass('hide');
 	$('.profileContainer').removeClass('hide');
 	$('.userProfileName').html(data.email);
+	$('html, body').animate({
+		scrollTop: $('.storyBankMainContent').offset().top -100
+	}, 'slow');
 
 	const record = $.ajax({
 		type: "GET",
