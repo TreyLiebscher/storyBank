@@ -19,6 +19,7 @@ function renderCreateStoryInterface(title, id) {
                 <input id="title" class="mdl-textfield__input" name="title">
                 <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
             </div>
+            <label for="image">Upload a picture</label>
             <input type="file" onchange='onChooseFile(event, onFileLoad.bind(this, "contents"))' id="image" class="imageUploadButton"
                 name="image">
 

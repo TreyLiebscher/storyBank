@@ -43,6 +43,7 @@
 .menuButtonHolder {
     display: flex;
     margin: auto;
+    width: 100%;
 }
 
 #storyBankForm .userButton {
@@ -544,6 +545,10 @@ legend {
 .storyContent {
     white-space: pre-wrap;
     overflow-wrap: break-word;
+}
+
+.imageUploadButton {
+    color: #d06502;
 }
 
 .imageURLThumb,
