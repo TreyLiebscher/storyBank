@@ -115,6 +115,8 @@
     top: 0;
     color: white;
     word-wrap: break-word;
+    padding-left: 1%;
+    height: 60%;
 }
 
 .titleColorSplit {
@@ -140,10 +142,9 @@
     margin-right: 2%;
     width: 100%;
     margin-top: 0;
-    height: 40%;
-    margin-bottom: 2px;
+    height: 60%;
     text-align: center;
-    color: white;
+    color: #fff;
     word-wrap: break-word;
 }
 
@@ -344,7 +345,7 @@ legend {
 .storyBankMainContent {
     width: 100%;
     max-width: 1200px;
-    margin-top: 110px;
+    margin-top: 12vh;
     margin-bottom: 30px;
     color: white;
 }
@@ -357,7 +358,7 @@ legend {
     position: fixed;
     top: 0;
     left: 0;
-    height: 80px;
+    height: 10vh;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
 }
@@ -369,7 +370,7 @@ legend {
     border-bottom: 2px solid white;
     border-left: none;
     border-right: none;
-    height: 50px;
+    height: 40px;
     width: 100%;
     transition: all 0.2s;
 }
@@ -686,7 +687,7 @@ legend {
     flex-direction: column;
     z-index: 1;
     position: fixed;
-    top: 80px;
+    top: 10vh;
     height: 90vh;
     left: 0;
     right: 0;
@@ -923,7 +924,7 @@ legend {
     .userButton {
         width: auto;
         margin-top: auto;
-        border-radius: 10px;
+        border-radius: 5px;
         border-left: 2px solid white;
         border-right: 2px solid white;
     }
