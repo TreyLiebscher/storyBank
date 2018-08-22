@@ -117,6 +117,7 @@ function displayStory(result) {
     const storyControls = renderStoryViewControls();
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
+    $('.storyViewer').focus();
     $('.storyFooter').html(storyControls);
 }
 

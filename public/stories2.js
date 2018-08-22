@@ -103,6 +103,7 @@ function displayStoryUpdateMenu() {
             const storyUpdateControls = renderStoryUpdateControls();
 
             $('.storyBody').html(storyUpdateMenu);
+            $('.storyViewer').focus();
             $('.storyFooter').html(storyUpdateControls);
             $('.storyBody').animate({
                 scrollTop: '0px'
@@ -163,9 +164,6 @@ function handleStoryUpdate() {
         const newStory = renderStory(data);
         $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
         getBlocksWithStories(data.story.block);
-        // $('#updateStory').addClass('hide');
-        // $('#editStoryButton').removeClass('hide');
-        // $('#deleteStoryButton').removeClass('hide');
         $('.deleteStoryHolder').removeClass('hide');
         $('.deleteStoryHolder').html(message);
     })
@@ -199,6 +197,7 @@ function displayDeleteStoryMenu() {
         const storyTitle = $('.storyBody').find('.storyTitle').text();
         const deleteMenu = renderStoryDeleteMenu(storyTitle, storyId);
         $('.deleteStoryHolder').html(deleteMenu);
+        $('.deleteStoryHolder').focus();
     });
 }
 
