@@ -37,6 +37,7 @@ function renderSignUpForm() {
 				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
 			</div>
+			<p class="passwordMessage"></p>
 			<div class="menuButtonHolder">
 				<button type="button" class="userButton" id="cancel">Cancel</button>
 				<button type="submit" class="userButton" id="submitSignupForm">Create Account</button>
@@ -62,7 +63,7 @@ function renderProfileHeader(result) {
 	<p>${result.email}</p>`
 }
 
-
+//POST
 function handleCreateNewUser() {
 	const $form = $('#signUpForm'),
 		email = $form.find('input[name="userEmail"]').val().toLowerCase(),
@@ -126,9 +127,7 @@ function handleLogInClick() {
 	});
 }
 
-
 function navigateToStories(data, saveResponse = false) {
-	console.log(data);
 	AUTH_TOKEN = data.authToken;
 	if (saveResponse) {
 		saveLoginResponse(data)
@@ -178,7 +177,6 @@ function handleUserLogIn() {
 function handleLogOutUser() {
 	$('#logOutButton').on('click', function (event) {
 		event.preventDefault();
-		console.log('logout button was clicked');
 		AUTH_TOKEN = null;
 		Cookies.remove(COOKIE_NAME);
 		$('.profileOptions').removeClass('profileVisibleOptions');
@@ -206,13 +204,14 @@ function renderChangePasswordForm () {
 		<fieldset id="storyBankForm">
 			<legend>Change Password</legend>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="password" class="mdl-textfield__input" type="password" name="password">
+				<input id="password" class="mdl-textfield__input" type="password" name="password" required>
 				<label id="passwordLabel" class="mdl-textfield__label" for="password">New Password</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="storyBankFormInput">
-				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm">
+				<input id="passwordConfirm" class="mdl-textfield__input" type="password" name="passwordConfirm" required>
 				<label id="passwordConfirmLabel" class="mdl-textfield__label" for="passwordConfirm">Retype New Password</label>
 			</div>
+			<p class="passwordMessage"></p>
 			<div class="menuButtonHolder">
 				<button type="button" class="userButton" id="cancel">Cancel</button>
 				<button type="submit" class="userButton" id="submitPasswordChange">Update</button>
@@ -242,6 +241,27 @@ function hideUserForms() {
 	});
 }
 
+function validatePasswordChange() {
+	const password = $('#password').val();
+	const retyped = $('#passwordConfirm').val();
+	if (password != retyped) {
+		$('.passwordMessage').html('Passwords do not match');
+		$('.passwordMessage').addClass('noMatch');
+		$('.passwordMessage').removeClass('match');
+	} else {
+		$('.passwordMessage').html('Passwords Match');
+		$('.passwordMessage').addClass('match');
+		$('.passwordMessage').removeClass('noMatch');
+	}
+}
+
+function comparePasswords() {
+	$('.formsHolder').on('keyup', '#password, #passwordConfirm', function() {
+		validatePasswordChange();
+	});
+}
+
+//POST
 function handleChangePassword () {
 	const $form = $('#changePassword'),
 		password = $form.find('input[name="password"]').val(),
@@ -266,8 +286,14 @@ function handleChangePassword () {
 		$('.formsHolder').empty();
 		$('.formsHolder').removeClass('giveFormSpace');
 		const message = renderMessages(data.message);
-		$('.deleteMenuHolder').removeClass('hide');
-        $('.deleteMenuHolder').html(message);
+		$('.changePasswordHolder').removeClass('hide');
+		$('.changePasswordHolder').html(message);
+	});
+}
+
+function acceptPasswordChangeMessage() {
+	$('.changePasswordHolder').on('click','button#acceptMessage', function() {
+		$('.changePasswordHolder').addClass('hide');
 	});
 }
 
@@ -284,6 +310,8 @@ function userLogInSignUp() {
 	$(handleLogOutUser);
 	$(restoreLoginResponse);
 	$(displayChangePasswordForm);
+	$(comparePasswords);
+	$(acceptPasswordChangeMessage);
 	$(hideUserForms);
 	$(viewProfileOptions);
 }

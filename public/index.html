@@ -6,7 +6,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<!-- <link rel="stylesheet" type="text/css" href="whiteOut.css"> -->
 	<link rel="icon" href="https://i.imgur.com/Xy6cdMP.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-orange.min.css">
@@ -23,6 +22,7 @@
 </head>
 
 <body class="storyBankBody">
+	
 	<header class="storyBankHeader">
 		<div class="titleBox"></div>
 		<h1 class="storyBankTitle">Story<span class="titleColorSplit">Bank</span></h1>
@@ -42,6 +42,7 @@
 
 	<main class="storyBankMainContent">
 		<div class="formsHolder"></div>
+		<div class="changePasswordHolder hide"></div>
 
 		<button type="button" id="discover" class="userButton">Discover</button>
 		<button type="button" id="hideDiscover" class="userButton hide">Close</button>
@@ -58,29 +59,24 @@
 		</section>
 
 		<div class="profileDivider"></div>
+
 		<button type="button" class="js-create-block-view userButton hide">Create a new Story Block</button>
 		<div class="storyBlockCreateHolder"></div>
+
 		<div class="js-block-result hide"></div>
 		<div class="storyBlockView-Title"></div>
+
 		<div class="deleteMenuHolder hide"></div>
+
 		<div class="storyViewer hide">
 			<div class="storyBody"></div>
 			<div class="deleteStoryHolder hide"></div>
-			<footer class="storyFooter">
-				<button type="button" class="userButton" id="deleteStoryButton">Delete</button>
-				<button type="button" class="userButton" id="editStoryButton">Edit</button>
-				<button type="submit" class="userButton hide" id="updateStory">Update</button>
-				<button class="userButton hide" id="createStoryButton">Add to Block</button>
-				<button type="button" class="userButton" id="closeStory">Close</button>
-			</footer>
+			<footer class="storyFooter"></footer>
 		</div>
 
 		<section class="storyViewing" role="region">
 			<div class="storyBlockView"></div>
 		</section>
-
-		<br>
-		<div class="storyCreateInterface"></div>
 	</main>
 
 	<script type="text/javascript" src="globals.js"></script>
@@ -90,12 +86,6 @@
 	<script type="text/javascript" src="stories.js"></script>
 	<script type="text/javascript" src="stories2.js"></script>
 	<script type="text/javascript" src="social.js"></script>
-
-
-
 </body>
-
-
-
 
 </html>

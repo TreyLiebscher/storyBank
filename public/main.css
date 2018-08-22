@@ -3,6 +3,14 @@
     font-family: 'Kanit', sans-serif;
 }
 
+.storyBankBody,
+.storyBankMainContent,
+.storyViewer,
+.publicStoryViewer {
+    max-width: 1200px;
+    margin: auto;
+}
+
 /* A fix for background scrolling with content on iOS Safari */
 
 .storyBankBody:before {
@@ -80,6 +88,18 @@
 .createBlockSpace {
     margin-bottom: 10%;
     margin-top: 5%;
+}
+
+.passwordMessage {
+    text-align: center;
+}
+
+.match {
+    color: #d06503;
+}
+
+.noMatch {
+    color: red;
 }
 
 /* Loading Icon */
@@ -323,6 +343,7 @@ legend {
 
 .storyBankMainContent {
     width: 100%;
+    max-width: 1200px;
     margin-top: 110px;
     margin-bottom: 30px;
     color: white;
@@ -335,7 +356,8 @@ legend {
     margin: auto auto 2% auto;
     position: fixed;
     top: 0;
-    height: 15%;
+    left: 0;
+    height: 80px;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
 }
@@ -664,7 +686,7 @@ legend {
     flex-direction: column;
     z-index: 1;
     position: fixed;
-    top: 10vh;
+    top: 80px;
     height: 90vh;
     left: 0;
     right: 0;
@@ -691,25 +713,16 @@ legend {
     width: 100%;
 }
 
+.storyFooter .userButton,
 .publicStoryFooter .userButton {
     height: 100%;
-    width: 100%;
-    border-right: none;
-    border-left: none;
-    border-bottom: none;
-    border-top: 2px solid white;
-}
-
-.storyFooter .userButton {
-    height: 100%;
-    border: none;
-    width: 50%;
-    border-right: 2px solid white;
-    border-top: 2px solid white;
+    flex: 1;
+    border-right: 2px solid #fff;
+    border-top: 2px solid #fff;
 }
 
 .storyFooter> :last-child {
-    border-right: none !important;
+    border-right: none;
 }
 
 .discoverView::-webkit-scrollbar,
@@ -872,6 +885,7 @@ legend {
     }
     .titleBox {
         width: 20%;
+        height: 3em;
     }
     .blockLoader {
         width: 20%;
@@ -964,8 +978,8 @@ legend {
         width: auto;
         height: 50%;
         position: absolute;
-        right: 0;
-        top: 1em;
+        right: 2%;
+        top: 25%;
     }
     .profileContainer:hover .profileOptions {
         display: block;
@@ -979,7 +993,6 @@ legend {
         height: 100%;
         float: none;
         border: 2px solid white;
-        border-radius: 10px;
     }
     /* ~~~~~~~~ Block Container ~~~~~~~~ */
     .blockOptions {
@@ -987,6 +1000,20 @@ legend {
         top: auto;
         height: 500%;
         transition: opacity 1s, transform 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .blockOptions button,
+    .profileOptions button {
+        border: none;
+        border-radius: 0;
+        height: auto;
+        padding: 0;
+        flex: 1;
+    }
+    .blockOptions button:hover,
+    .profileOptions button:hover {
+        box-shadow: none;
     }
     .storyBlock>.blockOptionsContainer:hover .blockOptions {
         transform: translateY(120%);
@@ -1014,7 +1041,6 @@ legend {
         width: 25%;
         margin: 0.2em;
         border-radius: 0.5em;
-        font: auto;
     }
     :root {
         --block-Background: white;
@@ -1035,6 +1061,14 @@ legend {
     .storyViewing {
         padding: 0.2em;
         border-radius: 5px;
+    }
+    .storyFooter> :last-child,
+    .publicStoryFooter> :last-child {
+        border-right: 2px solid white;
+    }
+    .storyFooter .userButton,
+    .publicStoryFooter .userButton {
+        margin: 0 1em 0 1em;
     }
     #storyBankForm #rotate-cw {
         width: 30%;
@@ -1062,9 +1096,14 @@ legend {
     .publicStoryViewer,
     .storyViewer {
         width: 90%;
+        top: 10vh;
         border-right: 2px solid white;
         border-left: 2px solid white;
         border-bottom: 2px solid white;
+    }
+    .storyFooter,
+    .publicStoryFooter {
+        padding: 1%;
     }
 }
 

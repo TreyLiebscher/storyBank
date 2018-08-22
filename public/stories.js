@@ -43,27 +43,32 @@ function renderCreateStoryInterface(title, id) {
     </form>`
 }
 
+function renderStoryCreateControls() {
+    return `
+    <button type="button" class="userButton" id="closeStory">Cancel</button>
+    <button class="userButton" id="createStoryButton">Add to Block</button>
+    `
+}
 function viewCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
         event.preventDefault();
         const blockTitle = $(event.target).closest('.storyBlock').find('.blockTitle').text();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
         const createStoryInterface = renderCreateStoryInterface(blockTitle, blockId);
+        const createStoryControls = renderStoryCreateControls();
         $('.blockOptions').removeClass('blockVisibleOptions');
         $('.storyBody').html(createStoryInterface);
+        $('.storyFooter').html(createStoryControls);
         $('.storyBody').animate({scrollTop: '0px'}, 0);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
-        $('#editStoryButton').addClass('hide');
-        $('#deleteStoryButton').addClass('hide');
-        $('#createStoryButton').removeClass('hide');
         $('.storyViewer').removeClass('hide');
         componentHandler.upgradeDom();
     });
 }
 
 function handleStoryCreateSubmit() {
-    $('#createStoryButton').click(function() {
+    $('.storyFooter').on('click', 'button#createStoryButton', function() {
         $('#createStory').submit();
     });
 }
@@ -99,12 +104,22 @@ function renderStory(result) {
     `
 }
 
+function renderStoryViewControls() {
+    return `
+    <button type="button" class="userButton" id="deleteStoryButton">Delete</button>
+    <button type="button" class="userButton" id="editStoryButton">Edit</button>
+    <button type="button" class="userButton" id="closeStory">Close</button>
+    `
+}
+
 function displayStory(result) {
     const story = renderStory(result);
+    const storyControls = renderStoryViewControls();
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
+    $('.storyFooter').html(storyControls);
 }
-//TODO fix this
+
 function renderStoryQuickView(result) {
 
     let storyStyle;
@@ -158,15 +173,12 @@ function handleViewStory() {
 function handleCloseStory() {
     $('.storyFooter').on('click', 'button#closeStory', function() {
         $('.storyViewer').addClass('hide');
-        $('#updateStory').addClass('hide');
-        $('#createStoryButton').addClass('hide');
-        $('#editStoryButton').removeClass('hide');
-        $('#deleteStoryButton').removeClass('hide');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
     })
 }
 
+// for image uploading (lines 182-241)
 let angle = 0;
 
 function onFileLoad(elementId, event) {
@@ -228,6 +240,7 @@ function onChooseFile(event, onLoadFileHandler) {
     fr.readAsDataURL(file)
 }
 
+//POST
 function handleCreateStory() {
     const $form = $('#createStory'),
         title = $form.find('input[name="title"]').val(),
@@ -257,16 +270,11 @@ function handleCreateStory() {
 
     posting.done(function (data) {
         lastUpload = null
-        // const content = renderStoryQuickView(data.story);
         getBlocksWithStories(data.story.block);
         console.log('story id is', data.story.id);
-        $('#editStoryButton').removeClass('hide');
-        $('#deleteStoryButton').removeClass('hide');
-        $('#createStoryButton').addClass('hide');
         $('.storyViewer').addClass('hide');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
-        // $('.storyBlockView').append(content);
         componentHandler.upgradeDom();
     });
 }

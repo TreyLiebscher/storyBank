@@ -51,6 +51,13 @@ function renderStoryUpdateMenu(title, image, content, publicStatus, publicBoolea
     `
 }
 
+function renderStoryUpdateControls() {
+    return `
+    <button type="button" class="userButton" id="closeStory">Cancel</button>
+    <button type="submit" class="userButton" id="updateStory">Update</button>
+    `
+}
+
 function displayStoryUpdateMenu() {
     $('.storyFooter').on('click', 'button#editStoryButton', function (event) {
         event.preventDefault();
@@ -83,7 +90,6 @@ function displayStoryUpdateMenu() {
             const currentContent = content;
             const currentPublicBoolean = publicStatus;
             const currentPublicStatus = $('.storyViewer').find('.publicStatusInfo').text();
-            console.log(currentPublicStatus);
             const currentId = id;
 
             const storyUpdateMenu = renderStoryUpdateMenu(
@@ -94,25 +100,26 @@ function displayStoryUpdateMenu() {
                 currentPublicBoolean,
                 currentId
             );
+            const storyUpdateControls = renderStoryUpdateControls();
+
             $('.storyBody').html(storyUpdateMenu);
+            $('.storyFooter').html(storyUpdateControls);
             $('.storyBody').animate({
                 scrollTop: '0px'
             }, 0);
             resizeContentBox();
-            $('#updateStory').removeClass('hide');
-            $('#editStoryButton').addClass('hide');
-            $('#deleteStoryButton').addClass('hide');
             componentHandler.upgradeDom();
         })
     });
 }
 
 function handleStoryUpdateSubmit() {
-    $('#updateStory').click(function () {
+    $('.storyFooter').on('click', 'button#updateStory', function() {
         $('#editStory').submit();
-    })
+    });
 }
 
+//PUT
 function handleStoryUpdate() {
     const $form = $('#editStory'),
         title = $form.find('input[name="title"]').val(),
@@ -156,9 +163,9 @@ function handleStoryUpdate() {
         const newStory = renderStory(data);
         $('.storyBlockView').find(`.storyDetailView[id="${data.story.id}"]`).replaceWith(newStory);
         getBlocksWithStories(data.story.block);
-        $('#updateStory').addClass('hide');
-        $('#editStoryButton').removeClass('hide');
-        $('#deleteStoryButton').removeClass('hide');
+        // $('#updateStory').addClass('hide');
+        // $('#editStoryButton').removeClass('hide');
+        // $('#deleteStoryButton').removeClass('hide');
         $('.deleteStoryHolder').removeClass('hide');
         $('.deleteStoryHolder').html(message);
     })
@@ -202,6 +209,7 @@ function hideStoryDeleteMenu() {
     });
 }
 
+//DELETE
 function handleStoryDeletion() {
     const $form = $('#deleteStory'),
         url = $form.attr('action');
@@ -256,7 +264,6 @@ document.addEventListener('input', function (event) {
     if (event.target.tagName.toLowerCase() !== 'textarea') return;
     autoExpand(event.target);
 }, false);
-// // // //
 
 //for resizing content box upon the opening
 //of the editing interface
