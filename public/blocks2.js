@@ -30,22 +30,23 @@ function displayBlockUpdateMenu() {
         $('.storyBlockCreateHolder').addClass('createBlockSpace');
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
+        const currentColorString = $(event.target).closest('.storyBlockView-Title').find('input[id="color"]').text()
+        console.log('kiwi currentColorString returns', currentColorString);
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         const blockEditMenu = renderBlockUpdateMenu(currentTitle, currentColor, blockId);
         $('.storyBlockCreateHolder').html(blockEditMenu);
         $('html, body').animate({
-            scrollTop: $('.storyBlockCreateHolder').offset().top -100
+            scrollTop: $('.storyBlockCreateHolder').offset().top - 100
         }, 'slow');
-// Spectrum Color Picker //
+        // Spectrum Color Picker //
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
-            change: function (color) {
+            color: '#f00',
+            move: function (color) {
                 const selectedColor = color.toHexString();
-                console.log('you turned %s', selectedColor)
                 $('#colorPicker').css("background-color", selectedColor);
                 $('#color').val(selectedColor)
-            },
-            color: "#f00"
+            }
         });
         componentHandler.upgradeDom();
     });
@@ -58,7 +59,7 @@ function hideBlockUpdateMenu() {
         $('.js-create-block-view').removeClass('hide');
         $('.storyBlockCreateHolder').removeClass('createBlockSpace');
         $('html, body').animate({
-            scrollTop: $('.storyBlockView-Title').offset().top -100
+            scrollTop: $('.storyBlockView-Title').offset().top - 100
         }, 'slow');
     });
 }
@@ -96,7 +97,7 @@ function handleBlockUpdate() {
         $('.deleteMenuHolder').removeClass('hide');
         $('.deleteMenuHolder').html(message);
         $('html, body').animate({
-            scrollTop: $('.storyBlockView-Title').offset().top -100
+            scrollTop: $('.storyBlockView-Title').offset().top - 100
         }, 'slow');
         componentHandler.upgradeDom();
     })

@@ -349,7 +349,7 @@ legend {
     border-right: none;
     height: 50px;
     width: 100%;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .userButton:hover,
@@ -664,8 +664,8 @@ legend {
     flex-direction: column;
     z-index: 1;
     position: fixed;
-    top: 15%;
-    height: 85%;
+    top: 10vh;
+    height: 90vh;
     left: 0;
     right: 0;
     width: 100%;
@@ -860,12 +860,12 @@ legend {
     .storyBankMainContent {
         width: 90%;
         margin: auto;
-        margin-top: 110px;
+        margin-top: 12vh;
         margin-bottom: 30px;
     }
     .storyBankHeader {
         display: block;
-        height: 5em;
+        height: 10vh;
     }
     .storyBankTitle {
         word-wrap: normal;

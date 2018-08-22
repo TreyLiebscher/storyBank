@@ -74,21 +74,19 @@ function viewCreateBlockInterface() {
         $('.storyBlockCreateHolder').addClass('createBlockSpace');
         $('.storyBlockCreateHolder').html(blockInterface);
         $('html, body').animate({
-            scrollTop: $('.storyBlockCreateHolder').offset().top -100
+            scrollTop: $('.storyBlockCreateHolder').offset().top - 100
         }, 'slow');
-        
+        // Spectrum Color Picker //
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
-            change: function (color) {
+            color: "#f00",
+            move: function (color) {
                 const selectedColor = color.toHexString();
-                console.log('you turned %s', selectedColor)
                 $('#colorPicker').css("background-color", selectedColor);
                 $('#color').val(selectedColor)
-            },
-            color: "#f00"
+            }
         });
         componentHandler.upgradeDom();
-
     });
 }
 
