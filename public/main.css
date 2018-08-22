@@ -301,7 +301,7 @@ legend {
 }
 
 .storyBlockView-Title {
-    margin-top:2%;
+    margin-top: 2%;
 }
 
 .storyBlockView-Title>.storyBlock:hover .blockOptionsMenu {
@@ -865,6 +865,7 @@ legend {
     }
     .storyBankHeader {
         display: block;
+        height: 5em;
     }
     .storyBankTitle {
         word-wrap: normal;
@@ -887,6 +888,9 @@ legend {
     }
     .buttonHolderHeader {
         height: auto;
+        position: absolute;
+        right: 20px;
+        top: 30%;
     }
     .userSignUp,
     .userLogIn {
@@ -959,6 +963,9 @@ legend {
     .profileContainer {
         width: auto;
         height: 50%;
+        position: absolute;
+        right: 0;
+        top: 1em;
     }
     .profileContainer:hover .profileOptions {
         display: block;
@@ -966,6 +973,7 @@ legend {
     .profileOptions {
         right: auto;
         top: auto;
+        min-width: 100%;
     }
     .userProfileName {
         height: 100%;
