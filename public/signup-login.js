@@ -54,6 +54,9 @@ function handleSignUpClick() {
 		$('.formsHolder').html(signUp);
 		$('.formsHolder').removeClass('hide');
 		$('.formsHolder').addClass('giveFormSpace');
+		$('html, body').animate({
+			scrollTop: $('.storyBankMainContent').offset().top -100
+		}, 'slow');
 		componentHandler.upgradeDom();
 	});
 }
@@ -123,6 +126,9 @@ function handleLogInClick() {
 		$('.formsHolder').html(logIn);
 		$('.formsHolder').removeClass('hide');
 		$('.formsHolder').addClass('giveFormSpace');
+		$('html, body').animate({
+			scrollTop: $('.storyBankMainContent').offset().top -100
+		}, 'slow');
 		componentHandler.upgradeDom();
 	});
 }
@@ -141,6 +147,7 @@ function navigateToStories(data, saveResponse = false) {
 	$('.js-create-block-view').removeClass('hide');
 	$('.profileContainer').removeClass('hide');
 	$('.userProfileName').html(data.email);
+	$('.welcomeSection').addClass('hide');
 	$('html, body').animate({
 		scrollTop: $('.storyBankMainContent').offset().top -100
 	}, 'slow');

@@ -50,7 +50,7 @@ function renderCreateBlockInterface() {
     return `
     <form id="createBlock" type="submit" action="/storyblock/block/create" method="POST">
         <fieldset id="storyBankForm">
-        <legend>Create a new Story Block</legend>
+        <legend>Create a new Story Folder</legend>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="title" class="mdl-textfield__input" name="title">
             <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
@@ -199,7 +199,7 @@ function renderInsideBlockViewTitle(result) {
             <div class="blockOptions" style="background-color: ${result.color}">
                 <button class="addStory userButton">Add New Story</button>
                 <button id="editBlock" class="userButton">Edit</button>
-                <button id="displayDeleteMenu" class="userButton">Delete Block</button>
+                <button id="displayDeleteMenu" class="userButton">Delete Folder</button>
             </div>
         </div>
     </div>

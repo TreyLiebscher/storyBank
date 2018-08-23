@@ -46,7 +46,7 @@ function renderCreateStoryInterface(title, id) {
 function renderStoryCreateControls() {
     return `
     <button type="button" class="userButton cancelButton" id="closeStory">Cancel</button>
-    <button class="userButton" id="createStoryButton">Add to Block</button>
+    <button class="userButton" id="createStoryButton">Add to Folder</button>
     `
 }
 function viewCreateStoryInterface() {

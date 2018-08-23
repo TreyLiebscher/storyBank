@@ -123,7 +123,7 @@ async function updateBlock(req, res) {
         })
     res.json({
         block: updatedRecord.serialize(),
-        message: 'Block updated successfully'
+        message: 'Folder updated successfully'
     })
 }
 

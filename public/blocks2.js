@@ -112,7 +112,7 @@ function renderDeleteMenu(title, id) {
     return `
     <form id="deleteBlock" class="deleteBlockMenu" action="${deleteUrl}/${id}" method="DELETE">
         <fieldset id="storyBankForm">
-            <legend>Delete Block</legend>
+            <legend>Delete Folder</legend>
             <p>Are you sure you want to delete
                 <span class="deleteBlockTitle">${title}</span>? Doing so will also delete all of the stories within!</p>
             <div class="menuButtonHolder">
