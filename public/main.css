@@ -964,7 +964,7 @@ legend {
         filter: brightness(250%);
     }
     .infoBox:hover .infoText {
-        opacity: 0;
+        opacity: 0.3;
     }
     .storyBankMainContent {
         width: 90%;
