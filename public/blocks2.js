@@ -31,7 +31,6 @@ function displayBlockUpdateMenu() {
         const currentTitle = $(event.target).closest('.storyBlockView-Title').find('.blockTitle').text();
         const currentColor = $(event.target).closest('.storyBlockView-Title').find('.storyBlock').attr('style');
         const currentColorString = $(event.target).closest('.storyBlockView-Title').find('input[id="color"]').text()
-        console.log('kiwi currentColorString returns', currentColorString);
         const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
         const blockEditMenu = renderBlockUpdateMenu(currentTitle, currentColor, blockId);
         $('.storyBlockCreateHolder').html(blockEditMenu);
@@ -87,7 +86,6 @@ function handleBlockUpdate() {
     });
 
     posting.done(function (data) {
-        console.log(data.message);
         const message = renderMessages(data.message);
         const newBlock = renderBlock(data.block);
         const oldBlock = `.storyBlock[id="${data.block.id}"]`;
@@ -158,7 +156,6 @@ function handleBlockDeletion() {
     })
 
     deleting.done(function (data) {
-        console.log(`${data.message}`);
         const message = renderMessages(data.message);
         $('.deleteMenuHolder').html(message);
         $('.storyBlockView-Title').hide('slow', function () {

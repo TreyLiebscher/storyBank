@@ -49,6 +49,7 @@ function renderStoryCreateControls() {
     <button class="userButton" id="createStoryButton">Add to Folder</button>
     `
 }
+
 function viewCreateStoryInterface() {
     $('.storyBlockView-Title').on('click', 'button.addStory', function (event) {
         event.preventDefault();
@@ -59,7 +60,9 @@ function viewCreateStoryInterface() {
         $('.blockOptions').removeClass('blockVisibleOptions');
         $('.storyBody').html(createStoryInterface);
         $('.storyFooter').html(createStoryControls);
-        $('.storyBody').animate({scrollTop: '0px'}, 0);
+        $('.storyBody').animate({
+            scrollTop: '0px'
+        }, 0);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
         $('.storyViewer').removeClass('hide');
@@ -70,7 +73,7 @@ function viewCreateStoryInterface() {
 }
 
 function handleStoryCreateSubmit() {
-    $('.storyFooter').on('click', 'button#createStoryButton', function() {
+    $('.storyFooter').on('click', 'button#createStoryButton', function () {
         $('#createStory').submit();
     });
 }
@@ -120,7 +123,9 @@ function displayStory(result) {
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
     $('.storyViewer').addClass('showFlex');
-    $('.storyBody').animate({scrollTop: '0px'}, 0);
+    $('.storyBody').animate({
+        scrollTop: '0px'
+    }, 0);
     $('.storyViewer').focus();
     $('.storyFooter').html(storyControls);
 }
@@ -160,10 +165,8 @@ function handleViewStory() {
     $('.storyBlockView').on('click', 'button.storyQuickView', function (event) {
         event.preventDefault();
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
-        console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
-        // $('.storyBody').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
             console.error('Error', err);
@@ -176,7 +179,7 @@ function handleViewStory() {
 }
 
 function handleCloseStory() {
-    $('.storyFooter').on('click', 'button#closeStory', function() {
+    $('.storyFooter').on('click', 'button#closeStory', function () {
         $('.storyViewer').addClass('hide');
         $('.storyViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');
@@ -184,7 +187,7 @@ function handleCloseStory() {
     })
 }
 
-// for image uploading (lines 182-241)
+// for image uploading (lines 191-251)
 let angle = 0;
 
 function onFileLoad(elementId, event) {
@@ -277,7 +280,6 @@ function handleCreateStory() {
     posting.done(function (data) {
         lastUpload = null
         getBlocksWithStories(data.story.block);
-        console.log('story id is', data.story.id);
         $('.storyViewer').addClass('hide');
         $('.storyViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');

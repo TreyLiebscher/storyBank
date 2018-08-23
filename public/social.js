@@ -21,7 +21,7 @@ function renderStoryPublicQuickView(result) {
     let storyStyle;
 
     if (result.imageURL === null || undefined) {
-        storyStyle = `background-color: rgba(0, 0, 0, 0.8);`; 
+        storyStyle = `background-color: rgba(0, 0, 0, 0.8);`;
     } else {
         storyStyle = `background: linear-gradient( rgba(0, 0, 0, 0.6),
         rgba(0, 0, 0, 0.6) ), url(${result.imageURL});
@@ -47,7 +47,6 @@ function displayPublicStories(arr) {
 function handleGetALlPublicStories() {
     $('#discover').on('click', function (event) {
         event.preventDefault();
-        // $('.discoverView').removeClass('discoverViewStoryFocus');
         getRandomPublicStories();
     });
 }
@@ -106,7 +105,9 @@ function displayPublicStory(result) {
     $('.publicStoryContent').html(story);
     $('.publicStoryViewer').removeClass('hide');
     $('.publicStoryViewer').addClass('showFlex');
-    $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
+    $('.publicStoryContent').animate({
+        scrollTop: '0px'
+    }, 0);
     $('.publicStoryViewer').focus();
 }
 
@@ -114,10 +115,8 @@ function handleViewPublicStory() {
     $('.discoverView').on('click', 'button.storyQuickView', function (event) {
         event.preventDefault();
         const storyId = $(event.target).closest('.storyQuickView').find('.storyId').text();
-        console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
-        // $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
             console.error('Error', err);

@@ -179,7 +179,6 @@ function handleGetAllBlocksWithStories() {
     $('.js-block-result').on('click', 'button.storyBlock', function (event) {
         event.preventDefault();
         const blockId = $(event.target).closest('.storyBlock').find('.blockId').text();
-        console.log(blockId);
         $('.storyCreateInterface').empty();
         $('.storyBlockView-Title').show('slow');
         $('html, body').animate({

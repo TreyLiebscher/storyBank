@@ -55,7 +55,7 @@ function handleSignUpClick() {
 		$('.formsHolder').removeClass('hide');
 		$('.formsHolder').addClass('giveFormSpace');
 		$('html, body').animate({
-			scrollTop: $('.storyBankMainContent').offset().top -100
+			scrollTop: $('.storyBankMainContent').offset().top - 100
 		}, 'slow');
 		componentHandler.upgradeDom();
 	});
@@ -90,7 +90,7 @@ function handleCreateNewUser() {
 			email: email,
 			password: password
 		});
-			userLoginRequest.done(data => navigateToStories(data, true));
+		userLoginRequest.done(data => navigateToStories(data, true));
 	});
 }
 
@@ -127,7 +127,7 @@ function handleLogInClick() {
 		$('.formsHolder').removeClass('hide');
 		$('.formsHolder').addClass('giveFormSpace');
 		$('html, body').animate({
-			scrollTop: $('.storyBankMainContent').offset().top -100
+			scrollTop: $('.storyBankMainContent').offset().top - 100
 		}, 'slow');
 		componentHandler.upgradeDom();
 	});
@@ -149,7 +149,7 @@ function navigateToStories(data, saveResponse = false) {
 	$('.userProfileName').html(data.email);
 	$('.welcomeSection').addClass('hide');
 	$('html, body').animate({
-		scrollTop: $('.storyBankMainContent').offset().top -100
+		scrollTop: $('.storyBankMainContent').offset().top - 100
 	}, 'slow');
 
 	const record = $.ajax({
@@ -203,7 +203,7 @@ function handleLogOutUser() {
 	});
 }
 
-function renderChangePasswordForm () {
+function renderChangePasswordForm() {
 	const updateUrl = API_URLS.changePassword;
 
 	return `
@@ -229,7 +229,7 @@ function renderChangePasswordForm () {
 }
 
 function displayChangePasswordForm() {
-	$('#changePasswordButton').on('click', function(event) {
+	$('#changePasswordButton').on('click', function (event) {
 		event.preventDefault();
 		const changePasswordForm = renderChangePasswordForm();
 		$('.profileOptions').removeClass('profileVisibleOptions');
@@ -241,7 +241,7 @@ function displayChangePasswordForm() {
 }
 
 function hideUserForms() {
-	$('.formsHolder').on('click', 'button#cancel', function(event) {
+	$('.formsHolder').on('click', 'button#cancel', function (event) {
 		event.preventDefault();
 		$('.formsHolder').addClass('hide');
 		$('.formsHolder').removeClass('giveFormSpace');
@@ -263,13 +263,13 @@ function validatePasswordChange() {
 }
 
 function comparePasswords() {
-	$('.formsHolder').on('keyup', '#password, #passwordConfirm', function() {
+	$('.formsHolder').on('keyup', '#password, #passwordConfirm', function () {
 		validatePasswordChange();
 	});
 }
 
 //POST
-function handleChangePassword () {
+function handleChangePassword() {
 	const $form = $('#changePassword'),
 		password = $form.find('input[name="password"]').val(),
 		retyped = $form.find('input[name="passwordConfirm"]').val(),
@@ -299,13 +299,13 @@ function handleChangePassword () {
 }
 
 function acceptPasswordChangeMessage() {
-	$('.changePasswordHolder').on('click','button#acceptMessage', function() {
+	$('.changePasswordHolder').on('click', 'button#acceptMessage', function () {
 		$('.changePasswordHolder').addClass('hide');
 	});
 }
 
 function viewProfileOptions() {
-	$('.profileContainer').on('click', 'button.userProfileName', function(event) {
+	$('.profileContainer').on('click', 'button.userProfileName', function (event) {
 		event.preventDefault();
 		$('.profileOptions').toggleClass('profileVisibleOptions');
 	});

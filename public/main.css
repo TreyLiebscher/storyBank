@@ -503,9 +503,6 @@ legend {
 }
 
 .hide {
-    /* position: absolute !important;
-    top: -9999px !important;
-    left: -9999px !important; */
     display: none;
 }
 
@@ -602,7 +599,6 @@ legend {
 .storyImage {
     max-width: 100%;
     max-height: 50vh;
-    /* border: 2px solid #fff; */
     border-radius: 5px;
     margin: auto;
 }
@@ -708,7 +704,6 @@ legend {
 
 .publicStoryViewer,
 .storyViewer {
-    /* display: flex; */
     flex-direction: column;
     z-index: 1;
     position: fixed;
@@ -965,10 +960,9 @@ legend {
     .infoBox:hover {
         transform: scale(1.4, 1.4);
         z-index: 3;
-        background-size:100%;
+        background-size: 100%;
         filter: brightness(250%);
     }
-    
     .infoBox:hover .infoText {
         opacity: 0;
     }
@@ -1238,12 +1232,14 @@ legend {
     .storyBlock {
         height: 113.6px;
     }
+    .storyBankHeader {
+        height: 56.8px;
+    }
     .storyQuickView {
         height: 85.2px;
     }
     #canvas,
     .storyImage {
-        max-width: 240px;
         max-height: 284px;
     }
     .imageURLThumb,
@@ -1257,12 +1253,14 @@ legend {
     .storyBlock {
         height: 64px;
     }
+    .storyBankHeader {
+        height: 32px;
+    }
     .storyQuickView {
         height: 48px;
     }
     #canvas,
     .storyImage {
-        max-width: 284px;
         max-height: 240px;
     }
     .imageURLThumb,
@@ -1278,12 +1276,17 @@ legend {
     .storyBlock {
         height: 133.4px;
     }
+    .storyBankHeader {
+        height: 66.7px;
+    }
+    .storyBankMainContent {
+        margin-top: 80.04px;
+    }
     .storyQuickView {
         height: 100.5px;
     }
     #canvas,
     .storyImage {
-        max-width: 281.25px;
         max-height: 333.5px;
     }
     .imageURLThumb,
@@ -1297,12 +1300,17 @@ legend {
     .storyBlock {
         height: 75px;
     }
+    .storyBankHeader {
+        height: 37.5px;
+    }
+    .storyBankMainContent {
+        margin-top: 45px;
+    }
     .storyQuickView {
         height: 56.25px;
     }
     #canvas,
     .storyImage {
-        max-width: 333.5px;
         max-height: 281.25px;
     }
     .imageURLThumb,
@@ -1315,18 +1323,20 @@ legend {
 /* iPhone 8+ */
 
 @media all and (device-width: 414px) and (device-height: 736px) and (orientation:portrait) {
-    .storyBankMainContent {
-        width: 414px;
+    .storyBankHeader {
+        height: 73.6px;
     }
     .storyBlock {
         height: 147.2px;
+    }
+    .storyBankMainContent {
+        margin-top: 88.32px;
     }
     .storyQuickView {
         height: 110.4px;
     }
     #canvas,
     .storyImage {
-        max-width: 310.5px;
         max-height: 368px;
     }
     .imageURLThumb,
@@ -1340,12 +1350,17 @@ legend {
     .storyBlock {
         height: 82.8px;
     }
+    .storyBankHeader {
+        height: 41.4px;
+    }
+    .storyBankMainContent {
+        margin-top: 49.68px;
+    }
     .storyQuickView {
         height: 62.1px;
     }
     #canvas,
     .storyImage {
-        max-width: 368px;
         max-height: 310.5px;
     }
     .imageURLThumb,
@@ -1361,12 +1376,17 @@ legend {
     .storyBlock {
         height: 162.4px;
     }
+    .storyBankHeader {
+        height: 81.2px;
+    }
+    .storyBankMainContent {
+        margin-top: 97.44px;
+    }
     .storyQuickView {
         height: 121.8px;
     }
     #canvas,
     .storyImage {
-        max-width: 281.25px;
         max-height: 406px;
     }
     .imageURLThumb,
@@ -1380,12 +1400,17 @@ legend {
     .storyBlock {
         height: 75px;
     }
+    .storyBankHeader {
+        height: 37.5px;
+    }
+    .storyBankMainContent {
+        margin-top: 45px;
+    }
     .storyQuickView {
         height: 56.25px;
     }
     #canvas,
     .storyImage {
-        max-width: 406px;
         max-height: 281.25px;
     }
     .imageURLThumb,
@@ -1394,5 +1419,3 @@ legend {
         max-height: 112.5px;
     }
 }
-
-/* TODO add ipad dimensions */

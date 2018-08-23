@@ -115,7 +115,7 @@ function displayStoryUpdateMenu() {
 }
 
 function handleStoryUpdateSubmit() {
-    $('.storyFooter').on('click', 'button#updateStory', function() {
+    $('.storyFooter').on('click', 'button#updateStory', function () {
         $('#editStory').submit();
     });
 }
@@ -157,8 +157,6 @@ function handleStoryUpdate() {
     });
 
     posting.done(function (data) {
-        console.log(data);
-        console.log(data.story.imageURL);
         const message = renderMessages(data.message);
         $('.storyCreateInterface').empty();
         const newStory = renderStory(data);
