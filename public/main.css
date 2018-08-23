@@ -299,6 +299,8 @@ legend {
     z-index: -1;
     opacity: 0;
     position: absolute;
+    display: flex;
+    flex-direction: column;
 }
 
 .profileOptions button,
@@ -312,6 +314,7 @@ legend {
     border-bottom: 1px solid white;
     border-right: none;
     border-left: none;
+    flex: 1;
 }
 
 .blockOptions button {
@@ -886,6 +889,38 @@ legend {
 #titleLabel::after,
 #contentLabel::after {
     background-color: #d06503;
+}
+
+/* welcome section */
+
+.infoContainer {
+    border: 3px solid white;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.infoTitle {
+    flex: 100%;
+    text-align: -webkit-center;
+    font-size: 40px;
+    padding: 2%;
+}
+
+.infoBox {
+    border: 2px solid #fff;
+    border-radius: 5px;
+    flex: 1;
+    height: 200px;
+    margin: .5em;
+}
+
+.a {
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://4.bp.blogspot.com/-c0HYC0CsITI/UBDb6v2nE4I/AAAAAAAAEHs/xb6UCx8Ka74/s1600/storm+thunder+lightning+night+sky+photo+pics+animation+gifs+free+download+3D+HD+wallpaper+background+ecards+decoration+graphic+arts+for+websites+amazing+landscape+with+cactuses+and+lightning.gif') no-repeat center center;
+}
+
+.b {
+    background-image: url('https://thumbs.gfycat.com/EarlyHeavenlyBlackbird-small.gif');
 }
 
 /* Non-Mobile Defaults */
