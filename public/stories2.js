@@ -234,6 +234,7 @@ function acceptStoryMessages() {
     $('.deleteStoryHolder').on('click', 'button#acceptMessage', function () {
         $('.deleteStoryHolder').addClass('hide');
         $('.storyViewer').addClass('hide');
+        $('.storyViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
     })

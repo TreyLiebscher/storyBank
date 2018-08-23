@@ -62,7 +62,10 @@
 #submitSignupForm,
 #submitLoginForm,
 #submitPasswordChange,
-#js-blockCreateButton {
+#js-blockCreateButton,
+#createStoryButton,
+#editStoryButton,
+#updateStory {
     background-color: #d06503;
 }
 
@@ -71,13 +74,16 @@
 #cancelBlockCreate,
 #cancelBlockUpdate,
 #cancelBlockDeletion,
-#cancelStoryDeletion {
-    background-color: #6D6D6E;
+#cancelStoryDeletion,
+#closeStory,
+#goBack {
+    background-color: #3e3e3e;
 }
 
 .deleteButton,
 #deleteBlockSubmit,
-#deleteStorySubmit {
+#deleteStorySubmit,
+#deleteStoryButton {
     background-color: darkred;
 }
 
@@ -569,6 +575,7 @@ legend {
 
 .storyTitle {
     font-family: 'Kanit', sans-serif;
+    text-align: center;
 }
 
 .storyContent {
@@ -588,9 +595,16 @@ legend {
 
 #canvas,
 .storyImage {
-    max-width: 75vw;
+    max-width: 100%;
     max-height: 50vh;
-    border: 2px solid white;
+    /* border: 2px solid #fff; */
+    border-radius: 5px;
+    margin: auto;
+}
+
+.imageBox {
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 #storyBankForm #rotate-cw {
@@ -712,7 +726,7 @@ legend {
 .publicStoryFooter,
 .storyFooter {
     height: 50px;
-    background-color: rgba(0, 0, 0, 0.88);
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     margin-top: auto;
     position: absolute;
@@ -948,7 +962,9 @@ legend {
         margin: 0.5em;
     }
     #storyBankForm .userButton:hover,
-    #storyBankForm .userButton:focus {
+    #storyBankForm .userButton:focus,
+    #js-story-footer .userButton:hover,
+    #js-story-footer .userButton:focus {
         cursor: pointer;
         background-color: black;
         box-shadow: 0 0 10px 1px #d06503;
@@ -967,11 +983,19 @@ legend {
     #storyBankForm #cancelBlockDeletion:hover,
     #storyBankForm #cancelBlockDeletion:focus,
     #storyBankForm #cancelStoryDeletion:hover,
-    #storyBankForm #cancelStoryDeletion:focus {
-        box-shadow: 0 0 10px 1px #6D6D6E;
+    #storyBankForm #cancelStoryDeletion:focus,
+    .storyFooter #closeStory:hover,
+    .storyFooter #closeStory:focus,
+    .publicStoryFooter #goBack:hover,
+    .publicStoryFooter #goBack:focus {
+        box-shadow: 0 0 10px 1px #3e3e3e;
+        background-color: black;
+        color: white;
     }
     #storyBankForm .deleteButton:hover,
-    #storyBankForm .deleteButton:focus {
+    #storyBankForm .deleteButton:focus,
+    #js-story-footer #deleteStoryButton:hover,
+    #js-story-footer #deleteStoryButton:focus {
         box-shadow: 0 0 10px 1px darkred;
         background-color: black;
     }
@@ -1000,6 +1024,7 @@ legend {
         height: 100%;
         float: none;
         border: 2px solid white;
+        width: 200px;
     }
     /* ~~~~~~~~ Block Container ~~~~~~~~ */
     .blockOptions {
@@ -1073,6 +1098,11 @@ legend {
         padding: 0.2em;
         border-radius: 5px;
     }
+    .storyViewer .storyDetailView,
+    .publicStoryViewer .storyDetailView {
+        margin: auto;
+        width: 60%;
+    }
     .storyFooter> :last-child,
     .publicStoryFooter> :last-child {
         border-right: 2px solid white;
@@ -1080,6 +1110,7 @@ legend {
     .storyFooter .userButton,
     .publicStoryFooter .userButton {
         margin: 0 1em 0 1em;
+        border: none;
     }
     #storyBankForm #rotate-cw {
         width: 30%;

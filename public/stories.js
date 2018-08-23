@@ -45,7 +45,7 @@ function renderCreateStoryInterface(title, id) {
 
 function renderStoryCreateControls() {
     return `
-    <button type="button" class="userButton" id="closeStory">Cancel</button>
+    <button type="button" class="userButton cancelButton" id="closeStory">Cancel</button>
     <button class="userButton" id="createStoryButton">Add to Block</button>
     `
 }
@@ -119,6 +119,8 @@ function displayStory(result) {
     const storyControls = renderStoryViewControls();
     $('.storyBody').html(story);
     $('.storyViewer').removeClass('hide');
+    $('.storyViewer').addClass('showFlex');
+    $('.storyBody').animate({scrollTop: '0px'}, 0);
     $('.storyViewer').focus();
     $('.storyFooter').html(storyControls);
 }
@@ -161,7 +163,7 @@ function handleViewStory() {
         console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
-        $('.storyBody').animate({scrollTop: '0px'}, 0);
+        // $('.storyBody').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
             console.error('Error', err);

@@ -64,6 +64,7 @@ function hidePublicStories() {
 function handleGoBack() {
     $('.publicStoryFooter').on('click', 'button#goBack', function (event) {
         $('.publicStoryViewer').addClass('hide');
+        $('.publicStoryViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
     });
@@ -104,6 +105,8 @@ function displayPublicStory(result) {
     const story = renderPublicStory(result);
     $('.publicStoryContent').html(story);
     $('.publicStoryViewer').removeClass('hide');
+    $('.publicStoryViewer').addClass('showFlex');
+    $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
     $('.publicStoryViewer').focus();
 }
 
@@ -114,7 +117,7 @@ function handleViewPublicStory() {
         console.log('The story id is:', storyId);
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
-        $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
+        // $('.publicStoryContent').animate({scrollTop: '0px'}, 0);
         const resultPromise = getStoryById(storyId);
         resultPromise.catch(err => {
             console.error('Error', err);
