@@ -9,7 +9,7 @@ function renderBlockUpdateMenu(title, color, id) {
         <fieldset id="storyBankForm">
             <legend>Edit ${title}</legend>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input id="title" class="mdl-textfield__input" name="title" value="${title}">
+                <input id="title" class="mdl-textfield__input" name="title" value="${title}" tabindex="0">
                 <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
             </div>
             <div class="menuButtonHolder">
@@ -38,6 +38,7 @@ function displayBlockUpdateMenu() {
         $('html, body').animate({
             scrollTop: $('.storyBlockCreateHolder').offset().top - 100
         }, 'slow');
+        $('#title').focus();
         // Spectrum Color Picker //
         $("#colorPicker").spectrum("destroy");
         $("#colorPicker").spectrum({
@@ -46,7 +47,8 @@ function displayBlockUpdateMenu() {
                 const selectedColor = color.toHexString();
                 $('#colorPicker').css("background-color", selectedColor);
                 $('#color').val(selectedColor)
-            }
+            },
+            showInput: true
         });
         componentHandler.upgradeDom();
     });

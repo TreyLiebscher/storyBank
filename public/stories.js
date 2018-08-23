@@ -16,7 +16,7 @@ function renderCreateStoryInterface(title, id) {
         <fieldset id="storyBankForm">
             <legend>Add a story to ${title}</legend>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input id="title" class="mdl-textfield__input" name="title">
+                <input id="title" class="mdl-textfield__input" name="title" tabindex="0">
                 <label id="titleLabel" class="mdl-textfield__label" for="title">Title</label>
             </div>
             <label for="image">Upload a picture</label>
@@ -63,6 +63,8 @@ function viewCreateStoryInterface() {
         $('.storyBankBody').addClass('noScroll');
         $('html').addClass('noScroll');
         $('.storyViewer').removeClass('hide');
+        $('.storyViewer').addClass('showFlex');
+        $('#title').focus();
         componentHandler.upgradeDom();
     });
 }
@@ -174,6 +176,7 @@ function handleViewStory() {
 function handleCloseStory() {
     $('.storyFooter').on('click', 'button#closeStory', function() {
         $('.storyViewer').addClass('hide');
+        $('.storyViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
     })
@@ -274,6 +277,7 @@ function handleCreateStory() {
         getBlocksWithStories(data.story.block);
         console.log('story id is', data.story.id);
         $('.storyViewer').addClass('hide');
+        $('.storyViewer').removeClass('showFlex');
         $('.storyBankBody').removeClass('noScroll');
         $('html').removeClass('noScroll');
         componentHandler.upgradeDom();
@@ -282,7 +286,6 @@ function handleCreateStory() {
 
 
 function stories() {
-    $(viewAllStoriesInBlock);
     $(handleViewStory);
     $(handleCloseStory);
     $(viewCreateStoryInterface);

@@ -166,6 +166,7 @@ function handleStoryUpdate() {
         getBlocksWithStories(data.story.block);
         $('.deleteStoryHolder').removeClass('hide');
         $('.deleteStoryHolder').html(message);
+        $('.deleteStoryHolder').focus();
     })
 
 }

@@ -84,7 +84,8 @@ function viewCreateBlockInterface() {
                 const selectedColor = color.toHexString();
                 $('#colorPicker').css("background-color", selectedColor);
                 $('#color').val(selectedColor)
-            }
+            },
+            showInput: true
         });
         componentHandler.upgradeDom();
     });
@@ -164,6 +165,8 @@ function displayBlockWithStories(arr) {
     $('.storyBlockView-Title').html(blockResult);
     $('.storyViewing').find('.storyQuickView').css('border', `1px solid ${arr.block.color}`);
     const viewColor = arr.block.color + '90';
+    //If there are no stories, storyViewing
+    //background will not be visible
     if (results.length === 0) {
         $('.storyViewing').css('background-color', '#00000000');
     } else {
@@ -192,10 +195,9 @@ function renderInsideBlockViewTitle(result) {
         <p class="blockTitle">${result.title}</p>
         <p class="blockId">${result.id}</p>
         <div class="blockOptionsContainer">
-            <button class="blockOptionsMenu">Options</button>
+            <button class="blockOptionsMenu" tabindex="0">Options</button>
             <div class="blockOptions" style="background-color: ${result.color}">
                 <button class="addStory userButton">Add New Story</button>
-                <button id="displayAllStories" class="userButton">Show All Stories</button>
                 <button id="editBlock" class="userButton">Edit</button>
                 <button id="displayDeleteMenu" class="userButton">Delete Block</button>
             </div>
@@ -204,22 +206,9 @@ function renderInsideBlockViewTitle(result) {
    `
 }
 
-function viewAllStoriesInBlock() {
-    $('.storyBlockView-Title').on('click', 'button#displayAllStories', function (event) {
-        event.preventDefault();
-        $('.storyCreateInterface').empty();
-        $('.storyBlockView').show('slow');
-        $('.storyBlockView-Title').show('slow');
-        $('.blockOptions').removeClass('blockVisibleOptions');
-        const blockId = $(event.target).closest('.storyBlockView-Title').find('.blockId').text();
-        getBlocksWithStories(blockId);
-    })
-}
-
 function viewBlockOptions() {
     $('.storyBlockView-Title').on('click', 'button.blockOptionsMenu', function (event) {
         event.preventDefault();
-        console.log('kiwi menu clicked')
         $('.blockOptions').toggleClass('blockVisibleOptions');
     });
 }

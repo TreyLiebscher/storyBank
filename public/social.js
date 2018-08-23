@@ -104,6 +104,7 @@ function displayPublicStory(result) {
     const story = renderPublicStory(result);
     $('.publicStoryContent').html(story);
     $('.publicStoryViewer').removeClass('hide');
+    $('.publicStoryViewer').focus();
 }
 
 function handleViewPublicStory() {

@@ -23,9 +23,10 @@
 
 <body class="storyBankBody">
 
-	<header class="storyBankHeader">
+	<header class="storyBankHeader" role="banner">
 		<div class="titleBox"></div>
 		<h1 class="storyBankTitle">Story<span class="titleColorSplit">Bank</span></h1>
+
 		<div class="profileContainer hide">
 			<button class="userProfileName"></button>
 			<div class="profileOptions">
@@ -33,6 +34,7 @@
 				<button class="userButton" id="logOutButton">LogOut</button>
 			</div>
 		</div>
+
 		<div class="buttonHolderHeader">
 			<button type="button" id="signUp" class="userSignUp">Sign Up</button>
 			<button type="button" id="logIn" class="userLogIn">Log In</button>
@@ -40,14 +42,14 @@
 	</header>
 
 
-	<main class="storyBankMainContent">
+	<main class="storyBankMainContent" role="main">
 		<div class="formsHolder"></div>
 		<div class="changePasswordHolder hide"></div>
 
 		<button type="button" id="discover" class="userButton">Discover</button>
 		<button type="button" id="hideDiscover" class="userButton hide">Close</button>
 
-		<div class="publicStoryViewer hide">
+		<div class="publicStoryViewer hide" tabindex="0">
 			<div class="publicStoryContent"></div>
 			<footer class="publicStoryFooter">
 				<button type="button" class="userButton" id="goBack">Back</button>

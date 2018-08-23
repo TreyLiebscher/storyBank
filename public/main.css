@@ -315,7 +315,8 @@ legend {
     border-top: none;
 }
 
-.profileContainer:hover .userProfileName {
+.profileContainer:hover .userProfileName,
+.userProfileName:focus {
     background-color: white;
     color: black;
     box-shadow: 0 0 10px 1px white;
@@ -494,9 +495,14 @@ legend {
 }
 
 .hide {
-    position: absolute !important;
+    /* position: absolute !important;
     top: -9999px !important;
-    left: -9999px !important;
+    left: -9999px !important; */
+    display: none;
+}
+
+.showFlex {
+    display: flex;
 }
 
 .deleteMenuHolder .userButton {
@@ -683,7 +689,7 @@ legend {
 
 .publicStoryViewer,
 .storyViewer {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     z-index: 1;
     position: fixed;
@@ -1022,6 +1028,10 @@ legend {
         border-top: none;
         opacity: 1;
         z-index: 1;
+    }
+    .blockOptionsMenu:focus {
+        background-color: white;
+        color: black;
     }
     .storyBlock>.blockOptionsContainer:hover .blockOptionsMenu {
         transform: translateY(100%);
