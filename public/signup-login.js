@@ -114,6 +114,7 @@ function renderLogInForm() {
 				<button type="button" class="userButton" id="cancel">Cancel</button>
 				<button type="submit" class="userButton" id="submitLoginForm">Log In</button>
 			</div>
+			<button type="button" id="demo-button" class="userLogIn">Demo</button>
 		</fieldset>
 	</form>
     `
@@ -182,7 +183,7 @@ function handleUserLogIn() {
 }
 
 function handleDemoLogIn(){
-	$('#demo-button').on('click', (ev) => {
+	$('.formsHolder').on('click', 'button#demo-button',  (ev) => {
 		ev.preventDefault();
 		const url = API_URLS.userLogIn;
 

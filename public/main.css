@@ -3,6 +3,14 @@
     font-family: 'Kanit', sans-serif;
 }
 
+#demo-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 30%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .storyBankBody,
 .storyBankMainContent,
 .storyViewer,
