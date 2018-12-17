@@ -18,7 +18,7 @@ const jwtAuth = passport.authenticate('jwt', {
 
 const router = express.Router();
 
-const LIMIT = 1000;
+const LIMIT = 20;
 const B64HEADER = ';base64,'
 
 const STORY_MODEL_FIELDS = ['title', 'image', 'content', 'publicStatus'] //an array of updatable field names
