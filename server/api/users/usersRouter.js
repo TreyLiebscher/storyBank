@@ -178,6 +178,14 @@ async function changePassword(req, res) {
             return res.status(404).send(message);
         }
     }
+    
+    if(req.user.email === 'demo@demo'){
+        const message = 'You may not change the password of the demo account';
+        console.error(message);
+        return res.json({
+            message: message
+        });
+    }
 
     const {
         newPassword

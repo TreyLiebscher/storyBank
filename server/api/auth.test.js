@@ -233,5 +233,32 @@ describe('Auth endpoints', function () {
 
 
         });
+
+        it('Should not allow a user to change the demo account password', async function() {
+            const demo = 'demo@demo';
+            const token = jwt.sign(
+                {
+                    user: {
+                        demo,
+                    }
+                },
+                JWT_SECRET,
+                {
+                    algorithm: 'HS256',
+                    subject: email,
+                    expiresIn: '7d'
+                }
+            );
+
+            const newPassword = '1234567890';
+            const res = await chai
+                .request(app)
+                .post('/users/changepassword')
+                .send({ newPassword, retypeNewPassword:newPassword })
+                .set('authorization', `Bearer ${token}`)
+            
+            expect(res).to.have.status(500);
+            expect(res.body.message).to.equal('SERVER_ERROR');
+        });
     });
 });
