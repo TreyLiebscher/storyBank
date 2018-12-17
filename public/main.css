@@ -540,7 +540,7 @@ legend {
     color: #fff;
     background: 0 0;
     border: 2px solid #fff;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     width: 100%;
     transition: all .3s;
 }
@@ -919,7 +919,7 @@ legend {
 
 .infoBox {
     border: 2px solid #fff;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     flex: 1;
     height: 200px;
     margin: 0.3em;
@@ -1027,7 +1027,7 @@ legend {
     .userButton {
         width: auto;
         margin-top: auto;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         border-left: 2px solid white;
         border-right: 2px solid white;
     }
@@ -1041,7 +1041,7 @@ legend {
     }
     #storyBankForm .userButton {
         flex: 1;
-        border-radius: 15px;
+        /* border-radius: 15px; */
         margin: 0.5em;
     }
     #storyBankForm .userButton:hover,
@@ -1159,7 +1159,7 @@ legend {
         height: 15vh;
         width: 25%;
         margin: 0.2em;
-        border-radius: 0.5em;
+        /* border-radius: 0.5em; */
     }
     :root {
         --block-Background: white;
