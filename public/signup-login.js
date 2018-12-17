@@ -181,6 +181,20 @@ function handleUserLogIn() {
 	userLoginRequest.done(data => navigateToStories(data, true));
 }
 
+function handleDemoLogIn(){
+	$('#demo-button').on('click', (ev) => {
+		ev.preventDefault();
+		const url = API_URLS.userLogIn;
+
+		const demoLogInRequest = $.post(url, {
+			email: 'demo@demo',
+			password: '0987654321'
+		});
+
+		demoLogInRequest.done(data => navigateToStories(data, true));
+	})
+}
+
 function handleLogOutUser() {
 	$('#logOutButton').on('click', function (event) {
 		event.preventDefault();
@@ -314,6 +328,7 @@ function viewProfileOptions() {
 function userLogInSignUp() {
 	$(handleSignUpClick);
 	$(handleLogInClick);
+	$(handleDemoLogIn);
 	$(handleLogOutUser);
 	$(restoreLoginResponse);
 	$(displayChangePasswordForm);
