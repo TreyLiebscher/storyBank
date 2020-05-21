@@ -4,7 +4,7 @@
 https://aqueous-inlet-15627.herokuapp.com/app/
 
 ## About
-StoryBank is an app that allows users to create an account and then upload stories along with images into folders that they name and color. If a user wishes, they may set their stories to 'public' status and the story will then be visible whenever any user views the 'discover' section of the app
+StoryBank is an web application that allows users to create an account and then upload stories along with images into folders that they name and color. If a user wishes, they may set their stories to 'public' status and the story will then be visible whenever any user views the 'discover' section of the app
 
 ## Technologies used:
 
